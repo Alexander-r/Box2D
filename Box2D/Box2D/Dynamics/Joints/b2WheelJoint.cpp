@@ -141,14 +141,14 @@ void b2WheelJoint::InitVelocityConstraints(const b2SolverData& data)
 			double omega = 2.0 * b2_pi * m_frequencyHz;
 
 			// Damping coefficient
-			double d = 2.0 * m_springMass * m_dampingRatio * omega;
+			double damping = 2.0 * m_springMass * m_dampingRatio * omega;
 
 			// Spring stiffness
 			double k = m_springMass * omega * omega;
 
 			// magic formulas
 			double h = data.step.dt;
-			m_gamma = h * (d + h * k);
+			m_gamma = h * (damping + h * k);
 			if (m_gamma > 0.0)
 			{
 				m_gamma = 1.0 / m_gamma;
