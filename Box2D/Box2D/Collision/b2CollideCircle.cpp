@@ -138,8 +138,8 @@ void b2CollidePolygonAndCircle(
 	else
 	{
 		b2Vec2 faceCenter = 0.5 * (v1 + v2);
-		double separation = b2Dot(cLocal - faceCenter, normals[vertIndex1]);
-		if (separation > radius)
+		double distance = b2Dot(cLocal - faceCenter, normals[vertIndex1]);
+		if (distance > radius)
 		{
 			return;
 		}
