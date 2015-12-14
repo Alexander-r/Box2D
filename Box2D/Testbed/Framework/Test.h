@@ -19,17 +19,13 @@
 #ifndef TEST_H
 #define TEST_H
 
+#include <stdlib.h>
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 #include <Box2D/Box2D.h>
 #include "DebugDraw.h"
-
-#if defined(__APPLE__)
-#include <OpenGL/gl3.h>
-#else
-#include <glew/glew.h>
-#endif
-#include <glfw/glfw3.h>
-
-#include <stdlib.h>
 
 class Test;
 struct Settings;
@@ -40,18 +36,18 @@ typedef Test* TestCreateFcn();
 #define DRAW_STRING_NEW_LINE 16
 
 /// Random number in range [-1,1]
-inline float RandomFloat()
+inline float32 RandomFloat()
 {
-	float r = (float)(std::rand() & (RAND_LIMIT));
+	float32 r = (float32)(rand() & (RAND_LIMIT));
 	r /= RAND_LIMIT;
 	r = 2.0f * r - 1.0f;
 	return r;
 }
 
 /// Random floating point number in range [lo, hi]
-inline float RandomFloat(float lo, float hi)
+inline float32 RandomFloat(float32 lo, float32 hi)
 {
-	float r = (float)(std::rand() & (RAND_LIMIT));
+	float32 r = (float32)(rand() & (RAND_LIMIT));
 	r /= RAND_LIMIT;
 	r = (hi - lo) * r + lo;
 	return r;
@@ -83,9 +79,9 @@ struct Settings
 		singleStep = false;
 	}
 
-	float hz;
-	int32_t velocityIterations;
-	int32_t positionIterations;
+	float32 hz;
+	int32 velocityIterations;
+	int32 positionIterations;
 	bool drawShapes;
 	bool drawJoints;
 	bool drawAABBs;
@@ -123,7 +119,7 @@ public:
 	Test* test;
 };
 
-const int32_t k_maxContactPoints = 2048;
+const int32 k_maxContactPoints = 2048;
 
 struct ContactPoint
 {
@@ -132,9 +128,9 @@ struct ContactPoint
 	b2Vec2 normal;
 	b2Vec2 position;
 	b2PointState state;
-	float normalImpulse;
-	float tangentImpulse;
-	float separation;
+	float32 normalImpulse;
+	float32 tangentImpulse;
+	float32 separation;
 };
 
 class Test : public b2ContactListener
@@ -181,16 +177,16 @@ protected:
 	b2Body* m_groundBody;
 	b2AABB m_worldAABB;
 	ContactPoint m_points[k_maxContactPoints];
-	int32_t m_pointCount;
+	int32 m_pointCount;
 	DestructionListener m_destructionListener;
-	int32_t m_textLine;
+	int32 m_textLine;
 	b2World* m_world;
 	b2Body* m_bomb;
 	b2MouseJoint* m_mouseJoint;
 	b2Vec2 m_bombSpawnPoint;
 	bool m_bombSpawning;
 	b2Vec2 m_mouseWorld;
-	int32_t m_stepCount;
+	int32 m_stepCount;
 
 	b2Profile m_maxProfile;
 	b2Profile m_totalProfile;
