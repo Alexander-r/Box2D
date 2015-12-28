@@ -29,8 +29,8 @@ b2Rope::b2Rope()
 	m_Ls = NULL;
 	m_as = NULL;
 	m_gravity.SetZero();
-	m_k2 = 1.0f;
-	m_k3 = 0.1f;
+	m_k2 = 1.0;
+	m_k3 = 0.1;
 }
 
 b2Rope::~b2Rope()
@@ -50,7 +50,7 @@ void b2Rope::Initialize(const b2RopeDef* def)
 	m_ps = (b2Vec2*)b2Alloc(m_count * sizeof(b2Vec2));
 	m_p0s = (b2Vec2*)b2Alloc(m_count * sizeof(b2Vec2));
 	m_vs = (b2Vec2*)b2Alloc(m_count * sizeof(b2Vec2));
-	m_ims = (float*)b2Alloc(m_count * sizeof(float));
+	m_ims = (double*)b2Alloc(m_count * sizeof(double));
 
 	for (int32_t i = 0; i < m_count; ++i)
 	{
@@ -58,21 +58,21 @@ void b2Rope::Initialize(const b2RopeDef* def)
 		m_p0s[i] = def->vertices[i];
 		m_vs[i].SetZero();
 
-		float m = def->masses[i];
-		if (m > 0.0f)
+		double m = def->masses[i];
+		if (m > 0.0)
 		{
-			m_ims[i] = 1.0f / m;
+			m_ims[i] = 1.0 / m;
 		}
 		else
 		{
-			m_ims[i] = 0.0f;
+			m_ims[i] = 0.0;
 		}
 	}
 
 	int32_t count2 = m_count - 1;
 	int32_t count3 = m_count - 2;
-	m_Ls = (float*)b2Alloc(count2 * sizeof(float));
-	m_as = (float*)b2Alloc(count3 * sizeof(float));
+	m_Ls = (double*)b2Alloc(count2 * sizeof(double));
+	m_as = (double*)b2Alloc(count3 * sizeof(double));
 
 	for (int32_t i = 0; i < count2; ++i)
 	{
@@ -90,8 +90,8 @@ void b2Rope::Initialize(const b2RopeDef* def)
 		b2Vec2 d1 = p2 - p1;
 		b2Vec2 d2 = p3 - p2;
 
-		float a = b2Cross(d1, d2);
-		float b = b2Dot(d1, d2);
+		double a = b2Cross(d1, d2);
+		double b = b2Dot(d1, d2);
 
 		m_as[i] = b2Atan2(a, b);
 	}
@@ -102,19 +102,19 @@ void b2Rope::Initialize(const b2RopeDef* def)
 	m_k3 = def->k3;
 }
 
-void b2Rope::Step(float h, int32_t iterations)
+void b2Rope::Step(double h, int32_t iterations)
 {
 	if (h == 0.0)
 	{
 		return;
 	}
 
-	float d = expf(- h * m_damping);
+	double d = expf(- h * m_damping);
 
 	for (int32_t i = 0; i < m_count; ++i)
 	{
 		m_p0s[i] = m_ps[i];
-		if (m_ims[i] > 0.0f)
+		if (m_ims[i] > 0.0)
 		{
 			m_vs[i] += h * m_gravity;
 		}
@@ -130,7 +130,7 @@ void b2Rope::Step(float h, int32_t iterations)
 		SolveC2();
 	}
 
-	float inv_h = 1.0f / h;
+	double inv_h = 1.0 / h;
 	for (int32_t i = 0; i < m_count; ++i)
 	{
 		m_vs[i] = inv_h * (m_ps[i] - m_p0s[i]);
@@ -147,18 +147,18 @@ void b2Rope::SolveC2()
 		b2Vec2 p2 = m_ps[i + 1];
 
 		b2Vec2 d = p2 - p1;
-		float L = d.Normalize();
+		double L = d.Normalize();
 
-		float im1 = m_ims[i];
-		float im2 = m_ims[i + 1];
+		double im1 = m_ims[i];
+		double im2 = m_ims[i + 1];
 
-		if (im1 + im2 == 0.0f)
+		if (im1 + im2 == 0.0)
 		{
 			continue;
 		}
 
-		float s1 = im1 / (im1 + im2);
-		float s2 = im2 / (im1 + im2);
+		double s1 = im1 / (im1 + im2);
+		double s2 = im2 / (im1 + im2);
 
 		p1 -= m_k2 * s1 * (m_Ls[i] - L) * d;
 		p2 += m_k2 * s2 * (m_Ls[i] - L) * d;
@@ -168,7 +168,7 @@ void b2Rope::SolveC2()
 	}
 }
 
-void b2Rope::SetAngle(float angle)
+void b2Rope::SetAngle(double angle)
 {
 	int32_t count3 = m_count - 2;
 	for (int32_t i = 0; i < count3; ++i)
@@ -187,42 +187,42 @@ void b2Rope::SolveC3()
 		b2Vec2 p2 = m_ps[i + 1];
 		b2Vec2 p3 = m_ps[i + 2];
 
-		float m1 = m_ims[i];
-		float m2 = m_ims[i + 1];
-		float m3 = m_ims[i + 2];
+		double m1 = m_ims[i];
+		double m2 = m_ims[i + 1];
+		double m3 = m_ims[i + 2];
 
 		b2Vec2 d1 = p2 - p1;
 		b2Vec2 d2 = p3 - p2;
 
-		float L1sqr = d1.LengthSquared();
-		float L2sqr = d2.LengthSquared();
+		double L1sqr = d1.LengthSquared();
+		double L2sqr = d2.LengthSquared();
 
-		if (L1sqr * L2sqr == 0.0f)
+		if (L1sqr * L2sqr == 0.0)
 		{
 			continue;
 		}
 
-		float a = b2Cross(d1, d2);
-		float b = b2Dot(d1, d2);
+		double a = b2Cross(d1, d2);
+		double b = b2Dot(d1, d2);
 
-		float angle = b2Atan2(a, b);
+		double angle = b2Atan2(a, b);
 
-		b2Vec2 Jd1 = (-1.0f / L1sqr) * d1.Skew();
-		b2Vec2 Jd2 = (1.0f / L2sqr) * d2.Skew();
+		b2Vec2 Jd1 = (-1.0 / L1sqr) * d1.Skew();
+		b2Vec2 Jd2 = (1.0 / L2sqr) * d2.Skew();
 
 		b2Vec2 J1 = -Jd1;
 		b2Vec2 J2 = Jd1 - Jd2;
 		b2Vec2 J3 = Jd2;
 
-		float mass = m1 * b2Dot(J1, J1) + m2 * b2Dot(J2, J2) + m3 * b2Dot(J3, J3);
-		if (mass == 0.0f)
+		double mass = m1 * b2Dot(J1, J1) + m2 * b2Dot(J2, J2) + m3 * b2Dot(J3, J3);
+		if (mass == 0.0)
 		{
 			continue;
 		}
 
-		mass = 1.0f / mass;
+		mass = 1.0 / mass;
 
-		float C = angle - m_as[i];
+		double C = angle - m_as[i];
 
 		while (C > b2_pi)
 		{
@@ -232,11 +232,11 @@ void b2Rope::SolveC3()
 
 		while (C < -b2_pi)
 		{
-			angle += 2.0f * b2_pi;
+			angle += 2.0 * b2_pi;
 			C = angle - m_as[i];
 		}
 
-		float impulse = - m_k3 * mass * C;
+		double impulse = - m_k3 * mass * C;
 
 		p1 += (m1 * impulse) * J1;
 		p2 += (m2 * impulse) * J2;
@@ -250,7 +250,7 @@ void b2Rope::SolveC3()
 
 void b2Rope::Draw(b2Draw* draw) const
 {
-	b2Color c(0.4f, 0.5f, 0.7f);
+	b2Color c(0.4, 0.5, 0.7);
 
 	for (int32_t i = 0; i < m_count - 1; ++i)
 	{

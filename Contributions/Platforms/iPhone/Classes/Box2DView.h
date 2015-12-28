@@ -41,7 +41,7 @@ Note that setting the view non-opaque will only work if the EAGL surface has an 
 	Test* test;
 
 	// Position offset and scale
-	float sceneScale;
+	double sceneScale;
 	CGPoint positionOffset;
 	CGPoint lastWorldTouch;
 	CGPoint lastScreenTouch;

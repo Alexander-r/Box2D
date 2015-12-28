@@ -25,14 +25,14 @@
 class b2Polygon;
 
 int32_t remainder(int32_t x, int32_t modulus);
-int32_t TriangulatePolygon(float* xv, float* yv, int32_t vNum, b2Triangle* results);
-bool IsEar(int32_t i, float* xv, float* yv, int32_t xvLength); //Not for external use
+int32_t TriangulatePolygon(double* xv, double* yv, int32_t vNum, b2Triangle* results);
+bool IsEar(int32_t i, double* xv, double* yv, int32_t xvLength); //Not for external use
 int32_t PolygonizeTriangles(b2Triangle* triangulated, int32_t triangulatedLength, b2Polygon* polys, int32_t polysLength);
 int32_t DecomposeConvex(b2Polygon* p, b2Polygon* results, int32_t maxPolys);
 void DecomposeConvexAndAddTo(b2Polygon* p, b2Body* bd, b2FixtureDef* prototype);
 b2Polygon ConvexHull(b2Vec2* v, int nVert);
-b2Polygon ConvexHull(float* cloudX, float* cloudY, int32_t nVert);
-void ReversePolygon(float* x, float* y, int n);
+b2Polygon ConvexHull(double* cloudX, double* cloudY, int32_t nVert);
+void ReversePolygon(double* x, double* y, int n);
 
 b2Polygon TraceEdge(b2Polygon* p); //For use with self-intersecting polygons, finds outline
 
@@ -41,21 +41,21 @@ class b2Polygon {
 public:
     const static int32_t maxVerticesPerPolygon = b2_maxPolygonVertices;
 
-    float* x; //vertex arrays
-    float* y;
+    double* x; //vertex arrays
+    double* y;
     int32_t nVertices;
 	
-	float area;
+	double area;
 	bool areaIsSet;
 	
-    b2Polygon(float* _x, float* _y, int32_t nVert);
+    b2Polygon(double* _x, double* _y, int32_t nVert);
     b2Polygon(b2Vec2* v, int32_t nVert);
 	b2Polygon();
     ~b2Polygon();
 	
-	float GetArea();
+	double GetArea();
 	
-	void MergeParallelEdges(float tolerance);
+	void MergeParallelEdges(double tolerance);
     b2Vec2* GetVertexVecs();
     b2Polygon(b2Triangle& t);
     void Set(const b2Polygon& p);
@@ -76,11 +76,11 @@ public:
 	}
 
 	void printFormatted(){
-		printf("float xv[] = {");
+		printf("double xv[] = {");
 		for (int32_t i=0; i<nVertices; ++i){
 			printf("%ff,",x[i]);
 		}
-		printf("};\nfloat yv[] = {");
+		printf("};\ndouble yv[] = {");
 		for (int32_t i=0; i<nVertices; ++i){
 			printf("%ff,",y[i]);
 		}
@@ -91,17 +91,17 @@ public:
 		nVertices = p.nVertices;
 		area = p.area;
 		areaIsSet = p.areaIsSet;
-		x = new float[nVertices];
-		y = new float[nVertices];
-		memcpy(x, p.x, nVertices * sizeof(float));
-		memcpy(y, p.y, nVertices * sizeof(float));
+		x = new double[nVertices];
+		y = new double[nVertices];
+		memcpy(x, p.x, nVertices * sizeof(double));
+		memcpy(y, p.y, nVertices * sizeof(double));
 	}
 
 	
 };
 
 const int32_t MAX_CONNECTED = 32;
-const float COLLAPSE_DIST_SQR = FLT_EPSILON*FLT_EPSILON;//0.1f;//1000*FLT_EPSILON*1000*FLT_EPSILON;
+const double COLLAPSE_DIST_SQR = DBL_EPSILON*DBL_EPSILON;//0.1;//1000*DBL_EPSILON*1000*DBL_EPSILON;
 	
 class b2PolyNode{
 public:

@@ -44,7 +44,7 @@ public:
 	void ComputeAABB(b2AABB* aabb, const b2Transform& transform, int32_t childIndex) const;
 
 	/// @see b2Shape::ComputeMass
-	void ComputeMass(b2MassData* massData, float density) const;
+	void ComputeMass(b2MassData* massData, double density) const;
 
 	/// Get the supporting vertex index in the given direction.
 	int32_t GetSupport(const b2Vec2& d) const;
@@ -65,7 +65,7 @@ public:
 inline b2CircleShape::b2CircleShape()
 {
 	m_type = e_circle;
-	m_radius = 0.0f;
+	m_radius = 0.0;
 	m_p.SetZero();
 }
 

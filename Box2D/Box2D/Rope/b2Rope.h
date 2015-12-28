@@ -32,9 +32,9 @@ struct b2RopeDef
 		count = 0;
 		masses = NULL;
 		gravity.SetZero();
-		damping = 0.1f;
-		k2 = 0.9f;
-		k3 = 0.1f;
+		damping = 0.1;
+		k2 = 0.9;
+		k3 = 0.1;
 	}
 
 	///
@@ -44,19 +44,19 @@ struct b2RopeDef
 	int32_t count;
 
 	///
-	float* masses;
+	double* masses;
 
 	///
 	b2Vec2 gravity;
 
 	///
-	float damping;
+	double damping;
 
 	/// Stretching stiffness
-	float k2;
+	double k2;
 
 	/// Bending stiffness. Values above 0.5 can make the simulation blow up.
-	float k3;
+	double k3;
 };
 
 /// 
@@ -70,7 +70,7 @@ public:
 	void Initialize(const b2RopeDef* def);
 
 	///
-	void Step(float timeStep, int32_t iterations);
+	void Step(double timeStep, int32_t iterations);
 
 	///
 	int32_t GetVertexCount() const
@@ -88,7 +88,7 @@ public:
 	void Draw(b2Draw* draw) const;
 
 	///
-	void SetAngle(float angle);
+	void SetAngle(double angle);
 
 private:
 
@@ -100,16 +100,16 @@ private:
 	b2Vec2* m_p0s;
 	b2Vec2* m_vs;
 
-	float* m_ims;
+	double* m_ims;
 
-	float* m_Ls;
-	float* m_as;
+	double* m_Ls;
+	double* m_as;
 
 	b2Vec2 m_gravity;
-	float m_damping;
+	double m_damping;
 
-	float m_k2;
-	float m_k3;
+	double m_k2;
+	double m_k3;
 };
 
 #endif

@@ -23,15 +23,15 @@ namespace Box2D
 			//
 			//ie: Shape.Extents.X += 10;
 			//won't behave like you think it should (or will it?)
-			float X, Y;
+			double X, Y;
 
 			Vector() : X(0), Y(0) { }
-			Vector(float x, float y) : X(x), Y(y) { }
+			Vector(double x, double y) : X(x), Y(y) { }
 			Vector(Vector^ other) : X(other->X), Y(other->Y) { }
 			Vector(const b2Vec2 &other) : X(other.x), Y(other.y) { }
 
 			/*
-			Vector^ Set(float x, float y)
+			Vector^ Set(double x, double y)
 			{
 				X = x;
 				Y = y;
@@ -58,7 +58,7 @@ namespace Box2D
 			}
 			
 			///<summary>Scalar multiplication for a vector</summary>
-			static Vector^ operator * (Vector^ a, float b)
+			static Vector^ operator * (Vector^ a, double b)
 			{
 				return gcnew Vector(a->X * b, a->Y * b);
 			}

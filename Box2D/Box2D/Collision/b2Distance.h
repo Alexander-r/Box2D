@@ -28,7 +28,7 @@ class b2Shape;
 /// It encapsulates any shape.
 struct b2DistanceProxy
 {
-	b2DistanceProxy() : m_vertices(NULL), m_count(0), m_radius(0.0f) {}
+	b2DistanceProxy() : m_vertices(NULL), m_count(0), m_radius(0.0) {}
 
 	/// Initialize the proxy using the given shape. The shape
 	/// must remain in scope while the proxy is in use.
@@ -49,14 +49,14 @@ struct b2DistanceProxy
 	b2Vec2 m_buffer[2];
 	const b2Vec2* m_vertices;
 	int32_t m_count;
-	float m_radius;
+	double m_radius;
 };
 
 /// Used to warm start b2Distance.
 /// Set count to zero on first call.
 struct b2SimplexCache
 {
-	float metric;		///< length or area
+	double metric;		///< length or area
 	uint16_t count;
 	uint8_t indexA[3];	///< vertices on shape A
 	uint8_t indexB[3];	///< vertices on shape B
@@ -79,7 +79,7 @@ struct b2DistanceOutput
 {
 	b2Vec2 pointA;		///< closest point on shapeA
 	b2Vec2 pointB;		///< closest point on shapeB
-	float distance;
+	double distance;
 	int32_t iterations;	///< number of GJK iterations used
 };
 
@@ -107,10 +107,10 @@ inline const b2Vec2& b2DistanceProxy::GetVertex(int32_t index) const
 inline int32_t b2DistanceProxy::GetSupport(const b2Vec2& d) const
 {
 	int32_t bestIndex = 0;
-	float bestValue = b2Dot(m_vertices[0], d);
+	double bestValue = b2Dot(m_vertices[0], d);
 	for (int32_t i = 1; i < m_count; ++i)
 	{
-		float value = b2Dot(m_vertices[i], d);
+		double value = b2Dot(m_vertices[i], d);
 		if (value > bestValue)
 		{
 			bestIndex = i;
@@ -124,10 +124,10 @@ inline int32_t b2DistanceProxy::GetSupport(const b2Vec2& d) const
 inline const b2Vec2& b2DistanceProxy::GetSupportVertex(const b2Vec2& d) const
 {
 	int32_t bestIndex = 0;
-	float bestValue = b2Dot(m_vertices[0], d);
+	double bestValue = b2Dot(m_vertices[0], d);
 	for (int32_t i = 1; i < m_count; ++i)
 	{
-		float value = b2Dot(m_vertices[i], d);
+		double value = b2Dot(m_vertices[i], d);
 		if (value > bestValue)
 		{
 			bestIndex = i;

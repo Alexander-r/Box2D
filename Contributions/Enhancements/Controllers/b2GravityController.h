@@ -27,7 +27,7 @@ class b2GravityControllerDef;
 class b2GravityController : public b2Controller{
 public:
 	/// Specifies the strength of the gravitiation force
-	float G;
+	double G;
 	/// If true, gravity is proportional to r^-2, otherwise r^-1
 	bool invSqr;
 
@@ -49,7 +49,7 @@ class b2GravityControllerDef : public b2ControllerDef
 {
 public:
 	/// Specifies the strength of the gravitiation force
-	float G;
+	double G;
 	/// If true, gravity is proportional to r^-2, otherwise r^-1
 	bool invSqr;
 private:

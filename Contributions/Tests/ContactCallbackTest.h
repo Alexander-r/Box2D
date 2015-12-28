@@ -144,21 +144,21 @@ public:
 #if 1
 		b2PolygonDef cd;
 		cd.vertexCount = 8;
-		float w = 0.95f;
-		float b = w / (2.0f + sqrtf(2.0f));
-		float s = sqrtf(2.0f) * b;
-		cd.vertices[0].Set(0.5f * s, 0.0f);
-		cd.vertices[1].Set(0.5f * w, b);
-		cd.vertices[2].Set(0.5f * w, b + s);
-		cd.vertices[3].Set(0.5f * s, w);
-		cd.vertices[4].Set(-0.5f * s, w);
-		cd.vertices[5].Set(-0.5f * w, b + s);
-		cd.vertices[6].Set(-0.5f * w, b);
-		cd.vertices[7].Set(-0.5f * s, 0.0f);
-		cd.density = 1.0f;
+		double w = 0.95;
+		double b = w / (2.0 + sqrtf(2.0));
+		double s = sqrtf(2.0) * b;
+		cd.vertices[0].Set(0.5 * s, 0.0);
+		cd.vertices[1].Set(0.5 * w, b);
+		cd.vertices[2].Set(0.5 * w, b + s);
+		cd.vertices[3].Set(0.5 * s, w);
+		cd.vertices[4].Set(-0.5 * s, w);
+		cd.vertices[5].Set(-0.5 * w, b + s);
+		cd.vertices[6].Set(-0.5 * w, b);
+		cd.vertices[7].Set(-0.5 * s, 0.0);
+		cd.density = 1.0;
 #else
 		b2CircleDef cd;
-		cd.radius = 0.33f;
+		cd.radius = 0.33;
 		cd.friction = 0;
 		cd.density = 1;
 #endif
@@ -179,8 +179,8 @@ public:
 			if (m_points[i].shape1 > m_points[i].shape2)
 			{
 				b2Swap(m_points[i].shape1, m_points[i].shape2);
-				m_points[i].normal *= -1.0f;
-				m_points[i].velocity *= -1.0f;
+				m_points[i].normal *= -1.0;
+				m_points[i].velocity *= -1.0;
 			}
 #endif
 			oss.str("");

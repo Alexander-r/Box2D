@@ -32,11 +32,11 @@ struct b2VelocityConstraintPoint
 {
 	b2Vec2 rA;
 	b2Vec2 rB;
-	float normalImpulse;
-	float tangentImpulse;
-	float normalMass;
-	float tangentMass;
-	float velocityBias;
+	double normalImpulse;
+	double tangentImpulse;
+	double normalMass;
+	double tangentMass;
+	double velocityBias;
 };
 
 struct b2ContactVelocityConstraint
@@ -47,11 +47,11 @@ struct b2ContactVelocityConstraint
 	b2Mat22 K;
 	int32_t indexA;
 	int32_t indexB;
-	float invMassA, invMassB;
-	float invIA, invIB;
-	float friction;
-	float restitution;
-	float tangentSpeed;
+	double invMassA, invMassB;
+	double invIA, invIB;
+	double friction;
+	double restitution;
+	double tangentSpeed;
 	int32_t pointCount;
 	int32_t contactIndex;
 };

@@ -184,7 +184,7 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 {
 	b2Timer timer;
 
-	float h = step.dt;
+	double h = step.dt;
 
 	// Integrate velocities and apply damping. Initialize the body state.
 	for (int32_t i = 0; i < m_bodyCount; ++i)
@@ -192,9 +192,9 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 		b2Body* b = m_bodies[i];
 
 		b2Vec2 c = b->m_sweep.c;
-		float a = b->m_sweep.a;
+		double a = b->m_sweep.a;
 		b2Vec2 v = b->m_linearVelocity;
-		float w = b->m_angularVelocity;
+		double w = b->m_angularVelocity;
 
 		// Store positions for continuous collision.
 		b->m_sweep.c0 = b->m_sweep.c;
@@ -213,8 +213,8 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 			// v2 = exp(-c * dt) * v1
 			// Pade approximation:
 			// v2 = v1 * 1 / (1 + c * dt)
-			v *= 1.0f / (1.0f + h * b->m_linearDamping);
-			w *= 1.0f / (1.0f + h * b->m_angularDamping);
+			v *= 1.0 / (1.0 + h * b->m_linearDamping);
+			w *= 1.0 / (1.0 + h * b->m_angularDamping);
 		}
 
 		m_positions[i].c = c;
@@ -275,22 +275,22 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 	for (int32_t i = 0; i < m_bodyCount; ++i)
 	{
 		b2Vec2 c = m_positions[i].c;
-		float a = m_positions[i].a;
+		double a = m_positions[i].a;
 		b2Vec2 v = m_velocities[i].v;
-		float w = m_velocities[i].w;
+		double w = m_velocities[i].w;
 
 		// Check for large velocities
 		b2Vec2 translation = h * v;
 		if (b2Dot(translation, translation) > b2_maxTranslationSquared)
 		{
-			float ratio = b2_maxTranslation / translation.Length();
+			double ratio = b2_maxTranslation / translation.Length();
 			v *= ratio;
 		}
 
-		float rotation = h * w;
+		double rotation = h * w;
 		if (rotation * rotation > b2_maxRotationSquared)
 		{
-			float ratio = b2_maxRotation / b2Abs(rotation);
+			double ratio = b2_maxRotation / b2Abs(rotation);
 			w *= ratio;
 		}
 
@@ -343,10 +343,10 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 
 	if (allowSleep)
 	{
-		float minSleepTime = b2_maxFloat;
+		double minSleepTime = b2_maxFloat;
 
-		const float linTolSqr = b2_linearSleepTolerance * b2_linearSleepTolerance;
-		const float angTolSqr = b2_angularSleepTolerance * b2_angularSleepTolerance;
+		const double linTolSqr = b2_linearSleepTolerance * b2_linearSleepTolerance;
+		const double angTolSqr = b2_angularSleepTolerance * b2_angularSleepTolerance;
 
 		for (int32_t i = 0; i < m_bodyCount; ++i)
 		{
@@ -360,8 +360,8 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 				b->m_angularVelocity * b->m_angularVelocity > angTolSqr ||
 				b2Dot(b->m_linearVelocity, b->m_linearVelocity) > linTolSqr)
 			{
-				b->m_sleepTime = 0.0f;
-				minSleepTime = 0.0f;
+				b->m_sleepTime = 0.0;
+				minSleepTime = 0.0;
 			}
 			else
 			{
@@ -467,28 +467,28 @@ void b2Island::SolveTOI(const b2TimeStep& subStep, int32_t toiIndexA, int32_t to
 	// Don't store the TOI contact forces for warm starting
 	// because they can be quite large.
 
-	float h = subStep.dt;
+	double h = subStep.dt;
 
 	// Integrate positions
 	for (int32_t i = 0; i < m_bodyCount; ++i)
 	{
 		b2Vec2 c = m_positions[i].c;
-		float a = m_positions[i].a;
+		double a = m_positions[i].a;
 		b2Vec2 v = m_velocities[i].v;
-		float w = m_velocities[i].w;
+		double w = m_velocities[i].w;
 
 		// Check for large velocities
 		b2Vec2 translation = h * v;
 		if (b2Dot(translation, translation) > b2_maxTranslationSquared)
 		{
-			float ratio = b2_maxTranslation / translation.Length();
+			double ratio = b2_maxTranslation / translation.Length();
 			v *= ratio;
 		}
 
-		float rotation = h * w;
+		double rotation = h * w;
 		if (rotation * rotation > b2_maxRotationSquared)
 		{
-			float ratio = b2_maxRotation / b2Abs(rotation);
+			double ratio = b2_maxRotation / b2Abs(rotation);
 			w *= ratio;
 		}
 

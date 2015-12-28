@@ -25,10 +25,10 @@ public:
 	PyramidStaticEdges()
 	{
 		{
-			float coords[] = 
+			double coords[] = 
 			{
-				50.0f,0.0f,
-				-50.0f,0.0f
+				50.0,0.0,
+				-50.0,0.0
 			};
 			
 			b2Vec2 verts[2];
@@ -39,7 +39,7 @@ public:
 			}
 			
 			b2BodyDef bd;
-			bd.position.Set( 0.0f, 0.0f );
+			bd.position.Set( 0.0, 0.0 );
 			b2Body* body = m_world->CreateBody(&bd);
 			b2EdgeDef edgeDef;
 			edgeDef.vertex1 = verts[0];
@@ -51,14 +51,14 @@ public:
 
 		{
 			b2PolygonDef sd;
-			float a = 0.5f;
+			double a = 0.5;
 			sd.SetAsBox(a, a);
-			sd.density = 5.0f;
+			sd.density = 5.0;
 
-			b2Vec2 x(-10.0f, 1.0f);
+			b2Vec2 x(-10.0, 1.0);
 			b2Vec2 y;
-			b2Vec2 deltaX(0.5625f, 2.0f);
-			b2Vec2 deltaY(1.125f, 0.0f);
+			b2Vec2 deltaX(0.5625, 2.0);
+			b2Vec2 deltaY(1.125, 0.0);
 
 			const int32_t N = 2;
 

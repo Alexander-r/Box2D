@@ -37,21 +37,21 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
 	b2Vec2 e = B - A;
 	
 	// Barycentric coordinates
-	float u = b2Dot(e, B - Q);
-	float v = b2Dot(e, Q - A);
+	double u = b2Dot(e, B - Q);
+	double v = b2Dot(e, Q - A);
 	
-	float radius = edgeA->m_radius + circleB->m_radius;
+	double radius = edgeA->m_radius + circleB->m_radius;
 	
 	b2ContactFeature cf;
 	cf.indexB = 0;
 	cf.typeB = b2ContactFeature::e_vertex;
 	
 	// Region A
-	if (v <= 0.0f)
+	if (v <= 0.0)
 	{
 		b2Vec2 P = A;
 		b2Vec2 d = Q - P;
-		float dd = b2Dot(d, d);
+		double dd = b2Dot(d, d);
 		if (dd > radius * radius)
 		{
 			return;
@@ -63,10 +63,10 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
 			b2Vec2 A1 = edgeA->m_vertex0;
 			b2Vec2 B1 = A;
 			b2Vec2 e1 = B1 - A1;
-			float u1 = b2Dot(e1, B1 - Q);
+			double u1 = b2Dot(e1, B1 - Q);
 			
 			// Is the circle in Region AB of the previous edge?
-			if (u1 > 0.0f)
+			if (u1 > 0.0)
 			{
 				return;
 			}
@@ -85,11 +85,11 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
 	}
 	
 	// Region B
-	if (u <= 0.0f)
+	if (u <= 0.0)
 	{
 		b2Vec2 P = B;
 		b2Vec2 d = Q - P;
-		float dd = b2Dot(d, d);
+		double dd = b2Dot(d, d);
 		if (dd > radius * radius)
 		{
 			return;
@@ -101,10 +101,10 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
 			b2Vec2 B2 = edgeA->m_vertex3;
 			b2Vec2 A2 = B;
 			b2Vec2 e2 = B2 - A2;
-			float v2 = b2Dot(e2, Q - A2);
+			double v2 = b2Dot(e2, Q - A2);
 			
 			// Is the circle in Region AB of the next edge?
-			if (v2 > 0.0f)
+			if (v2 > 0.0)
 			{
 				return;
 			}
@@ -123,18 +123,18 @@ void b2CollideEdgeAndCircle(b2Manifold* manifold,
 	}
 	
 	// Region AB
-	float den = b2Dot(e, e);
-	b2Assert(den > 0.0f);
-	b2Vec2 P = (1.0f / den) * (u * A + v * B);
+	double den = b2Dot(e, e);
+	b2Assert(den > 0.0);
+	b2Vec2 P = (1.0 / den) * (u * A + v * B);
 	b2Vec2 d = Q - P;
-	float dd = b2Dot(d, d);
+	double dd = b2Dot(d, d);
 	if (dd > radius * radius)
 	{
 		return;
 	}
 	
 	b2Vec2 n(-e.y, e.x);
-	if (b2Dot(n, Q - A) < 0.0f)
+	if (b2Dot(n, Q - A) < 0.0)
 	{
 		n.Set(-n.x, -n.y);
 	}
@@ -163,7 +163,7 @@ struct b2EPAxis
 	
 	Type type;
 	int32_t index;
-	float separation;
+	double separation;
 };
 
 // This holds polygon B expressed in frame A.
@@ -184,10 +184,10 @@ struct b2ReferenceFace
 	b2Vec2 normal;
 	
 	b2Vec2 sideNormal1;
-	float sideOffset1;
+	double sideOffset1;
 	
 	b2Vec2 sideNormal2;
-	float sideOffset2;
+	double sideOffset2;
 };
 
 // This class collides and edge and a polygon, taking into account edge adjacency.
@@ -214,7 +214,7 @@ struct b2EPCollider
 	b2Vec2 m_normal;
 	VertexType m_type1, m_type2;
 	b2Vec2 m_lowerLimit, m_upperLimit;
-	float m_radius;
+	double m_radius;
 	bool m_front;
 };
 
@@ -245,8 +245,8 @@ void b2EPCollider::Collide(b2Manifold* manifold, const b2EdgeShape* edgeA, const
 	b2Vec2 edge1 = m_v2 - m_v1;
 	edge1.Normalize();
 	m_normal1.Set(edge1.y, -edge1.x);
-	float offset1 = b2Dot(m_normal1, m_centroidB - m_v1);
-	float offset0 = 0.0f, offset2 = 0.0f;
+	double offset1 = b2Dot(m_normal1, m_centroidB - m_v1);
+	double offset0 = 0.0, offset2 = 0.0;
 	bool convex1 = false, convex2 = false;
 	
 	// Is there a preceding edge?
@@ -255,7 +255,7 @@ void b2EPCollider::Collide(b2Manifold* manifold, const b2EdgeShape* edgeA, const
 		b2Vec2 edge0 = m_v1 - m_v0;
 		edge0.Normalize();
 		m_normal0.Set(edge0.y, -edge0.x);
-		convex1 = b2Cross(edge0, edge1) >= 0.0f;
+		convex1 = b2Cross(edge0, edge1) >= 0.0;
 		offset0 = b2Dot(m_normal0, m_centroidB - m_v0);
 	}
 	
@@ -265,7 +265,7 @@ void b2EPCollider::Collide(b2Manifold* manifold, const b2EdgeShape* edgeA, const
 		b2Vec2 edge2 = m_v3 - m_v2;
 		edge2.Normalize();
 		m_normal2.Set(edge2.y, -edge2.x);
-		convex2 = b2Cross(edge1, edge2) > 0.0f;
+		convex2 = b2Cross(edge1, edge2) > 0.0;
 		offset2 = b2Dot(m_normal2, m_centroidB - m_v2);
 	}
 	
@@ -274,7 +274,7 @@ void b2EPCollider::Collide(b2Manifold* manifold, const b2EdgeShape* edgeA, const
 	{
 		if (convex1 && convex2)
 		{
-			m_front = offset0 >= 0.0f || offset1 >= 0.0f || offset2 >= 0.0f;
+			m_front = offset0 >= 0.0 || offset1 >= 0.0 || offset2 >= 0.0;
 			if (m_front)
 			{
 				m_normal = m_normal1;
@@ -290,7 +290,7 @@ void b2EPCollider::Collide(b2Manifold* manifold, const b2EdgeShape* edgeA, const
 		}
 		else if (convex1)
 		{
-			m_front = offset0 >= 0.0f || (offset1 >= 0.0f && offset2 >= 0.0f);
+			m_front = offset0 >= 0.0 || (offset1 >= 0.0 && offset2 >= 0.0);
 			if (m_front)
 			{
 				m_normal = m_normal1;
@@ -306,7 +306,7 @@ void b2EPCollider::Collide(b2Manifold* manifold, const b2EdgeShape* edgeA, const
 		}
 		else if (convex2)
 		{
-			m_front = offset2 >= 0.0f || (offset0 >= 0.0f && offset1 >= 0.0f);
+			m_front = offset2 >= 0.0 || (offset0 >= 0.0 && offset1 >= 0.0);
 			if (m_front)
 			{
 				m_normal = m_normal1;
@@ -322,7 +322,7 @@ void b2EPCollider::Collide(b2Manifold* manifold, const b2EdgeShape* edgeA, const
 		}
 		else
 		{
-			m_front = offset0 >= 0.0f && offset1 >= 0.0f && offset2 >= 0.0f;
+			m_front = offset0 >= 0.0 && offset1 >= 0.0 && offset2 >= 0.0;
 			if (m_front)
 			{
 				m_normal = m_normal1;
@@ -341,7 +341,7 @@ void b2EPCollider::Collide(b2Manifold* manifold, const b2EdgeShape* edgeA, const
 	{
 		if (convex1)
 		{
-			m_front = offset0 >= 0.0f || offset1 >= 0.0f;
+			m_front = offset0 >= 0.0 || offset1 >= 0.0;
 			if (m_front)
 			{
 				m_normal = m_normal1;
@@ -357,7 +357,7 @@ void b2EPCollider::Collide(b2Manifold* manifold, const b2EdgeShape* edgeA, const
 		}
 		else
 		{
-			m_front = offset0 >= 0.0f && offset1 >= 0.0f;
+			m_front = offset0 >= 0.0 && offset1 >= 0.0;
 			if (m_front)
 			{
 				m_normal = m_normal1;
@@ -376,7 +376,7 @@ void b2EPCollider::Collide(b2Manifold* manifold, const b2EdgeShape* edgeA, const
 	{
 		if (convex2)
 		{
-			m_front = offset1 >= 0.0f || offset2 >= 0.0f;
+			m_front = offset1 >= 0.0 || offset2 >= 0.0;
 			if (m_front)
 			{
 				m_normal = m_normal1;
@@ -392,7 +392,7 @@ void b2EPCollider::Collide(b2Manifold* manifold, const b2EdgeShape* edgeA, const
 		}
 		else
 		{
-			m_front = offset1 >= 0.0f && offset2 >= 0.0f;
+			m_front = offset1 >= 0.0 && offset2 >= 0.0;
 			if (m_front)
 			{
 				m_normal = m_normal1;
@@ -409,7 +409,7 @@ void b2EPCollider::Collide(b2Manifold* manifold, const b2EdgeShape* edgeA, const
 	}
 	else
 	{
-		m_front = offset1 >= 0.0f;
+		m_front = offset1 >= 0.0;
 		if (m_front)
 		{
 			m_normal = m_normal1;
@@ -432,7 +432,7 @@ void b2EPCollider::Collide(b2Manifold* manifold, const b2EdgeShape* edgeA, const
 		m_polygonB.normals[i] = b2Mul(m_xf.q, polygonB->m_normals[i]);
 	}
 	
-	m_radius = 2.0f * b2_polygonRadius;
+	m_radius = 2.0 * b2_polygonRadius;
 	
 	manifold->pointCount = 0;
 	
@@ -456,8 +456,8 @@ void b2EPCollider::Collide(b2Manifold* manifold, const b2EdgeShape* edgeA, const
 	}
 	
 	// Use hysteresis for jitter reduction.
-	const float k_relativeTol = 0.98f;
-	const float k_absoluteTol = 0.001f;
+    const double k_relativeTol = 0.98;
+	const double k_absoluteTol = 0.001;
 	
 	b2EPAxis primaryAxis;
 	if (polygonAxis.type == b2EPAxis::e_unknown)
@@ -481,10 +481,10 @@ void b2EPCollider::Collide(b2Manifold* manifold, const b2EdgeShape* edgeA, const
 		
 		// Search for the polygon normal that is most anti-parallel to the edge normal.
 		int32_t bestIndex = 0;
-		float bestValue = b2Dot(m_normal, m_polygonB.normals[0]);
+		double bestValue = b2Dot(m_normal, m_polygonB.normals[0]);
 		for (int32_t i = 1; i < m_polygonB.count; ++i)
 		{
-			float value = b2Dot(m_normal, m_polygonB.normals[i]);
+			double value = b2Dot(m_normal, m_polygonB.normals[i]);
 			if (value < bestValue)
 			{
 				bestValue = value;
@@ -588,7 +588,7 @@ void b2EPCollider::Collide(b2Manifold* manifold, const b2EdgeShape* edgeA, const
 	int32_t pointCount = 0;
 	for (int32_t i = 0; i < b2_maxManifoldPoints; ++i)
 	{
-		float separation;
+		double separation;
 		
 		separation = b2Dot(rf.normal, clipPoints2[i].v - rf.v1);
 		
@@ -622,11 +622,11 @@ b2EPAxis b2EPCollider::ComputeEdgeSeparation()
 	b2EPAxis axis;
 	axis.type = b2EPAxis::e_edgeA;
 	axis.index = m_front ? 0 : 1;
-	axis.separation = FLT_MAX;
+    axis.separation = DBL_MAX;
 	
 	for (int32_t i = 0; i < m_polygonB.count; ++i)
 	{
-		float s = b2Dot(m_normal, m_polygonB.vertices[i] - m_v1);
+		double s = b2Dot(m_normal, m_polygonB.vertices[i] - m_v1);
 		if (s < axis.separation)
 		{
 			axis.separation = s;
@@ -641,7 +641,7 @@ b2EPAxis b2EPCollider::ComputePolygonSeparation()
 	b2EPAxis axis;
 	axis.type = b2EPAxis::e_unknown;
 	axis.index = -1;
-	axis.separation = -FLT_MAX;
+    axis.separation = -DBL_MAX;
 
 	b2Vec2 perp(-m_normal.y, m_normal.x);
 
@@ -649,9 +649,9 @@ b2EPAxis b2EPCollider::ComputePolygonSeparation()
 	{
 		b2Vec2 n = -m_polygonB.normals[i];
 		
-		float s1 = b2Dot(n, m_polygonB.vertices[i] - m_v1);
-		float s2 = b2Dot(n, m_polygonB.vertices[i] - m_v2);
-		float s = b2Min(s1, s2);
+		double s1 = b2Dot(n, m_polygonB.vertices[i] - m_v1);
+		double s2 = b2Dot(n, m_polygonB.vertices[i] - m_v2);
+		double s = b2Min(s1, s2);
 		
 		if (s > m_radius)
 		{
@@ -663,7 +663,7 @@ b2EPAxis b2EPCollider::ComputePolygonSeparation()
 		}
 		
 		// Adjacency
-		if (b2Dot(n, perp) >= 0.0f)
+		if (b2Dot(n, perp) >= 0.0)
 		{
 			if (b2Dot(n - m_upperLimit, m_normal) < -b2_angularSlop)
 			{

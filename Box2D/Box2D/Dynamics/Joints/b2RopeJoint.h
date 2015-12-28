@@ -30,9 +30,9 @@ struct b2RopeJointDef : public b2JointDef
 	b2RopeJointDef()
 	{
 		type = e_ropeJoint;
-		localAnchorA.Set(-1.0f, 0.0f);
-		localAnchorB.Set(1.0f, 0.0f);
-		maxLength = 0.0f;
+		localAnchorA.Set(-1.0, 0.0);
+		localAnchorB.Set(1.0, 0.0);
+		maxLength = 0.0;
 	}
 
 	/// The local anchor point relative to bodyA's origin.
@@ -44,7 +44,7 @@ struct b2RopeJointDef : public b2JointDef
 	/// The maximum length of the rope.
 	/// Warning: this must be larger than b2_linearSlop or
 	/// the joint will have no effect.
-	float maxLength;
+	double maxLength;
 };
 
 /// A rope joint enforces a maximum distance between two points
@@ -61,8 +61,8 @@ public:
 	b2Vec2 GetAnchorA() const;
 	b2Vec2 GetAnchorB() const;
 
-	b2Vec2 GetReactionForce(float inv_dt) const;
-	float GetReactionTorque(float inv_dt) const;
+	b2Vec2 GetReactionForce(double inv_dt) const;
+	double GetReactionTorque(double inv_dt) const;
 
 	/// The local anchor point relative to bodyA's origin.
 	const b2Vec2& GetLocalAnchorA() const { return m_localAnchorA; }
@@ -71,8 +71,8 @@ public:
 	const b2Vec2& GetLocalAnchorB() const  { return m_localAnchorB; }
 
 	/// Set/Get the maximum length of the rope.
-	void SetMaxLength(float length) { m_maxLength = length; }
-	float GetMaxLength() const;
+	void SetMaxLength(double length) { m_maxLength = length; }
+	double GetMaxLength() const;
 
 	b2LimitState GetLimitState() const;
 
@@ -91,9 +91,9 @@ protected:
 	// Solver shared
 	b2Vec2 m_localAnchorA;
 	b2Vec2 m_localAnchorB;
-	float m_maxLength;
-	float m_length;
-	float m_impulse;
+	double m_maxLength;
+	double m_length;
+	double m_impulse;
 
 	// Solver temp
 	int32_t m_indexA;
@@ -103,11 +103,11 @@ protected:
 	b2Vec2 m_rB;
 	b2Vec2 m_localCenterA;
 	b2Vec2 m_localCenterB;
-	float m_invMassA;
-	float m_invMassB;
-	float m_invIA;
-	float m_invIB;
-	float m_mass;
+	double m_invMassA;
+	double m_invMassB;
+	double m_invIA;
+	double m_invIB;
+	double m_mass;
 	b2LimitState m_state;
 };
 

@@ -52,11 +52,11 @@ b2World::b2World()
     m_stepComplete = true;
 
     m_allowSleep = true;
-    m_gravity = b2Vec2(0.0f, 0.0f);
+    m_gravity = b2Vec2(0.0, 0.0);
 
     m_flags = e_clearForces;
 
-    m_inv_dt0 = 0.0f;
+    m_inv_dt0 = 0.0;
 
     m_contactManager.m_allocator = &m_blockAllocator;
 
@@ -85,7 +85,7 @@ b2World::b2World(const b2Vec2& gravity)
 
 	m_flags = e_clearForces;
 
-	m_inv_dt0 = 0.0f;
+	m_inv_dt0 = 0.0;
 
 	m_contactManager.m_allocator = &m_blockAllocator;
 
@@ -414,9 +414,9 @@ void b2World::SetAllowSleeping(bool flag)
 // Find islands, integrate and solve constraints, solve position constraints
 void b2World::Solve(const b2TimeStep& step)
 {
-	m_profile.solveInit = 0.0f;
-	m_profile.solveVelocity = 0.0f;
-	m_profile.solvePosition = 0.0f;
+	m_profile.solveInit = 0.0;
+	m_profile.solveVelocity = 0.0;
+	m_profile.solvePosition = 0.0;
 
 	// Size the island for the worst case.
 	b2Island island(m_bodyCount,
@@ -612,7 +612,7 @@ void b2World::SolveTOI(const b2TimeStep& step)
 		for (b2Body* b = m_bodyList; b; b = b->m_next)
 		{
 			b->m_flags &= ~b2Body::e_islandFlag;
-			b->m_sweep.alpha0 = 0.0f;
+			b->m_sweep.alpha0 = 0.0;
 		}
 
 		for (b2Contact* c = m_contactManager.m_contactList; c; c = c->m_next)
@@ -620,7 +620,7 @@ void b2World::SolveTOI(const b2TimeStep& step)
 			// Invalidate TOI
 			c->m_flags &= ~(b2Contact::e_toiFlag | b2Contact::e_islandFlag);
 			c->m_toiCount = 0;
-			c->m_toi = 1.0f;
+			c->m_toi = 1.0;
 		}
 	}
 
@@ -629,7 +629,7 @@ void b2World::SolveTOI(const b2TimeStep& step)
 	{
 		// Find the first TOI.
 		b2Contact* minContact = NULL;
-		float minAlpha = 1.0f;
+		double minAlpha = 1.0;
 
 		for (b2Contact* c = m_contactManager.m_contactList; c; c = c->m_next)
 		{
@@ -645,7 +645,7 @@ void b2World::SolveTOI(const b2TimeStep& step)
 				continue;
 			}
 
-			float alpha = 1.0f;
+			double alpha = 1.0;
 			if (c->m_flags & b2Contact::e_toiFlag)
 			{
 				// This contact has a valid cached TOI.
@@ -689,7 +689,7 @@ void b2World::SolveTOI(const b2TimeStep& step)
 
 				// Compute the TOI for this contact.
 				// Put the sweeps onto the same time interval.
-				float alpha0 = bA->m_sweep.alpha0;
+				double alpha0 = bA->m_sweep.alpha0;
 
 				if (bA->m_sweep.alpha0 < bB->m_sweep.alpha0)
 				{
@@ -702,7 +702,7 @@ void b2World::SolveTOI(const b2TimeStep& step)
 					bB->m_sweep.Advance(alpha0);
 				}
 
-				b2Assert(alpha0 < 1.0f);
+				b2Assert(alpha0 < 1.0);
 
 				int32_t indexA = c->GetChildIndexA();
 				int32_t indexB = c->GetChildIndexB();
@@ -713,20 +713,20 @@ void b2World::SolveTOI(const b2TimeStep& step)
 				input.proxyB.Set(fB->GetShape(), indexB);
 				input.sweepA = bA->m_sweep;
 				input.sweepB = bB->m_sweep;
-				input.tMax = 1.0f;
+				input.tMax = 1.0;
 
 				b2TOIOutput output;
 				b2TimeOfImpact(&output, &input);
 
 				// Beta is the fraction of the remaining portion of the .
-				float beta = output.t;
+				double beta = output.t;
 				if (output.state == b2TOIOutput::e_touching)
 				{
-					alpha = b2Min(alpha0 + (1.0f - alpha0) * beta, 1.0f);
+					alpha = b2Min(alpha0 + (1.0 - alpha0) * beta, 1.0);
 				}
 				else
 				{
-					alpha = 1.0f;
+					alpha = 1.0;
 				}
 
 				c->m_toi = alpha;
@@ -741,7 +741,7 @@ void b2World::SolveTOI(const b2TimeStep& step)
 			}
 		}
 
-		if (minContact == NULL || 1.0f - 10.0f * b2_epsilon < minAlpha)
+		if (minContact == NULL || 1.0 - 10.0 * b2_epsilon < minAlpha)
 		{
 			// No more TOI events. Done!
 			m_stepComplete = true;
@@ -883,9 +883,9 @@ void b2World::SolveTOI(const b2TimeStep& step)
 		}
 
 		b2TimeStep subStep;
-		subStep.dt = (1.0f - minAlpha) * step.dt;
-		subStep.inv_dt = 1.0f / subStep.dt;
-		subStep.dtRatio = 1.0f;
+		subStep.dt = (1.0 - minAlpha) * step.dt;
+		subStep.inv_dt = 1.0 / subStep.dt;
+		subStep.dtRatio = 1.0;
 		subStep.positionIterations = 20;
 		subStep.velocityIterations = step.velocityIterations;
 		subStep.warmStarting = false;
@@ -923,7 +923,7 @@ void b2World::SolveTOI(const b2TimeStep& step)
 	}
 }
 
-void b2World::Step(float dt, int32_t velocityIterations, int32_t positionIterations)
+void b2World::Step(double dt, int32_t velocityIterations, int32_t positionIterations)
 {
 	b2Timer stepTimer;
 
@@ -940,13 +940,13 @@ void b2World::Step(float dt, int32_t velocityIterations, int32_t positionIterati
 	step.dt = dt;
 	step.velocityIterations	= velocityIterations;
 	step.positionIterations = positionIterations;
-	if (dt > 0.0f)
+	if (dt > 0.0)
 	{
-		step.inv_dt = 1.0f / dt;
+		step.inv_dt = 1.0 / dt;
 	}
 	else
 	{
-		step.inv_dt = 0.0f;
+		step.inv_dt = 0.0;
 	}
 
 	step.dtRatio = m_inv_dt0 * dt;
@@ -961,7 +961,7 @@ void b2World::Step(float dt, int32_t velocityIterations, int32_t positionIterati
 	}
 
 	// Integrate velocities, solve velocity constraints, and integrate positions.
-	if (m_stepComplete && step.dt > 0.0f)
+	if (m_stepComplete && step.dt > 0.0)
 	{
 		b2Timer timer;
 		Solve(step);
@@ -969,14 +969,14 @@ void b2World::Step(float dt, int32_t velocityIterations, int32_t positionIterati
 	}
 
 	// Handle TOI events.
-	if (m_continuousPhysics && step.dt > 0.0f)
+	if (m_continuousPhysics && step.dt > 0.0)
 	{
 		b2Timer timer;
 		SolveTOI(step);
 		m_profile.solveTOI = timer.GetMilliseconds();
 	}
 
-	if (step.dt > 0.0f)
+	if (step.dt > 0.0)
 	{
 		m_inv_dt0 = step.inv_dt;
 	}
@@ -996,7 +996,7 @@ void b2World::ClearForces()
 	for (b2Body* body = m_bodyList; body; body = body->GetNext())
 	{
 		body->m_force.SetZero();
-		body->m_torque = 0.0f;
+		body->m_torque = 0.0;
 	}
 }
 
@@ -1022,7 +1022,7 @@ void b2World::QueryAABB(b2QueryCallback* callback, const b2AABB& aabb) const
 
 struct b2WorldRayCastWrapper
 {
-	float RayCastCallback(const b2RayCastInput& input, int32_t proxyId)
+	double RayCastCallback(const b2RayCastInput& input, int32_t proxyId)
 	{
 		void* userData = broadPhase->GetUserData(proxyId);
 		b2FixtureProxy* proxy = (b2FixtureProxy*)userData;
@@ -1033,8 +1033,8 @@ struct b2WorldRayCastWrapper
 
 		if (hit)
 		{
-			float fraction = output.fraction;
-			b2Vec2 point = (1.0f - fraction) * input.p1 + fraction * input.p2;
+			double fraction = output.fraction;
+			b2Vec2 point = (1.0 - fraction) * input.p1 + fraction * input.p2;
 			return callback->ReportFixture(fixture, point, output.normal, fraction);
 		}
 
@@ -1051,7 +1051,7 @@ void b2World::RayCast(b2RayCastCallback* callback, const b2Vec2& point1, const b
 	wrapper.broadPhase = &m_contactManager.m_broadPhase;
 	wrapper.callback = callback;
 	b2RayCastInput input;
-	input.maxFraction = 1.0f;
+	input.maxFraction = 1.0;
 	input.p1 = point1;
 	input.p2 = point2;
 	m_contactManager.m_broadPhase.RayCast(&wrapper, input);
@@ -1066,8 +1066,8 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 			b2CircleShape* circle = (b2CircleShape*)fixture->GetShape();
 
 			b2Vec2 center = b2Mul(xf, circle->m_p);
-			float radius = circle->m_radius;
-			b2Vec2 axis = b2Mul(xf.q, b2Vec2(1.0f, 0.0f));
+			double radius = circle->m_radius;
+			b2Vec2 axis = b2Mul(xf.q, b2Vec2(1.0, 0.0));
 
 			g_debugDraw->DrawSolidCircle(center, radius, axis, color);
 		}
@@ -1093,7 +1093,7 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 			{
 				b2Vec2 v2 = b2Mul(xf, vertices[i]);
 				g_debugDraw->DrawSegment(v1, v2, color);
-				g_debugDraw->DrawCircle(v1, 0.05f, color);
+				g_debugDraw->DrawCircle(v1, 0.05, color);
 				v1 = v2;
 			}
 		}
@@ -1131,7 +1131,7 @@ void b2World::DrawJoint(b2Joint* joint)
 	b2Vec2 p1 = joint->GetAnchorA();
 	b2Vec2 p2 = joint->GetAnchorB();
 
-	b2Color color(0.5f, 0.8f, 0.8f);
+	b2Color color(0.5, 0.8, 0.8);
 
 	switch (joint->GetType())
 	{
@@ -1179,23 +1179,23 @@ void b2World::DrawDebugData()
 			{
 				if (b->IsActive() == false)
 				{
-					DrawShape(f, xf, b2Color(0.5f, 0.5f, 0.3f));
+					DrawShape(f, xf, b2Color(0.5, 0.5, 0.3));
 				}
 				else if (b->GetType() == b2_staticBody)
 				{
-					DrawShape(f, xf, b2Color(0.5f, 0.9f, 0.5f));
+					DrawShape(f, xf, b2Color(0.5, 0.9, 0.5));
 				}
 				else if (b->GetType() == b2_kinematicBody)
 				{
-					DrawShape(f, xf, b2Color(0.5f, 0.5f, 0.9f));
+					DrawShape(f, xf, b2Color(0.5, 0.5, 0.9));
 				}
 				else if (b->IsAwake() == false)
 				{
-					DrawShape(f, xf, b2Color(0.6f, 0.6f, 0.6f));
+					DrawShape(f, xf, b2Color(0.6, 0.6, 0.6));
 				}
 				else
 				{
-					DrawShape(f, xf, b2Color(0.9f, 0.7f, 0.7f));
+					DrawShape(f, xf, b2Color(0.9, 0.7, 0.7));
 				}
 			}
 		}
@@ -1211,7 +1211,7 @@ void b2World::DrawDebugData()
 
 	if (flags & b2Draw::e_pairBit)
 	{
-		b2Color color(0.3f, 0.9f, 0.9f);
+		b2Color color(0.3, 0.9, 0.9);
 		for (b2Contact* c = m_contactManager.m_contactList; c; c = c->GetNext())
 		{
 			//b2Fixture* fixtureA = c->GetFixtureA();
@@ -1226,7 +1226,7 @@ void b2World::DrawDebugData()
 
 	if (flags & b2Draw::e_aabbBit)
 	{
-		b2Color color(0.9f, 0.3f, 0.9f);
+		b2Color color(0.9, 0.3, 0.9);
 		b2BroadPhase* bp = &m_contactManager.m_broadPhase;
 
 		for (b2Body* b = m_bodyList; b; b = b->GetNext())
@@ -1280,7 +1280,7 @@ int32_t b2World::GetTreeBalance() const
 	return m_contactManager.m_broadPhase.GetTreeBalance();
 }
 
-float b2World::GetTreeQuality() const
+double b2World::GetTreeQuality() const
 {
 	return m_contactManager.m_broadPhase.GetTreeQuality();
 }

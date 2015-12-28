@@ -19,14 +19,14 @@
 #include "b2Triangle.h"
 
 //Constructor automatically fixes orientation to ccw
-b2Triangle::b2Triangle(float x1, float y1, float x2, float y2, float x3, float y3){
-	x = new float[3];
-	y = new float[3];
-	float dx1 = x2-x1;
-	float dx2 = x3-x1;
-	float dy1 = y2-y1;
-	float dy2 = y3-y1;
-	float cross = dx1*dy2-dx2*dy1;
+b2Triangle::b2Triangle(double x1, double y1, double x2, double y2, double x3, double y3){
+	x = new double[3];
+	y = new double[3];
+	double dx1 = x2-x1;
+	double dx2 = x3-x1;
+	double dy1 = y2-y1;
+	double dy2 = y3-y1;
+	double cross = dx1*dy2-dx2*dy1;
 	bool ccw = (cross>0);
 	if (ccw){
 		x[0] = x1; x[1] = x2; x[2] = x3;
@@ -38,8 +38,8 @@ b2Triangle::b2Triangle(float x1, float y1, float x2, float y2, float x3, float y
 }
     
 b2Triangle::b2Triangle(){
-	x = new float[3];
-	y = new float[3];
+	x = new double[3];
+	y = new double[3];
 }
 
 b2Triangle::~b2Triangle(){
@@ -54,24 +54,24 @@ void b2Triangle::Set(const b2Triangle& toMe) {
 	}
 }
 
-bool b2Triangle::IsInside(float _x, float _y){
+bool b2Triangle::IsInside(double _x, double _y){
 	if (_x < x[0] && _x < x[1] && _x < x[2]) return false;
 	if (_x > x[0] && _x > x[1] && _x > x[2]) return false;
 	if (_y < y[0] && _y < y[1] && _y < y[2]) return false;
 	if (_y > y[0] && _y > y[1] && _y > y[2]) return false;
 		
-		float vx2 = _x-x[0]; float vy2 = _y-y[0];
-		float vx1 = x[1]-x[0]; float vy1 = y[1]-y[0];
-		float vx0 = x[2]-x[0]; float vy0 = y[2]-y[0];
+		double vx2 = _x-x[0]; double vy2 = _y-y[0];
+		double vx1 = x[1]-x[0]; double vy1 = y[1]-y[0];
+		double vx0 = x[2]-x[0]; double vy0 = y[2]-y[0];
 		
-		float dot00 = vx0*vx0+vy0*vy0;
-		float dot01 = vx0*vx1+vy0*vy1;
-		float dot02 = vx0*vx2+vy0*vy2;
-		float dot11 = vx1*vx1+vy1*vy1;
-		float dot12 = vx1*vx2+vy1*vy2;
-		float invDenom = 1.0f / (dot00*dot11 - dot01*dot01);
-		float u = (dot11*dot02 - dot01*dot12)*invDenom;
-		float v = (dot00*dot12 - dot01*dot02)*invDenom;
+		double dot00 = vx0*vx0+vy0*vy0;
+		double dot01 = vx0*vx1+vy0*vy1;
+		double dot02 = vx0*vx2+vy0*vy2;
+		double dot11 = vx1*vx1+vy1*vy1;
+		double dot12 = vx1*vx2+vy1*vy2;
+		double invDenom = 1.0 / (dot00*dot11 - dot01*dot01);
+		double u = (dot11*dot02 - dot01*dot12)*invDenom;
+		double v = (dot00*dot12 - dot01*dot02)*invDenom;
 		
 		return ((u>=0)&&(v>=0)&&(u+v<=1));    
 }

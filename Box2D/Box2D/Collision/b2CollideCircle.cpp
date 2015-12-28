@@ -31,9 +31,9 @@ void b2CollideCircles(
 	b2Vec2 pB = b2Mul(xfB, circleB->m_p);
 
 	b2Vec2 d = pB - pA;
-	float distSqr = b2Dot(d, d);
-	float rA = circleA->m_radius, rB = circleB->m_radius;
-	float radius = rA + rB;
+	double distSqr = b2Dot(d, d);
+	double rA = circleA->m_radius, rB = circleB->m_radius;
+	double radius = rA + rB;
 	if (distSqr > radius * radius)
 	{
 		return;
@@ -61,15 +61,15 @@ void b2CollidePolygonAndCircle(
 
 	// Find the min separating edge.
 	int32_t normalIndex = 0;
-	float separation = -b2_maxFloat;
-	float radius = polygonA->m_radius + circleB->m_radius;
+	double separation = -b2_maxFloat;
+	double radius = polygonA->m_radius + circleB->m_radius;
 	int32_t vertexCount = polygonA->m_count;
 	const b2Vec2* vertices = polygonA->m_vertices;
 	const b2Vec2* normals = polygonA->m_normals;
 
 	for (int32_t i = 0; i < vertexCount; ++i)
 	{
-		float s = b2Dot(normals[i], cLocal - vertices[i]);
+		double s = b2Dot(normals[i], cLocal - vertices[i]);
 
 		if (s > radius)
 		{
@@ -96,16 +96,16 @@ void b2CollidePolygonAndCircle(
 		manifold->pointCount = 1;
 		manifold->type = b2Manifold::e_faceA;
 		manifold->localNormal = normals[normalIndex];
-		manifold->localPoint = 0.5f * (v1 + v2);
+		manifold->localPoint = 0.5 * (v1 + v2);
 		manifold->points[0].localPoint = circleB->m_p;
 		manifold->points[0].id.key = 0;
 		return;
 	}
 
 	// Compute barycentric coordinates
-	float u1 = b2Dot(cLocal - v1, v2 - v1);
-	float u2 = b2Dot(cLocal - v2, v1 - v2);
-	if (u1 <= 0.0f)
+	double u1 = b2Dot(cLocal - v1, v2 - v1);
+	double u2 = b2Dot(cLocal - v2, v1 - v2);
+	if (u1 <= 0.0)
 	{
 		if (b2DistanceSquared(cLocal, v1) > radius * radius)
 		{
@@ -120,7 +120,7 @@ void b2CollidePolygonAndCircle(
 		manifold->points[0].localPoint = circleB->m_p;
 		manifold->points[0].id.key = 0;
 	}
-	else if (u2 <= 0.0f)
+	else if (u2 <= 0.0)
 	{
 		if (b2DistanceSquared(cLocal, v2) > radius * radius)
 		{
@@ -137,8 +137,8 @@ void b2CollidePolygonAndCircle(
 	}
 	else
 	{
-		b2Vec2 faceCenter = 0.5f * (v1 + v2);
-		float separation = b2Dot(cLocal - faceCenter, normals[vertIndex1]);
+		b2Vec2 faceCenter = 0.5 * (v1 + v2);
+		double separation = b2Dot(cLocal - faceCenter, normals[vertIndex1]);
 		if (separation > radius)
 		{
 			return;

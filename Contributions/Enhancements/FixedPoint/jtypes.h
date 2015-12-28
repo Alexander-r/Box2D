@@ -74,8 +74,8 @@ typedef int16_t		int16;
 typedef int32_t		int32;
 typedef int64_t		int64;
 
-//typedef float		float32;
-typedef double		float64;
+//typedef double		double32;
+typedef double		double64;
 
 typedef volatile uint8_t	vuint8;
 typedef volatile uint16_t	vuint16;
@@ -87,8 +87,8 @@ typedef volatile int16_t	vint16;
 typedef volatile int32_t	vint32;
 typedef volatile int64_t	vint64;
 
-typedef volatile float          vfloat32;
-typedef volatile float64        vfloat64;
+typedef volatile double          vdouble32;
+typedef volatile double64        vdouble64;
 
 typedef uint8_t		byte;
 

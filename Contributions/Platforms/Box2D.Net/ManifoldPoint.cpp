@@ -41,40 +41,40 @@ namespace Box2D
 				}
 			}
 
-			property float Separation
+			property double Separation
 			{
-				float get()
+				double get()
 				{
 					return point->separation;
 				}
 
-				void set(float value)
+				void set(double value)
 				{
 					point->separation = value;
 				}
 			}
 
-			property float NormalForce
+			property double NormalForce
 			{
-				float get()
+				double get()
 				{
 					return point->normalForce;
 				}
 
-				void set(float value)
+				void set(double value)
 				{
 					point->normalForce = value;
 				}
 			}
 
-			property float TangentForce
+			property double TangentForce
 			{
-				float get()
+				double get()
 				{
 					return point->tangentForce;
 				}
 
-				void set(float value)
+				void set(double value)
 				{
 					point->tangentForce = value;
 				}

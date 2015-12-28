@@ -9,13 +9,13 @@ public:
 	BipedDef();
 	~BipedDef(void);
 
-	void SetMotorTorque(float);
-	void SetMotorSpeed(float);
-	void SetDensity(float);
-	void SetFriction(float);
-	void SetRestitution(float);
-	void SetLinearDamping(float);
-	void SetAngularDamping(float);
+	void SetMotorTorque(double);
+	void SetMotorSpeed(double);
+	void SetDensity(double);
+	void SetFriction(double);
+	void SetRestitution(double);
+	void SetLinearDamping(double);
+	void SetAngularDamping(double);
 	void EnableLimit();
 	void DisableLimit();
 	void SetLimit(bool);
@@ -23,7 +23,7 @@ public:
 	void DisableMotor();
 	void SetMotor(bool);
 	void SetGroupIndex(int16_t);
-	void SetPosition(float, float);
+	void SetPosition(double, double);
 	void SetPosition(b2Vec2);
 	void IsFast(bool);
 

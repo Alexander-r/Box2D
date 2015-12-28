@@ -30,31 +30,31 @@ public:
 
 			// bottom half
 			poly1.vertexCount = 5;
-			poly1.vertices[4].Set(-2.2f,-0.74f);
-			poly1.vertices[3].Set(-2.2f,0);
-			poly1.vertices[2].Set(1.0f,0);
-			poly1.vertices[1].Set(2.2f,-0.2f);
-			poly1.vertices[0].Set(2.2f,-0.74f);
+			poly1.vertices[4].Set(-2.2,-0.74);
+			poly1.vertices[3].Set(-2.2,0);
+			poly1.vertices[2].Set(1.0,0);
+			poly1.vertices[1].Set(2.2,-0.2);
+			poly1.vertices[0].Set(2.2,-0.74);
 			poly1.filter.groupIndex = -1;
 
-			poly1.density		= 20.0f;
-			poly1.friction		= 0.68f;
+			poly1.density		= 20.0;
+			poly1.friction		= 0.68;
 			poly1.filter.groupIndex	= -1;
 
 			// top half
 			poly2.vertexCount = 4;
-			poly2.vertices[3].Set(-1.7f,0);
-			poly2.vertices[2].Set(-1.3f,0.7f);
-			poly2.vertices[1].Set(0.5f,0.74f);
-			poly2.vertices[0].Set(1.0f,0);
+			poly2.vertices[3].Set(-1.7,0);
+			poly2.vertices[2].Set(-1.3,0.7);
+			poly2.vertices[1].Set(0.5,0.74);
+			poly2.vertices[0].Set(1.0,0);
 			poly2.filter.groupIndex = -1;
 
-			poly2.density		= 5.0f;
-			poly2.friction		= 0.68f;
+			poly2.density		= 5.0;
+			poly2.friction		= 0.68;
 			poly2.filter.groupIndex	= -1;
 
 			b2BodyDef bd;
-			bd.position.Set(-35.0f, 2.8f);
+			bd.position.Set(-35.0, 2.8);
 
 			m_vehicle = m_world->CreateBody(&bd);
 			m_vehicle->CreateFixture(&poly1);
@@ -64,20 +64,20 @@ public:
 
 		{	// vehicle wheels
 			b2CircleDef	circ;
-			circ.density = 40.0f;
-			circ.radius = 0.38608f;
-			circ.friction = 0.8f;
+			circ.density = 40.0;
+			circ.radius = 0.38608;
+			circ.friction = 0.8;
 			circ.filter.groupIndex = -1;
 
 			b2BodyDef bd;
 			bd.allowSleep = false;
-			bd.position.Set(-33.8f, 2.0f);
+			bd.position.Set(-33.8, 2.0);
 
 			m_rightWheel = m_world->CreateBody(&bd);
 			m_rightWheel->CreateFixture(&circ);
 			m_rightWheel->SetMassFromShapes();
 
-			bd.position.Set(-36.2f, 2.0f);
+			bd.position.Set(-36.2, 2.0);
 			m_leftWheel = m_world->CreateBody(&bd);
 			m_leftWheel->CreateFixture(&circ);
 			m_leftWheel->SetMassFromShapes();
@@ -89,8 +89,8 @@ public:
 			jd.Initialize(m_vehicle, m_leftWheel, m_leftWheel->GetWorldCenter());
 			jd.collideConnected = false;
 			jd.enableMotor = true;
-			jd.maxMotorTorque = 10.0f;
-			jd.motorSpeed = 0.0f;
+			jd.maxMotorTorque = 10.0;
+			jd.motorSpeed = 0.0;
 			m_leftJoint = (b2RevoluteJoint*)m_world->CreateJoint(&jd);
 
 			jd.Initialize(m_vehicle, m_rightWheel, m_rightWheel->GetWorldCenter());
@@ -100,11 +100,11 @@ public:
 
 		{	// ground
 			b2PolygonDef box;
-			box.SetAsBox(19.5f, 0.5f);
-			box.friction = 0.62f;
+			box.SetAsBox(19.5, 0.5);
+			box.friction = 0.62;
 
 			b2BodyDef bd;
-			bd.position.Set(-25.0f, 1.0f);
+			bd.position.Set(-25.0, 1.0);
 
 			b2Body* ground = m_world->CreateBody(&bd);
 			ground->CreateFixture(&box);
@@ -114,9 +114,9 @@ public:
 			b2PolygonDef box;
 			b2BodyDef bd;
 
-			box.SetAsBox(9.5f, 0.5f, b2Vec2_zero, 0.1f * b2_pi);
-			box.friction = 0.62f;
-			bd.position.Set(27.0f - 30.0f, 3.1f);
+			box.SetAsBox(9.5, 0.5, b2Vec2_zero, 0.1 * b2_pi);
+			box.friction = 0.62;
+			bd.position.Set(27.0 - 30.0, 3.1);
 
 			b2Body* ground = m_world->CreateBody(&bd);
 			ground->CreateFixture(&box);
@@ -126,9 +126,9 @@ public:
 			b2PolygonDef box;
 			b2BodyDef bd;
 
-			box.SetAsBox(9.5f, 0.5f, b2Vec2_zero, -0.1f * b2_pi);
-			box.friction = 0.62f;
-			bd.position.Set(55.0f - 30.0f, 3.1f);
+			box.SetAsBox(9.5, 0.5, b2Vec2_zero, -0.1 * b2_pi);
+			box.friction = 0.62;
+			bd.position.Set(55.0 - 30.0, 3.1);
 
 			b2Body* ground = m_world->CreateBody(&bd);
 			ground->CreateFixture(&box);
@@ -138,9 +138,9 @@ public:
 			b2PolygonDef box;
 			b2BodyDef bd;
 
-			box.SetAsBox(9.5f, 0.5f, b2Vec2_zero, 0.03f * b2_pi);
-			box.friction = 0.62f;
-			bd.position.Set(41.0f, 2.0f);
+			box.SetAsBox(9.5, 0.5, b2Vec2_zero, 0.03 * b2_pi);
+			box.friction = 0.62;
+			bd.position.Set(41.0, 2.0);
 
 			b2Body* ground = m_world->CreateBody(&bd);
 			ground->CreateFixture(&box);
@@ -150,9 +150,9 @@ public:
 			b2PolygonDef box;
 			b2BodyDef bd;
 
-			box.SetAsBox(5.0f, 0.5f, b2Vec2_zero, 0.15f * b2_pi);
-			box.friction = 0.62f;
-			bd.position.Set(50.0f, 4.0f);
+			box.SetAsBox(5.0, 0.5, b2Vec2_zero, 0.15 * b2_pi);
+			box.friction = 0.62;
+			bd.position.Set(50.0, 4.0);
 
 			b2Body* ground = m_world->CreateBody(&bd);
 			ground->CreateFixture(&box);
@@ -162,9 +162,9 @@ public:
 			b2PolygonDef box;
 			b2BodyDef bd;
 
-			box.SetAsBox(20.0f, 0.5f);
-			box.friction = 0.62f;
-			bd.position.Set(85.0f, 2.0f);
+			box.SetAsBox(20.0, 0.5);
+			box.friction = 0.62;
+			bd.position.Set(85.0, 2.0);
 
 			b2Body* ground = m_world->CreateBody(&bd);
 			ground->CreateFixture(&box);
@@ -184,18 +184,18 @@ public:
 		switch (key)
 		{
 		case 'a':
-			m_leftJoint->SetMaxMotorTorque(800.0f);
-			m_leftJoint->SetMotorSpeed(12.0f);
+			m_leftJoint->SetMaxMotorTorque(800.0);
+			m_leftJoint->SetMotorSpeed(12.0);
 			break;
 
 		case 's':
-			m_leftJoint->SetMaxMotorTorque(100.0f);
-			m_leftJoint->SetMotorSpeed(0.0f);
+			m_leftJoint->SetMaxMotorTorque(100.0);
+			m_leftJoint->SetMotorSpeed(0.0);
 			break;
 
 		case 'd':
-			m_leftJoint->SetMaxMotorTorque(1200.0f);
-			m_leftJoint->SetMotorSpeed(-36.0f);
+			m_leftJoint->SetMaxMotorTorque(1200.0);
+			m_leftJoint->SetMotorSpeed(-36.0);
 			break;
 		}
 	}

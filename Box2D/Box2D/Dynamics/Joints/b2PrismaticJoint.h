@@ -34,14 +34,14 @@ struct b2PrismaticJointDef : public b2JointDef
 		type = e_prismaticJoint;
 		localAnchorA.SetZero();
 		localAnchorB.SetZero();
-		localAxisA.Set(1.0f, 0.0f);
-		referenceAngle = 0.0f;
+		localAxisA.Set(1.0, 0.0);
+		referenceAngle = 0.0;
 		enableLimit = false;
-		lowerTranslation = 0.0f;
-		upperTranslation = 0.0f;
+		lowerTranslation = 0.0;
+		upperTranslation = 0.0;
 		enableMotor = false;
-		maxMotorForce = 0.0f;
-		motorSpeed = 0.0f;
+		maxMotorForce = 0.0;
+		motorSpeed = 0.0;
 	}
 
 	/// Initialize the bodies, anchors, axis, and reference angle using the world
@@ -58,25 +58,25 @@ struct b2PrismaticJointDef : public b2JointDef
 	b2Vec2 localAxisA;
 
 	/// The constrained angle between the bodies: bodyB_angle - bodyA_angle.
-	float referenceAngle;
+	double referenceAngle;
 
 	/// Enable/disable the joint limit.
 	bool enableLimit;
 
 	/// The lower translation limit, usually in meters.
-	float lowerTranslation;
+	double lowerTranslation;
 
 	/// The upper translation limit, usually in meters.
-	float upperTranslation;
+	double upperTranslation;
 
 	/// Enable/disable the joint motor.
 	bool enableMotor;
 
 	/// The maximum motor torque, usually in N-m.
-	float maxMotorForce;
+	double maxMotorForce;
 
 	/// The desired motor speed in radians per second.
-	float motorSpeed;
+	double motorSpeed;
 };
 
 /// A prismatic joint. This joint provides one degree of freedom: translation
@@ -89,8 +89,8 @@ public:
 	b2Vec2 GetAnchorA() const;
 	b2Vec2 GetAnchorB() const;
 
-	b2Vec2 GetReactionForce(float inv_dt) const;
-	float GetReactionTorque(float inv_dt) const;
+	b2Vec2 GetReactionForce(double inv_dt) const;
+	double GetReactionTorque(double inv_dt) const;
 
 	/// The local anchor point relative to bodyA's origin.
 	const b2Vec2& GetLocalAnchorA() const { return m_localAnchorA; }
@@ -102,13 +102,13 @@ public:
 	const b2Vec2& GetLocalAxisA() const { return m_localXAxisA; }
 
 	/// Get the reference angle.
-	float GetReferenceAngle() const { return m_referenceAngle; }
+	double GetReferenceAngle() const { return m_referenceAngle; }
 
 	/// Get the current joint translation, usually in meters.
-	float GetJointTranslation() const;
+	double GetJointTranslation() const;
 
 	/// Get the current joint translation speed, usually in meters per second.
-	float GetJointSpeed() const;
+	double GetJointSpeed() const;
 
 	/// Is the joint limit enabled?
 	bool IsLimitEnabled() const;
@@ -117,13 +117,13 @@ public:
 	void EnableLimit(bool flag);
 
 	/// Get the lower joint limit, usually in meters.
-	float GetLowerLimit() const;
+	double GetLowerLimit() const;
 
 	/// Get the upper joint limit, usually in meters.
-	float GetUpperLimit() const;
+	double GetUpperLimit() const;
 
 	/// Set the joint limits, usually in meters.
-	void SetLimits(float lower, float upper);
+	void SetLimits(double lower, double upper);
 
 	/// Is the joint motor enabled?
 	bool IsMotorEnabled() const;
@@ -132,17 +132,17 @@ public:
 	void EnableMotor(bool flag);
 
 	/// Set the motor speed, usually in meters per second.
-	void SetMotorSpeed(float speed);
+	void SetMotorSpeed(double speed);
 
 	/// Get the motor speed, usually in meters per second.
-	float GetMotorSpeed() const;
+	double GetMotorSpeed() const;
 
 	/// Set the maximum motor force, usually in N.
-	void SetMaxMotorForce(float force);
-	float GetMaxMotorForce() const { return m_maxMotorForce; }
+	void SetMaxMotorForce(double force);
+	double GetMaxMotorForce() const { return m_maxMotorForce; }
 
 	/// Get the current motor force given the inverse time step, usually in N.
-	float GetMotorForce(float inv_dt) const;
+	double GetMotorForce(double inv_dt) const;
 
 	/// Dump to b2Log
 	void Dump();
@@ -161,13 +161,13 @@ protected:
 	b2Vec2 m_localAnchorB;
 	b2Vec2 m_localXAxisA;
 	b2Vec2 m_localYAxisA;
-	float m_referenceAngle;
+	double m_referenceAngle;
 	b2Vec3 m_impulse;
-	float m_motorImpulse;
-	float m_lowerTranslation;
-	float m_upperTranslation;
-	float m_maxMotorForce;
-	float m_motorSpeed;
+	double m_motorImpulse;
+	double m_lowerTranslation;
+	double m_upperTranslation;
+	double m_maxMotorForce;
+	double m_motorSpeed;
 	bool m_enableLimit;
 	bool m_enableMotor;
 	b2LimitState m_limitState;
@@ -177,18 +177,18 @@ protected:
 	int32_t m_indexB;
 	b2Vec2 m_localCenterA;
 	b2Vec2 m_localCenterB;
-	float m_invMassA;
-	float m_invMassB;
-	float m_invIA;
-	float m_invIB;
+	double m_invMassA;
+	double m_invMassB;
+	double m_invIA;
+	double m_invIB;
 	b2Vec2 m_axis, m_perp;
-	float m_s1, m_s2;
-	float m_a1, m_a2;
+	double m_s1, m_s2;
+	double m_a1, m_a2;
 	b2Mat33 m_K;
-	float m_motorMass;
+	double m_motorMass;
 };
 
-inline float b2PrismaticJoint::GetMotorSpeed() const
+inline double b2PrismaticJoint::GetMotorSpeed() const
 {
 	return m_motorSpeed;
 }

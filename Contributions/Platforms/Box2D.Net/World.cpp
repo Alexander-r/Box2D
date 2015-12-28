@@ -49,7 +49,7 @@ namespace Box2D
 				return gcnew Body(world->GetGroundBody());
 			}
 
-			void Step(float timeStep, int32_t iterations)
+			void Step(double timeStep, int32_t iterations)
 			{
 				world->Step(timeStep, iterations);
 			}

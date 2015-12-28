@@ -94,7 +94,7 @@ public:
 	/// @param timeStep the amount of time to simulate, this should not vary.
 	/// @param velocityIterations for the velocity constraint solver.
 	/// @param positionIterations for the position constraint solver.
-	void Step(	float timeStep,
+	void Step(	double timeStep,
 				int32_t velocityIterations,
 				int32_t positionIterations);
 
@@ -180,7 +180,7 @@ public:
 
 	/// Get the quality metric of the dynamic tree. The smaller the better.
 	/// The minimum is 1.
-	float GetTreeQuality() const;
+	double GetTreeQuality() const;
 
 	/// Change the global gravity vector.
 	void SetGravity(const b2Vec2& gravity);
@@ -254,7 +254,7 @@ private:
 
 	// This is used to compute the time step ratio to
 	// support a variable time step.
-	float m_inv_dt0;
+	double m_inv_dt0;
 
 	// These are for debugging the solver.
 	bool m_warmStarting;

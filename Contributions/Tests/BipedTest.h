@@ -27,44 +27,44 @@ public:
 
 	BipedTest()
 	{
-		const float k_restitution = 1.4f;
+		const double k_restitution = 1.4;
 
 		{
 			b2BodyDef bd;
-			bd.position.Set(0.0f, 20.0f);
+			bd.position.Set(0.0, 20.0);
 			b2Body* body = m_world->CreateBody(&bd);
 
 			b2PolygonDef sd;
-			sd.density = 0.0f;
+			sd.density = 0.0;
 			sd.restitution = k_restitution;
 
-			sd.SetAsBox(0.1f, 10.0f, b2Vec2(-10.0f, 0.0f), 0.0f);
+			sd.SetAsBox(0.1, 10.0, b2Vec2(-10.0, 0.0), 0.0);
 			body->CreateFixture(&sd);
 
-			sd.SetAsBox(0.1f, 10.0f, b2Vec2(10.0f, 0.0f), 0.0f);
+			sd.SetAsBox(0.1, 10.0, b2Vec2(10.0, 0.0), 0.0);
 			body->CreateFixture(&sd);
 
-			sd.SetAsBox(0.1f, 10.0f, b2Vec2(0.0f, -10.0f), 0.5f * b2_pi);
+			sd.SetAsBox(0.1, 10.0, b2Vec2(0.0, -10.0), 0.5 * b2_pi);
 			body->CreateFixture(&sd);
 
-			sd.SetAsBox(0.1f, 10.0f, b2Vec2(0.0f, 10.0f), -0.5f * b2_pi);
+			sd.SetAsBox(0.1, 10.0, b2Vec2(0.0, 10.0), -0.5 * b2_pi);
 			body->CreateFixture(&sd);
 		}
 
-		m_biped = new Biped(m_world, b2Vec2(0.0f, 20.0f));
+		m_biped = new Biped(m_world, b2Vec2(0.0, 20.0));
 
 		for (int32_t i = 0; i < 8; ++i)
 		{
 			b2BodyDef bd;
-			bd.position.Set(5.0f, 20.0f + i);
+			bd.position.Set(5.0, 20.0 + i);
 			bd.isBullet = true;
 			b2Body* body = m_world->CreateBody(&bd);
-			body->SetLinearVelocity(b2Vec2(0.0f, -100.0f));
-			body->SetAngularVelocity(RandomFloat(-50.0f, 50.0f));
+			body->SetLinearVelocity(b2Vec2(0.0, -100.0));
+			body->SetAngularVelocity(RandomFloat(-50.0, 50.0));
 
 			b2CircleDef sd;
-			sd.radius = 0.25f;
-			sd.density = 15.0f;
+			sd.radius = 0.25;
+			sd.density = 15.0;
 			sd.restitution = k_restitution;
 			body->CreateFixture(&sd);
 			body->SetMassFromShapes();

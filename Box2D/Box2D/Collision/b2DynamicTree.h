@@ -113,7 +113,7 @@ public:
 	int32_t GetMaxBalance() const;
 
 	/// Get the ratio of the sum of the node areas to the root area.
-	float GetAreaRatio() const;
+	double GetAreaRatio() const;
 
 	/// Build an optimal tree. Very expensive. For testing.
 	void RebuildBottomUp();
@@ -206,17 +206,17 @@ inline void b2DynamicTree::RayCast(T* callback, const b2RayCastInput& input) con
 	b2Vec2 p1 = input.p1;
 	b2Vec2 p2 = input.p2;
 	b2Vec2 r = p2 - p1;
-	b2Assert(r.LengthSquared() > 0.0f);
+	b2Assert(r.LengthSquared() > 0.0);
 	r.Normalize();
 
 	// v is perpendicular to the segment.
-	b2Vec2 v = b2Cross(1.0f, r);
+	b2Vec2 v = b2Cross(1.0, r);
 	b2Vec2 abs_v = b2Abs(v);
 
 	// Separating axis for segment (Gino, p80).
 	// |dot(v, p1 - c)| > dot(|v|, h)
 
-	float maxFraction = input.maxFraction;
+	double maxFraction = input.maxFraction;
 
 	// Build a bounding box for the segment.
 	b2AABB segmentAABB;
@@ -248,8 +248,8 @@ inline void b2DynamicTree::RayCast(T* callback, const b2RayCastInput& input) con
 		// |dot(v, p1 - c)| > dot(|v|, h)
 		b2Vec2 c = node->aabb.GetCenter();
 		b2Vec2 h = node->aabb.GetExtents();
-		float separation = b2Abs(b2Dot(v, p1 - c)) - b2Dot(abs_v, h);
-		if (separation > 0.0f)
+		double separation = b2Abs(b2Dot(v, p1 - c)) - b2Dot(abs_v, h);
+		if (separation > 0.0)
 		{
 			continue;
 		}
@@ -261,15 +261,15 @@ inline void b2DynamicTree::RayCast(T* callback, const b2RayCastInput& input) con
 			subInput.p2 = input.p2;
 			subInput.maxFraction = maxFraction;
 
-			float value = callback->RayCastCallback(subInput, nodeId);
+			double value = callback->RayCastCallback(subInput, nodeId);
 
-			if (value == 0.0f)
+			if (value == 0.0)
 			{
 				// The client has terminated the ray cast.
 				return;
 			}
 
-			if (value > 0.0f)
+			if (value > 0.0)
 			{
 				// Update segment bounding box.
 				maxFraction = value;

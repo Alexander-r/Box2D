@@ -34,12 +34,12 @@ struct b2WheelJointDef : public b2JointDef
 		type = e_wheelJoint;
 		localAnchorA.SetZero();
 		localAnchorB.SetZero();
-		localAxisA.Set(1.0f, 0.0f);
+		localAxisA.Set(1.0, 0.0);
 		enableMotor = false;
-		maxMotorTorque = 0.0f;
-		motorSpeed = 0.0f;
-		frequencyHz = 2.0f;
-		dampingRatio = 0.7f;
+		maxMotorTorque = 0.0;
+		motorSpeed = 0.0;
+		frequencyHz = 2.0;
+		dampingRatio = 0.7;
 	}
 
 	/// Initialize the bodies, anchors, axis, and reference angle using the world
@@ -59,16 +59,16 @@ struct b2WheelJointDef : public b2JointDef
 	bool enableMotor;
 
 	/// The maximum motor torque, usually in N-m.
-	float maxMotorTorque;
+	double maxMotorTorque;
 
 	/// The desired motor speed in radians per second.
-	float motorSpeed;
+	double motorSpeed;
 
 	/// Suspension frequency, zero indicates no suspension
-	float frequencyHz;
+	double frequencyHz;
 
 	/// Suspension damping ratio, one indicates critical damping
-	float dampingRatio;
+	double dampingRatio;
 };
 
 /// A wheel joint. This joint provides two degrees of freedom: translation
@@ -81,8 +81,8 @@ public:
 	b2Vec2 GetAnchorA() const;
 	b2Vec2 GetAnchorB() const;
 
-	b2Vec2 GetReactionForce(float inv_dt) const;
-	float GetReactionTorque(float inv_dt) const;
+	b2Vec2 GetReactionForce(double inv_dt) const;
+	double GetReactionTorque(double inv_dt) const;
 
 	/// The local anchor point relative to bodyA's origin.
 	const b2Vec2& GetLocalAnchorA() const { return m_localAnchorA; }
@@ -94,22 +94,22 @@ public:
 	const b2Vec2& GetLocalAxisA() const { return m_localXAxisA; }
 
     /// Get the current prismatic joint translation, usually in meters.
-    float GetJointTranslation() const { return GetPrismaticJointTranslation(); }
+    double GetJointTranslation() const { return GetPrismaticJointTranslation(); }
 
     /// Get the current revolute joint angle speed in radians per second.
-    float GetJointSpeed() const { return GetRevoluteJointSpeed(); }
+    double GetJointSpeed() const { return GetRevoluteJointSpeed(); }
 
     /// Get the current prismatic joint translation, usually in meters.
-    float GetPrismaticJointTranslation() const;
+    double GetPrismaticJointTranslation() const;
 
     /// Get the current prismatic joint translation speed, usually in meters per second.
-    float GetPrismaticJointSpeed() const;
+    double GetPrismaticJointSpeed() const;
 
     /// Get the current revolute joint angle in radians.
-    float GetRevoluteJointAngle() const;
+    double GetRevoluteJointAngle() const;
 
     /// Get the current revolute joint angle speed in radians per second.
-    float GetRevoluteJointSpeed() const;
+    double GetRevoluteJointSpeed() const;
 
     /// Is the joint motor enabled?
 	bool IsMotorEnabled() const;
@@ -118,25 +118,25 @@ public:
 	void EnableMotor(bool flag);
 
 	/// Set the motor speed, usually in radians per second.
-	void SetMotorSpeed(float speed);
+	void SetMotorSpeed(double speed);
 
 	/// Get the motor speed, usually in radians per second.
-	float GetMotorSpeed() const;
+	double GetMotorSpeed() const;
 
 	/// Set/Get the maximum motor force, usually in N-m.
-	void SetMaxMotorTorque(float torque);
-	float GetMaxMotorTorque() const;
+	void SetMaxMotorTorque(double torque);
+	double GetMaxMotorTorque() const;
 
 	/// Get the current motor torque given the inverse time step, usually in N-m.
-	float GetMotorTorque(float inv_dt) const;
+	double GetMotorTorque(double inv_dt) const;
 
 	/// Set/Get the spring frequency in hertz. Setting the frequency to zero disables the spring.
-	void SetSpringFrequencyHz(float hz);
-	float GetSpringFrequencyHz() const;
+	void SetSpringFrequencyHz(double hz);
+	double GetSpringFrequencyHz() const;
 
 	/// Set/Get the spring damping ratio
-	void SetSpringDampingRatio(float ratio);
-	float GetSpringDampingRatio() const;
+	void SetSpringDampingRatio(double ratio);
+	double GetSpringDampingRatio() const;
 
 	/// Dump to b2Log
 	void Dump();
@@ -150,8 +150,8 @@ protected:
 	void SolveVelocityConstraints(const b2SolverData& data);
 	bool SolvePositionConstraints(const b2SolverData& data);
 
-	float m_frequencyHz;
-	float m_dampingRatio;
+	double m_frequencyHz;
+	double m_dampingRatio;
 
 	// Solver shared
 	b2Vec2 m_localAnchorA;
@@ -159,12 +159,12 @@ protected:
 	b2Vec2 m_localXAxisA;
 	b2Vec2 m_localYAxisA;
 
-	float m_impulse;
-	float m_motorImpulse;
-	float m_springImpulse;
+	double m_impulse;
+	double m_motorImpulse;
+	double m_springImpulse;
 
-	float m_maxMotorTorque;
-	float m_motorSpeed;
+	double m_maxMotorTorque;
+	double m_motorSpeed;
 	bool m_enableMotor;
 
 	// Solver temp
@@ -172,49 +172,49 @@ protected:
 	int32_t m_indexB;
 	b2Vec2 m_localCenterA;
 	b2Vec2 m_localCenterB;
-	float m_invMassA;
-	float m_invMassB;
-	float m_invIA;
-	float m_invIB;
+	double m_invMassA;
+	double m_invMassB;
+	double m_invIA;
+	double m_invIB;
 
 	b2Vec2 m_ax, m_ay;
-	float m_sAx, m_sBx;
-	float m_sAy, m_sBy;
+	double m_sAx, m_sBx;
+	double m_sAy, m_sBy;
 
-	float m_mass;
-	float m_motorMass;
-	float m_springMass;
+	double m_mass;
+	double m_motorMass;
+	double m_springMass;
 
-	float m_bias;
-	float m_gamma;
+	double m_bias;
+	double m_gamma;
 };
 
-inline float b2WheelJoint::GetMotorSpeed() const
+inline double b2WheelJoint::GetMotorSpeed() const
 {
 	return m_motorSpeed;
 }
 
-inline float b2WheelJoint::GetMaxMotorTorque() const
+inline double b2WheelJoint::GetMaxMotorTorque() const
 {
 	return m_maxMotorTorque;
 }
 
-inline void b2WheelJoint::SetSpringFrequencyHz(float hz)
+inline void b2WheelJoint::SetSpringFrequencyHz(double hz)
 {
 	m_frequencyHz = hz;
 }
 
-inline float b2WheelJoint::GetSpringFrequencyHz() const
+inline double b2WheelJoint::GetSpringFrequencyHz() const
 {
 	return m_frequencyHz;
 }
 
-inline void b2WheelJoint::SetSpringDampingRatio(float ratio)
+inline void b2WheelJoint::SetSpringDampingRatio(double ratio)
 {
 	m_dampingRatio = ratio;
 }
 
-inline float b2WheelJoint::GetSpringDampingRatio() const
+inline double b2WheelJoint::GetSpringDampingRatio() const
 {
 	return m_dampingRatio;
 }

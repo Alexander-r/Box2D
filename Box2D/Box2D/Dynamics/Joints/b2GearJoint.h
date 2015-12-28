@@ -30,7 +30,7 @@ struct b2GearJointDef : public b2JointDef
 		type = e_gearJoint;
 		joint1 = NULL;
 		joint2 = NULL;
-		ratio = 1.0f;
+		ratio = 1.0;
 	}
 
 	/// The first revolute/prismatic joint attached to the gear joint.
@@ -41,7 +41,7 @@ struct b2GearJointDef : public b2JointDef
 
 	/// The gear ratio.
 	/// @see b2GearJoint for explanation.
-	float ratio;
+	double ratio;
 };
 
 /// A gear joint is used to connect two joints together. Either joint
@@ -59,8 +59,8 @@ public:
 	b2Vec2 GetAnchorA() const;
 	b2Vec2 GetAnchorB() const;
 
-	b2Vec2 GetReactionForce(float inv_dt) const;
-	float GetReactionTorque(float inv_dt) const;
+	b2Vec2 GetReactionForce(double inv_dt) const;
+	double GetReactionTorque(double inv_dt) const;
 
 	/// Get the first joint.
 	b2Joint* GetJoint1() { return m_joint1; }
@@ -69,8 +69,8 @@ public:
 	b2Joint* GetJoint2() { return m_joint2; }
 
 	/// Set/Get the gear ratio.
-	void SetRatio(float ratio);
-	float GetRatio() const;
+	void SetRatio(double ratio);
+	double GetRatio() const;
 
 	/// Dump joint to dmLog
 	void Dump();
@@ -104,22 +104,22 @@ protected:
 	b2Vec2 m_localAxisC;
 	b2Vec2 m_localAxisD;
 
-	float m_referenceAngleA;
-	float m_referenceAngleB;
+	double m_referenceAngleA;
+	double m_referenceAngleB;
 
-	float m_constant;
-	float m_ratio;
+	double m_constant;
+	double m_ratio;
 
-	float m_impulse;
+	double m_impulse;
 
 	// Solver temp
 	int32_t m_indexA, m_indexB, m_indexC, m_indexD;
 	b2Vec2 m_lcA, m_lcB, m_lcC, m_lcD;
-	float m_mA, m_mB, m_mC, m_mD;
-	float m_iA, m_iB, m_iC, m_iD;
+	double m_mA, m_mB, m_mC, m_mD;
+	double m_iA, m_iB, m_iC, m_iD;
 	b2Vec2 m_JvAC, m_JvBD;
-	float m_JwA, m_JwB, m_JwC, m_JwD;
-	float m_mass;
+	double m_JwA, m_JwB, m_JwC, m_JwD;
+	double m_mass;
 };
 
 #endif

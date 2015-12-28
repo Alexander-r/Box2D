@@ -26,8 +26,8 @@ b2TensorDampingController::b2TensorDampingController(const b2TensorDampingContro
 
 void b2TensorDampingController::Step(const b2TimeStep& step)
 {
-	float timestep = step.dt;
-	if(timestep<=B2_FLT_EPSILON)
+	double timestep = step.dt;
+	if(timestep<=B2_DBL_EPSILON)
 		return;
 	if(timestep>maxTimestep && maxTimestep>0)
 		timestep = maxTimestep;
@@ -46,7 +46,7 @@ void b2TensorDampingController::Step(const b2TimeStep& step)
 	}
 }
 
-void b2TensorDampingControllerDef::SetAxisAligned(float xDamping, float yDamping)
+void b2TensorDampingControllerDef::SetAxisAligned(double xDamping, double yDamping)
 {
 	T.col1.x = -xDamping;
 	T.col1.y = 0;

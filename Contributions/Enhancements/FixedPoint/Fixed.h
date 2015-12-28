@@ -34,9 +34,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 #endif
 
+// TODO: check after conversion to double
 #define FIXED_BP        16
 #define FIXED_MAX       ((1<<(32-FIXED_BP-1))-1)
-#define FIXED_MIN       (-(1<<(32-FIXED_BP-1)))
+#define FIXED_MIN       (-(1<<(32-FIX7_BP-1)))
 #define FIXED_EPSILON   (Fixed(0.00007f))
 
 #define G_1_DIV_PI		20861
@@ -61,24 +62,24 @@ class Fixed {
 	
 		Fixed();
 		Fixed(const Fixed &a);
-		Fixed(float a);
+		Fixed(double a);
 		Fixed(double a);
 		Fixed(int a);
 		Fixed(long a);
 	
 		Fixed& operator =(const Fixed a);
-		Fixed& operator =(float a);
+		Fixed& operator =(double a);
 		Fixed& operator =(double a);
 		Fixed& operator =(int a);
 		Fixed& operator =(long a);
 	
-		operator float();
+		operator double();
 		operator double();
 		operator int();
 		operator long();
 		operator unsigned short();
 	
-		operator float() const;
+		operator double() const;
 	
 		Fixed operator +() const;
 		Fixed operator -() const;
@@ -97,10 +98,10 @@ class Fixed {
 		Fixed operator *(unsigned short a) const;
 		Fixed operator *(int a) const;
 	
-		Fixed operator +(float a) const;
-		Fixed operator -(float a) const;
-		Fixed operator *(float a) const;
-		Fixed operator /(float a) const;
+		Fixed operator +(double a) const;
+		Fixed operator -(double a) const;
+		Fixed operator *(double a) const;
+		Fixed operator /(double a) const;
 	
 		Fixed operator +(double a) const;
 		Fixed operator -(double a) const;
@@ -125,10 +126,10 @@ class Fixed {
 		Fixed& operator *=(long a);
 		Fixed& operator /=(long a);
 	
-		Fixed& operator +=(float a);
-		Fixed& operator -=(float a);
-		Fixed& operator *=(float a);
-		Fixed& operator /=(float a);
+		Fixed& operator +=(double a);
+		Fixed& operator -=(double a);
+		Fixed& operator *=(double a);
+		Fixed& operator /=(double a);
 	
 		Fixed& operator +=(double a);
 		Fixed& operator -=(double a);
@@ -142,12 +143,12 @@ class Fixed {
 		bool operator  <(const Fixed a) const;
 		bool operator  >(const Fixed a) const;
 	
-		bool operator ==(float a) const;
-		bool operator !=(float a) const;
-		bool operator <=(float a) const;
-		bool operator >=(float a) const;
-		bool operator  <(float a) const;
-		bool operator  >(float a) const;
+		bool operator ==(double a) const;
+		bool operator !=(double a) const;
+		bool operator <=(double a) const;
+		bool operator >=(double a) const;
+		bool operator  <(double a) const;
+		bool operator  >(double a) const;
 	
 		bool operator ==(double a) const;
 		bool operator !=(double a) const;
@@ -181,24 +182,24 @@ inline Fixed::Fixed(FixedRaw, int guts) : g(guts) {}
 
 inline Fixed::Fixed() : g(0) {}
 inline Fixed::Fixed(const Fixed &a) : g( a.g ) {}
-inline Fixed::Fixed(float a) : g( int(a * (float)(1<<BP)) ) {}
+inline Fixed::Fixed(double a) : g( int(a * (double)(1<<BP)) ) {}
 inline Fixed::Fixed(double a) : g( int(a * (double)(1<<BP) ) ) {}
 inline Fixed::Fixed(int a) : g( a << BP ) {}
 inline Fixed::Fixed(long a) : g( a << BP ) {}
 
 inline Fixed& Fixed::operator =(const Fixed a) { g= a.g; return *this; }
-inline Fixed& Fixed::operator =(float a) { g= Fixed(a).g; return *this; }
+inline Fixed& Fixed::operator =(double a) { g= Fixed(a).g; return *this; }
 inline Fixed& Fixed::operator =(double a) { g= Fixed(a).g; return *this; }
 inline Fixed& Fixed::operator =(int a) { g= Fixed(a).g; return *this; }
 inline Fixed& Fixed::operator =(long a) { g= Fixed(a).g; return *this; }
 
-inline Fixed::operator float() { return g * (float)STEP(); }
+inline Fixed::operator double() { return g * (double)STEP(); }
 inline Fixed::operator double() { return g * (double)STEP(); }
 inline Fixed::operator int() { return g>>BP; }
 inline Fixed::operator long() { return g>>BP; }
 #pragma warning(disable: 4244) //HARDWIRE added pragma to prevent VS2005 compilation error
 inline Fixed::operator unsigned short() { return g>>BP; }
-inline Fixed::operator float() const { return g / (float)(1<<BP); }
+inline Fixed::operator double() const { return g / (double)(1<<BP); }
 
 inline Fixed Fixed::operator +() const { return Fixed(RAW,g); }
 inline Fixed Fixed::operator -() const { return Fixed(RAW,-g); }
@@ -256,11 +257,11 @@ inline Fixed Fixed::operator /(const Fixed a) const
 inline Fixed Fixed::operator *(unsigned short a) const { return operator*(Fixed(a)); }
 inline Fixed Fixed::operator *(int a) const { return operator*(Fixed(a)); }
 
-inline Fixed Fixed::operator +(float a) const { return Fixed(RAW, g + Fixed(a).g); }
-inline Fixed Fixed::operator -(float a) const { return Fixed(RAW, g - Fixed(a).g); }
-inline Fixed Fixed::operator *(float a) const { return Fixed(RAW, (g>>BPhalf) * (Fixed(a).g>>BPhalf) ); }
-//inline Fixed Fixed::operator /(float a) const { return Fixed(RAW, int( (((long long)g << BP2) / (long long)(Fixed(a).g)) >> BP) ); }
-inline Fixed Fixed::operator /(float a) const { return operator/(Fixed(a)); }
+inline Fixed Fixed::operator +(double a) const { return Fixed(RAW, g + Fixed(a).g); }
+inline Fixed Fixed::operator -(double a) const { return Fixed(RAW, g - Fixed(a).g); }
+inline Fixed Fixed::operator *(double a) const { return Fixed(RAW, (g>>BPhalf) * (Fixed(a).g>>BPhalf) ); }
+//inline Fixed Fixed::operator /(double a) const { return Fixed(RAW, int( (((long long)g << BP2) / (long long)(Fixed(a).g)) >> BP) ); }
+inline Fixed Fixed::operator /(double a) const { return operator/(Fixed(a)); }
 
 inline Fixed Fixed::operator +(double a) const { return Fixed(RAW, g + Fixed(a).g); }
 inline Fixed Fixed::operator -(double a) const { return Fixed(RAW, g - Fixed(a).g); }
@@ -289,11 +290,11 @@ inline Fixed& Fixed::operator *=(long a) { return *this = *this * (Fixed)a; }
 //inline Fixed& Fixed::operator /=(long a) { return *this = *this / (Fixed)a; }
 inline Fixed& Fixed::operator /=(long a) { return *this = operator/((Fixed)a); }
 
-inline Fixed& Fixed::operator +=(float a) { return *this = *this + a; }
-inline Fixed& Fixed::operator -=(float a) { return *this = *this - a; }
-inline Fixed& Fixed::operator *=(float a) { return *this = *this * a; }
-//inline Fixed& Fixed::operator /=(float a) { return *this = *this / a; }
-inline Fixed& Fixed::operator /=(float a) { return *this = operator/(a); }
+inline Fixed& Fixed::operator +=(double a) { return *this = *this + a; }
+inline Fixed& Fixed::operator -=(double a) { return *this = *this - a; }
+inline Fixed& Fixed::operator *=(double a) { return *this = *this * a; }
+//inline Fixed& Fixed::operator /=(double a) { return *this = *this / a; }
+inline Fixed& Fixed::operator /=(double a) { return *this = operator/(a); }
 
 inline Fixed& Fixed::operator +=(double a) { return *this = *this + a; }
 inline Fixed& Fixed::operator -=(double a) { return *this = *this - a; }
@@ -306,10 +307,10 @@ inline Fixed operator -(int a, const Fixed b) { return Fixed(a)-b; }
 inline Fixed operator *(int a, const Fixed b) { return Fixed(a)*b; }
 inline Fixed operator /(int a, const Fixed b) { return Fixed(a)/b; };
 
-inline Fixed operator +(float a, const Fixed b) { return Fixed(a)+b; }
-inline Fixed operator -(float a, const Fixed b) { return Fixed(a)-b; }
-inline Fixed operator *(float a, const Fixed b) { return Fixed(a)*b; }
-inline Fixed operator /(float a, const Fixed b) { return Fixed(a)/b; }
+inline Fixed operator +(double a, const Fixed b) { return Fixed(a)+b; }
+inline Fixed operator -(double a, const Fixed b) { return Fixed(a)-b; }
+inline Fixed operator *(double a, const Fixed b) { return Fixed(a)*b; }
+inline Fixed operator /(double a, const Fixed b) { return Fixed(a)/b; }
 
 inline bool Fixed::operator ==(const Fixed a) const { return g == a.g; }
 inline bool Fixed::operator !=(const Fixed a) const { return g != a.g; }
@@ -318,12 +319,12 @@ inline bool Fixed::operator >=(const Fixed a) const { return g >= a.g; }
 inline bool Fixed::operator  <(const Fixed a) const { return g  < a.g; }
 inline bool Fixed::operator  >(const Fixed a) const { return g  > a.g; }
 
-inline bool Fixed::operator ==(float a) const { return g == Fixed(a).g; }
-inline bool Fixed::operator !=(float a) const { return g != Fixed(a).g; }
-inline bool Fixed::operator <=(float a) const { return g <= Fixed(a).g; }
-inline bool Fixed::operator >=(float a) const { return g >= Fixed(a).g; }
-inline bool Fixed::operator  <(float a) const { return g  < Fixed(a).g; }
-inline bool Fixed::operator  >(float a) const { return g  > Fixed(a).g; }
+inline bool Fixed::operator ==(double a) const { return g == Fixed(a).g; }
+inline bool Fixed::operator !=(double a) const { return g != Fixed(a).g; }
+inline bool Fixed::operator <=(double a) const { return g <= Fixed(a).g; }
+inline bool Fixed::operator >=(double a) const { return g >= Fixed(a).g; }
+inline bool Fixed::operator  <(double a) const { return g  < Fixed(a).g; }
+inline bool Fixed::operator  >(double a) const { return g  > Fixed(a).g; }
 
 inline bool Fixed::operator ==(double a) const { return g == Fixed(a).g; }
 inline bool Fixed::operator !=(double a) const { return g != Fixed(a).g; }
@@ -337,12 +338,12 @@ inline bool Fixed::operator  <(int a) const { return g < Fixed(a).g; }
 inline bool Fixed::operator  >=(int a) const{ return g >= Fixed(a).g; };
 inline bool Fixed::operator  <=(int a) const{ return g <= Fixed(a).g; };
 
-inline bool operator ==(float a, const Fixed b) { return Fixed(a) == b; }
-inline bool operator !=(float a, const Fixed b) { return Fixed(a) != b; }
-inline bool operator <=(float a, const Fixed b) { return Fixed(a) <= b; }
-inline bool operator >=(float a, const Fixed b) { return Fixed(a) >= b; }
-inline bool operator  <(float a, const Fixed b) { return Fixed(a)  < b; }
-inline bool operator  >(float a, const Fixed b) { return Fixed(a)  > b; }
+inline bool operator ==(double a, const Fixed b) { return Fixed(a) == b; }
+inline bool operator !=(double a, const Fixed b) { return Fixed(a) != b; }
+inline bool operator <=(double a, const Fixed b) { return Fixed(a) <= b; }
+inline bool operator >=(double a, const Fixed b) { return Fixed(a) >= b; }
+inline bool operator  <(double a, const Fixed b) { return Fixed(a)  < b; }
+inline bool operator  >(double a, const Fixed b) { return Fixed(a)  > b; }
 
 inline Fixed operator +(double a, const Fixed b) { return Fixed(a)+b; }
 inline Fixed operator -(double a, const Fixed b) { return Fixed(a)-b; }
@@ -373,10 +374,10 @@ inline long& operator -=(long& a, const Fixed b) { a = (Fixed)a - b; return a; }
 inline long& operator *=(long& a, const Fixed b) { a = (Fixed)a * b; return a; }
 inline long& operator /=(long& a, const Fixed b) { a = (Fixed)a / b; return a; }
 
-inline float& operator +=(float& a, const Fixed b) { a = a + b; return a; }
-inline float& operator -=(float& a, const Fixed b) { a = a - b; return a; }
-inline float& operator *=(float& a, const Fixed b) { a = a * b; return a; }
-inline float& operator /=(float& a, const Fixed b) { a = a / b; return a; }
+inline double& operator +=(double& a, const Fixed b) { a = a + b; return a; }
+inline double& operator -=(double& a, const Fixed b) { a = a - b; return a; }
+inline double& operator *=(double& a, const Fixed b) { a = a * b; return a; }
+inline double& operator /=(double& a, const Fixed b) { a = a / b; return a; }
 
 inline double& operator +=(double& a, const Fixed b) { a = a + b; return a; }
 inline double& operator -=(double& a, const Fixed b) { a = a - b; return a; }
@@ -386,13 +387,13 @@ inline double& operator /=(double& a, const Fixed b) { a = a / b; return a; }
 inline Fixed Fixed::abs() { return (g>0) ? Fixed(RAW, g) : Fixed(RAW, -g); }
 inline Fixed abs(Fixed f) { return f.abs(); }
 
-//inline Fixed atan2(Fixed a, Fixed b) { return atan2f((float) a, (float) b); }
+//inline Fixed atan2(Fixed a, Fixed b) { return atan2f((double) a, (double) b); }
 inline Fixed atan2(Fixed y, Fixed x)
 {
 	Fixed abs_y = y.abs() + FIXED_EPSILON;	// avoid 0/0
 	Fixed r, angle;
 
-	if(x >= 0.0f) {
+	if(x >= 0.0) {
 		r = (x - abs_y) / (x + abs_y);
 		angle = 3.1415926/4.0;
 	} else {

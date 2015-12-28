@@ -26,7 +26,7 @@
 #include "TriangleMesh.h"
 
 /// utility macro
-#define H(x) (x)/2.0f 
+#define H(x) (x)/2.0 
 #define N_MAXVERTEX 256
 
 class BreakableBody : public Test
@@ -36,11 +36,11 @@ public:
    BreakableBody()
    {   
         /// geometries
-        float  gx  = 100.0f, gy =  1.0f, 
-                 dx  =  34.0f, br =   0.3f; 
-        float  sx=-dx-H(dx), sy = 30.f;  
+        double  gx  = 100.0, gy =  1.0, 
+                 dx  =  34.0, br =   0.3; 
+        double  sx=-dx-H(dx), sy = 30.f;  
         /// break joint, if the reactionforce exceeds: 
-        maxAllowableForce = 100.0f;
+        maxAllowableForce = 100.0;
         m_drawMode = m_staticBodies = false;
         m_drawCount = 0;
         /// ground
@@ -48,12 +48,12 @@ public:
          b2PolygonDef sd;
          b2BodyDef    bd;
          b2Body*      ground;       
-		 bd.position.Set(0.0f, 0.0f);
+		 bd.position.Set(0.0, 0.0);
          ground = m_world->CreateBody(&bd);
          /// bottom
          sd.SetAsBox( H(gx), H(gy) );
          ground->CreateFixture(&sd);
-         sd.SetAsBox( H(dx), H(gy), b2Vec2(-dx,sy-1.0f), 0.0f );
+         sd.SetAsBox( H(dx), H(gy), b2Vec2(-dx,sy-1.0), 0.0 );
          ground->CreateFixture(&sd);
         }  
         /// dyn bodies 
@@ -61,37 +61,37 @@ public:
          b2PolygonDef       pd;
          b2DistanceJointDef dj;
          
-         dj.dampingRatio     = 0.0f;
+         dj.dampingRatio     = 0.0;
          dj.collideConnected = true;
 
          ExampleData('B');
          dj.frequencyHz      = 20.f;
-         pd.density          = 1.0f/70.0f;
-         pd.friction         = 0.4f;
-         pd.restitution      = 0.01f;
+         pd.density          = 1.0/70.0;
+         pd.friction         = 0.4;
+         pd.restitution      = 0.01;
          CreateSoftBody( b2Vec2(sx,sy), 0,  0, pd, dj, 
                          nodes,n_nodes,  segments,n_segments,  holes,n_holes) ;
 
          ExampleData('@');
          dj.frequencyHz      = 20.f;
-         pd.density          = 1.0f/36.0f;
-         pd.friction         = 0.1f;
-         pd.restitution      = 0.5f;
+         pd.density          = 1.0/36.0;
+         pd.friction         = 0.1;
+         pd.restitution      = 0.5;
          CreateSoftBody( b2Vec2(sx+6.f,sy), 0, 0, pd, dj, 
                          nodes,n_nodes,  segments,n_segments,  holes,n_holes) ;
          
          ExampleData('x');                        
-         dj.frequencyHz      = 20.0f;            
-         pd.density          = 1.0f/60.0f;
-         pd.friction         = 0.6f;
-         pd.restitution      = 0.0f;
+         dj.frequencyHz      = 20.0;            
+         pd.density          = 1.0/60.0;
+         pd.friction         = 0.6;
+         pd.restitution      = 0.0;
          CreateSoftBody( b2Vec2(sx+13.f,sy),  0, 0,   pd, dj, 
                          nodes,n_nodes,  segments,n_segments,  holes,n_holes) ;
 
          ExampleData('2');
-         pd.density          = 0.01f;
-         pd.friction         = 0.3f;
-         pd.restitution      = 0.3f;
+         pd.density          = 0.01;
+         pd.friction         = 0.3;
+         pd.restitution      = 0.3;
          CreateSoftBody( b2Vec2(sx+20.f,sy),  0, 0,   pd, dj, 
                          nodes,n_nodes,  segments,n_segments,  holes,n_holes) ;
 
@@ -100,11 +100,11 @@ public:
                          nodes,n_nodes,  segments,n_segments,  holes,n_holes) ;
           
          ExampleData('b');
-         dj.frequencyHz      = 10.0f;
-         dj.dampingRatio     = 20.0f;
-         pd.friction         = 0.9f;
-         pd.restitution      = 0.01f;
-         pd.density          = 0.01f;
+         dj.frequencyHz      = 10.0;
+         dj.dampingRatio     = 20.0;
+         pd.friction         = 0.9;
+         pd.restitution      = 0.01;
+         pd.density          = 0.01;
          CreateSoftBody( b2Vec2(-5.f,5.f*gy),  0, 0,   pd, dj, 
                          nodes,n_nodes,  segments,n_segments,  holes,n_holes) ;
          
@@ -112,8 +112,8 @@ public:
          b2BodyDef   bd;
          b2Body*     b;
          cd.radius = br;
-         cd.density= 0.001f; 
-         bd.position.Set(0.0f,10.0f*gy);
+         cd.density= 0.001; 
+         bd.position.Set(0.0,10.0*gy);
          for (int32_t i=0; i<60; i++ )
          {
            b = m_world->CreateBody(&bd);
@@ -194,7 +194,7 @@ public:
     void Step(Settings* settings)
     {
       b2Joint *jStressed=NULL; 
-      float F=0.0f, tmp;
+      double F=0.0, tmp;
 
       Test::Step(settings);
 
@@ -212,7 +212,7 @@ public:
           m_world->DestroyJoint(jStressed);
       }
 
-      m_debugDraw.DrawString(1, m_textLine,"max.reactionforce=%.0f allowable=%.0f  change:-+", (float)F,(float)maxAllowableForce);       
+      m_debugDraw.DrawString(1, m_textLine,"max.reactionforce=%.0 allowable=%.0  change:-+", (double)F,(double)maxAllowableForce);       
       m_textLine += 12;
 
       m_debugDraw.DrawString(1, m_textLine,"drawmode(%s):d  mesh:m  static(%s):s", (m_drawMode)?"on":"off", (m_staticBodies)?"on":"off");       
@@ -223,7 +223,7 @@ public:
           b2Vec2 p1,p2;
           p1.Set(m_drawVertices[i].x,m_drawVertices[i].y);
           p2.Set(m_drawVertices[i+1].x,m_drawVertices[i+1].y);
-          m_debugDraw.DrawSegment(p1,p2,b2Color(0.6f,0.2f,0.2f));
+          m_debugDraw.DrawSegment(p1,p2,b2Color(0.6,0.2,0.2));
       }
     }
 
@@ -238,11 +238,11 @@ public:
       switch (key)
       {
        case '-':
-           maxAllowableForce -= 5.0f;
+           maxAllowableForce -= 5.0;
          break;
 
        case '+':
-           maxAllowableForce += 5.0f;
+           maxAllowableForce += 5.0;
          break;
 
        case 'd':
@@ -260,11 +260,11 @@ public:
              b2DistanceJointDef dj;
              dj.collideConnected = true;
              dj.frequencyHz      = 20.f;
-             dj.dampingRatio     = 10.0f;
-             pd.density          = (m_staticBodies) ? 0.0f : 1.0f/32.0f;
-             pd.friction         = 0.99f;
-             pd.restitution      = 0.01f;
-             CreateSoftBody( b2Vec2(0.0f,0.0f),  0, tmO_SEGMENTBOUNDARY|tmO_GRADING,   
+             dj.dampingRatio     = 10.0;
+             pd.density          = (m_staticBodies) ? 0.0 : 1.0/32.0;
+             pd.friction         = 0.99;
+             pd.restitution      = 0.01;
+             CreateSoftBody( b2Vec2(0.0,0.0),  0, tmO_SEGMENTBOUNDARY|tmO_GRADING,   
                              pd, dj, m_drawVertices, m_drawCount) ;
              
              m_drawCount = 0;
@@ -303,22 +303,22 @@ public:
     {
      /// @ - ring
      static tmVertex ring_nodes[] = {
-       { 6.00f, 3.00f},
-       { 5.12f, 5.12f},
-       { 3.00f, 6.00f},
-       { 0.88f, 5.12f},
-       { 0.00f, 3.00f},
-       { 0.88f, 0.88f},
-       { 3.00f, 0.00f},
-       { 5.12f, 0.88f},
-       { 4.50f, 3.00f},
-       { 4.06f, 4.06f},
-       { 3.00f, 4.50f},
-       { 1.94f, 4.06f},
-       { 1.50f, 3.00f},
-       { 1.94f, 1.94f},
-       { 3.00f, 1.50f},
-       { 4.06f, 1.94f}
+       { 6.00, 3.00},
+       { 5.12, 5.12},
+       { 3.00, 6.00},
+       { 0.88, 5.12},
+       { 0.00, 3.00},
+       { 0.88, 0.88},
+       { 3.00, 0.00},
+       { 5.12, 0.88},
+       { 4.50, 3.00},
+       { 4.06, 4.06},
+       { 3.00, 4.50},
+       { 1.94, 4.06},
+       { 1.50, 3.00},
+       { 1.94, 1.94},
+       { 3.00, 1.50},
+       { 4.06, 1.94}
      };
      static tmSegmentId ring_segments[] = {
        { 9, 10 },
@@ -331,28 +331,28 @@ public:
        { 16, 9 }
      };
      static tmVertex ring_holes[] = {
-       { 3.00f, 3.00f}
+       { 3.00, 3.00}
      };    
 	 /// 'B'
      static tmVertex B_nodes[] = {
-       { 0.00f, 0.00f},
-       { 4.00f, 0.00f},
-       { 5.00f, 2.00f},
-       { 5.00f, 4.00f},
-       { 4.00f, 5.00f},
-       { 5.00f, 6.00f},
-       { 5.00f, 8.00f},
-       { 4.00f, 9.00f},
-       { 0.00f, 9.00f},
-       { 0.00f, 5.00f},
-       { 1.50f, 1.50f},
-       { 3.50f, 1.50f},
-       { 3.50f, 4.00f},
-       { 1.50f, 4.00f},
-       { 1.50f, 6.00f},
-       { 3.50f, 6.00f},
-       { 3.50f, 8.50f},
-       { 1.50f, 8.50f}
+       { 0.00, 0.00},
+       { 4.00, 0.00},
+       { 5.00, 2.00},
+       { 5.00, 4.00},
+       { 4.00, 5.00},
+       { 5.00, 6.00},
+       { 5.00, 8.00},
+       { 4.00, 9.00},
+       { 0.00, 9.00},
+       { 0.00, 5.00},
+       { 1.50, 1.50},
+       { 3.50, 1.50},
+       { 3.50, 4.00},
+       { 1.50, 4.00},
+       { 1.50, 6.00},
+       { 3.50, 6.00},
+       { 3.50, 8.50},
+       { 1.50, 8.50}
      };
      static tmSegmentId B_segments[] = {
        { 1, 2 },
@@ -375,23 +375,23 @@ public:
        { 18, 15 }
      };
      static tmVertex B_holes[] = {
-       { 5.00f, 5.00f},
-       { 2.50f, 2.50f},
-       { 2.50f, 7.00f}
+       { 5.00, 5.00},
+       { 2.50, 2.50},
+       { 2.50, 7.00}
      };    
 	 /// 'D'
      static tmVertex D_nodes[] = {
-       { 0.00f, 0.00f},
-       { 4.00f, 0.00f},
-       { 5.00f, 2.50f},
-       { 5.00f, 7.00f},
-       { 4.00f, 9.00f},
-       { 0.00f, 9.00f},
-       { 0.00f, 5.00f},
-       { 1.50f, 2.50f},
-       { 3.50f, 2.50f},
-       { 3.50f, 7.00f},
-       { 1.50f, 7.00f},
+       { 0.00, 0.00},
+       { 4.00, 0.00},
+       { 5.00, 2.50},
+       { 5.00, 7.00},
+       { 4.00, 9.00},
+       { 0.00, 9.00},
+       { 0.00, 5.00},
+       { 1.50, 2.50},
+       { 3.50, 2.50},
+       { 3.50, 7.00},
+       { 1.50, 7.00},
      };
      static tmSegmentId D_segments[] = {
        { 1, 2 },
@@ -407,26 +407,26 @@ public:
        { 11, 8 },
      };
      static tmVertex D_holes[] = {
-      { 2.50f, 5.00f},
+      { 2.50, 5.00},
      };	
      /// 'x' 
      static tmVertex x_nodes[] = {
-      { 0.00f, 0.00f},
-       { 1.00f, 0.00f},
-       { 5.00f, 0.00f},
-       { 6.00f, 0.00f},
-       { 6.00f, 1.00f},
-       { 6.00f, 5.00f},
-       { 6.00f, 6.00f},
-       { 1.00f, 6.00f},
-       { 5.00f, 6.00f},
-       { 0.00f, 6.00f},
-       { 0.00f, 5.00f},
-       { 0.00f, 1.00f},
-       { 3.00f, 2.00f},
-       { 4.00f, 3.00f},
-       { 3.00f, 4.00f},
-       { 2.00f, 3.00f}
+      { 0.00, 0.00},
+       { 1.00, 0.00},
+       { 5.00, 0.00},
+       { 6.00, 0.00},
+       { 6.00, 1.00},
+       { 6.00, 5.00},
+       { 6.00, 6.00},
+       { 1.00, 6.00},
+       { 5.00, 6.00},
+       { 0.00, 6.00},
+       { 0.00, 5.00},
+       { 0.00, 1.00},
+       { 3.00, 2.00},
+       { 4.00, 3.00},
+       { 3.00, 4.00},
+       { 2.00, 3.00}
      };
      static tmSegmentId x_segments[] = {
       { 2, 13 },
@@ -439,28 +439,28 @@ public:
        { 12, 16 }
      };
      static tmVertex x_holes[] = {
-       { 3.00f, 1.00f},
-       { 5.00f, 3.00f},
-       { 3.00f, 5.00f},
-       { 1.00f, 3.00f},
+       { 3.00, 1.00},
+       { 5.00, 3.00},
+       { 3.00, 5.00},
+       { 1.00, 3.00},
      };
 	 /// '2'
      static tmVertex two_nodes[] = {
-       { 0.00f, 0.00f},
-       { 6.00f, 0.00f},
-       { 6.00f, 1.00f},
-       { 2.00f, 1.00f},
-       { 2.00f, 2.00f},
-       { 6.00f, 6.00f},
-       { 6.00f, 8.00f},
-       { 5.00f, 9.00f},
-       { 2.00f, 9.00f},
-       { 1.00f, 7.50f},
-       { 0.00f, 2.50f},
-       { 5.00f, 6.50f},
-       { 5.00f, 8.00f},
-       { 2.50f, 8.00f},
-       { 2.00f, 7.50f},
+       { 0.00, 0.00},
+       { 6.00, 0.00},
+       { 6.00, 1.00},
+       { 2.00, 1.00},
+       { 2.00, 2.00},
+       { 6.00, 6.00},
+       { 6.00, 8.00},
+       { 5.00, 9.00},
+       { 2.00, 9.00},
+       { 1.00, 7.50},
+       { 0.00, 2.50},
+       { 5.00, 6.50},
+       { 5.00, 8.00},
+       { 2.50, 8.00},
+       { 2.00, 7.50},
      };
      static tmSegmentId two_segments[] = {
        { 1, 2 },
@@ -479,28 +479,28 @@ public:
        { 14, 15 },
      };
      static tmVertex two_holes[] = {
-       { 3.00f, 5.00f},
-       { 4.00f, 3.00f},
+       { 3.00, 5.00},
+       { 4.00, 3.00},
      };
      /// '-' beam
      static tmVertex beam_nodes[] = {
-       { 0.00f, 0.00f},
-       { 32.00f, 0.00f},
-       { 32.00f, 3.00f},
-       { 0.00f, 3.00f},
+       { 0.00, 0.00},
+       { 32.00, 0.00},
+       { 32.00, 3.00},
+       { 0.00, 3.00},
      }; 
      static tmSegmentId *beam_segments  = NULL;
      static tmVertex    *beam_holes  = NULL;
      /// 'b' a box
      static tmVertex b_nodes[] = {
-       { 0.00f, 0.00f},
-       { 10.00f, 0.00f},
-       { 10.00f, 10.00f},
-       { 0.00f, 10.00f},
-       { 2.00f, 2.00f},
-       { 8.00f, 2.00f},
-       { 8.00f, 8.00f},
-       { 2.00f, 8.00f},
+       { 0.00, 0.00},
+       { 10.00, 0.00},
+       { 10.00, 10.00},
+       { 0.00, 10.00},
+       { 2.00, 2.00},
+       { 8.00, 2.00},
+       { 8.00, 8.00},
+       { 2.00, 8.00},
      };
      static tmSegmentId b_segments[] = {
        { 5, 6 },
@@ -509,7 +509,7 @@ public:
        { 8, 5 },
      };
      static tmVertex b_holes[] = {
-       { 5.0f, 5.0f},
+       { 5.0, 5.0},
      };     
      /// choose...
      switch( which )
@@ -588,7 +588,7 @@ public:
     tmVertex    m_drawVertices[N_MAXVERTEX];
     int32_t       m_drawCount;
     /// 
-    float     maxAllowableForce;
+    double     maxAllowableForce;
     /// temporary vars to hold the examples
     tmVertex    *nodes;
     int32_t        n_nodes;

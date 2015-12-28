@@ -37,18 +37,18 @@ typedef Test* TestCreateFcn();
 #define	RAND_LIMIT	32767
 
 /// Random number in range [-1,1]
-inline float RandomFloat()
+inline double RandomFloat()
 {
-	float r = (float)(rand() & (RAND_LIMIT));
+	double r = (double)(rand() & (RAND_LIMIT));
 	r /= RAND_LIMIT;
-	r = 2.0f * r - 1.0f;
+	r = 2.0 * r - 1.0;
 	return r;
 }
 
-/// Random floating point number in range [lo, hi]
-inline float RandomFloat(float lo, float hi)
+/// Random doubleing point number in range [lo, hi]
+inline double RandomFloat(double lo, double hi)
 {
-	float r = (float)(rand() & (RAND_LIMIT));
+	double r = (double)(rand() & (RAND_LIMIT));
 	r /= RAND_LIMIT;
 	r = (hi - lo) * r + lo;
 	return r;
@@ -58,8 +58,8 @@ inline float RandomFloat(float lo, float hi)
 struct Settings
 {
 	Settings() :
-		viewCenter(0.0f, 20.0f),
-		hz(60.0f),
+		viewCenter(0.0, 20.0),
+		hz(60.0),
 		velocityIterations(8),
 		positionIterations(3),
 		drawShapes(1),
@@ -80,7 +80,7 @@ struct Settings
 		{}
 
 	b2Vec2 viewCenter;
-	float hz;
+	double hz;
 	int32_t velocityIterations;
 	int32_t positionIterations;
 	int32_t drawShapes;
@@ -137,7 +137,7 @@ class Test : public b2ContactListener
 		Test();
 		virtual ~Test();
 		
-		void SetGravity(float x,float y);
+		void SetGravity(double x,double y);
 		void SetTextLine(int32_t line) { m_textLine = line; }
 		void DrawTitle(int x, int y, const char *string);
 		virtual void Step(Settings* settings);

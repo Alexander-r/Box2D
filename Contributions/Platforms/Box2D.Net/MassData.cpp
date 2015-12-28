@@ -21,27 +21,27 @@ namespace Box2D
 					delete data;
 			}
 
-			property float Mass
+			property double Mass
 			{
-				float get()
+				double get()
 				{
 					return data->mass;
 				}
 
-				void set(float value)
+				void set(double value)
 				{
 					data->mass = value;
 				}
 			}
 
-			property float I
+			property double I
 			{
-				float get()
+				double get()
 				{
 					return data->I;
 				}
 
-				void set(float value)
+				void set(double value)
 				{
 					data->I = value;
 				}

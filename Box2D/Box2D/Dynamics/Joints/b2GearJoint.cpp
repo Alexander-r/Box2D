@@ -53,7 +53,7 @@ b2GearJoint::b2GearJoint(const b2GearJointDef* def)
 	b2Assert(m_typeA == e_revoluteJoint || m_typeA == e_prismaticJoint);
 	b2Assert(m_typeB == e_revoluteJoint || m_typeB == e_prismaticJoint);
 
-	float coordinateA, coordinateB;
+	double coordinateA, coordinateB;
 
 	// TODO_ERIN there might be some problem with the joint edges in b2Joint.
 
@@ -62,9 +62,9 @@ b2GearJoint::b2GearJoint(const b2GearJointDef* def)
 
 	// Get geometry of joint1
 	b2Transform xfA = m_bodyA->m_xf;
-	float aA = m_bodyA->m_sweep.a;
+	double aA = m_bodyA->m_sweep.a;
 	b2Transform xfC = m_bodyC->m_xf;
-	float aC = m_bodyC->m_sweep.a;
+	double aC = m_bodyC->m_sweep.a;
 
 	if (m_typeA == e_revoluteJoint)
 	{
@@ -94,9 +94,9 @@ b2GearJoint::b2GearJoint(const b2GearJointDef* def)
 
 	// Get geometry of joint2
 	b2Transform xfB = m_bodyB->m_xf;
-	float aB = m_bodyB->m_sweep.a;
+	double aB = m_bodyB->m_sweep.a;
 	b2Transform xfD = m_bodyD->m_xf;
-	float aD = m_bodyD->m_sweep.a;
+	double aD = m_bodyD->m_sweep.a;
 
 	if (m_typeB == e_revoluteJoint)
 	{
@@ -125,7 +125,7 @@ b2GearJoint::b2GearJoint(const b2GearJointDef* def)
 
 	m_constant = coordinateA + m_ratio * coordinateB;
 
-	m_impulse = 0.0f;
+	m_impulse = 0.0;
 }
 
 void b2GearJoint::InitVelocityConstraints(const b2SolverData& data)
@@ -147,31 +147,31 @@ void b2GearJoint::InitVelocityConstraints(const b2SolverData& data)
 	m_iC = m_bodyC->m_invI;
 	m_iD = m_bodyD->m_invI;
 
-	float aA = data.positions[m_indexA].a;
+	double aA = data.positions[m_indexA].a;
 	b2Vec2 vA = data.velocities[m_indexA].v;
-	float wA = data.velocities[m_indexA].w;
+	double wA = data.velocities[m_indexA].w;
 
-	float aB = data.positions[m_indexB].a;
+	double aB = data.positions[m_indexB].a;
 	b2Vec2 vB = data.velocities[m_indexB].v;
-	float wB = data.velocities[m_indexB].w;
+	double wB = data.velocities[m_indexB].w;
 
-	float aC = data.positions[m_indexC].a;
+	double aC = data.positions[m_indexC].a;
 	b2Vec2 vC = data.velocities[m_indexC].v;
-	float wC = data.velocities[m_indexC].w;
+	double wC = data.velocities[m_indexC].w;
 
-	float aD = data.positions[m_indexD].a;
+	double aD = data.positions[m_indexD].a;
 	b2Vec2 vD = data.velocities[m_indexD].v;
-	float wD = data.velocities[m_indexD].w;
+	double wD = data.velocities[m_indexD].w;
 
 	b2Rot qA(aA), qB(aB), qC(aC), qD(aD);
 
-	m_mass = 0.0f;
+	m_mass = 0.0;
 
 	if (m_typeA == e_revoluteJoint)
 	{
 		m_JvAC.SetZero();
-		m_JwA = 1.0f;
-		m_JwC = 1.0f;
+		m_JwA = 1.0;
+		m_JwC = 1.0;
 		m_mass += m_iA + m_iC;
 	}
 	else
@@ -204,7 +204,7 @@ void b2GearJoint::InitVelocityConstraints(const b2SolverData& data)
 	}
 
 	// Compute effective mass.
-	m_mass = m_mass > 0.0f ? 1.0f / m_mass : 0.0f;
+	m_mass = m_mass > 0.0 ? 1.0 / m_mass : 0.0;
 
 	if (data.step.warmStarting)
 	{
@@ -219,7 +219,7 @@ void b2GearJoint::InitVelocityConstraints(const b2SolverData& data)
 	}
 	else
 	{
-		m_impulse = 0.0f;
+		m_impulse = 0.0;
 	}
 
 	data.velocities[m_indexA].v = vA;
@@ -235,18 +235,18 @@ void b2GearJoint::InitVelocityConstraints(const b2SolverData& data)
 void b2GearJoint::SolveVelocityConstraints(const b2SolverData& data)
 {
 	b2Vec2 vA = data.velocities[m_indexA].v;
-	float wA = data.velocities[m_indexA].w;
+	double wA = data.velocities[m_indexA].w;
 	b2Vec2 vB = data.velocities[m_indexB].v;
-	float wB = data.velocities[m_indexB].w;
+	double wB = data.velocities[m_indexB].w;
 	b2Vec2 vC = data.velocities[m_indexC].v;
-	float wC = data.velocities[m_indexC].w;
+	double wC = data.velocities[m_indexC].w;
 	b2Vec2 vD = data.velocities[m_indexD].v;
-	float wD = data.velocities[m_indexD].w;
+	double wD = data.velocities[m_indexD].w;
 
-	float Cdot = b2Dot(m_JvAC, vA - vC) + b2Dot(m_JvBD, vB - vD);
+	double Cdot = b2Dot(m_JvAC, vA - vC) + b2Dot(m_JvBD, vB - vD);
 	Cdot += (m_JwA * wA - m_JwC * wC) + (m_JwB * wB - m_JwD * wD);
 
-	float impulse = -m_mass * Cdot;
+	double impulse = -m_mass * Cdot;
 	m_impulse += impulse;
 
 	vA += (m_mA * impulse) * m_JvAC;
@@ -271,29 +271,29 @@ void b2GearJoint::SolveVelocityConstraints(const b2SolverData& data)
 bool b2GearJoint::SolvePositionConstraints(const b2SolverData& data)
 {
 	b2Vec2 cA = data.positions[m_indexA].c;
-	float aA = data.positions[m_indexA].a;
+	double aA = data.positions[m_indexA].a;
 	b2Vec2 cB = data.positions[m_indexB].c;
-	float aB = data.positions[m_indexB].a;
+	double aB = data.positions[m_indexB].a;
 	b2Vec2 cC = data.positions[m_indexC].c;
-	float aC = data.positions[m_indexC].a;
+	double aC = data.positions[m_indexC].a;
 	b2Vec2 cD = data.positions[m_indexD].c;
-	float aD = data.positions[m_indexD].a;
+	double aD = data.positions[m_indexD].a;
 
 	b2Rot qA(aA), qB(aB), qC(aC), qD(aD);
 
-	float linearError = 0.0f;
+	double linearError = 0.0;
 
-	float coordinateA, coordinateB;
+	double coordinateA, coordinateB;
 
 	b2Vec2 JvAC, JvBD;
-	float JwA, JwB, JwC, JwD;
-	float mass = 0.0f;
+	double JwA, JwB, JwC, JwD;
+	double mass = 0.0;
 
 	if (m_typeA == e_revoluteJoint)
 	{
 		JvAC.SetZero();
-		JwA = 1.0f;
-		JwC = 1.0f;
+		JwA = 1.0;
+		JwC = 1.0;
 		mass += m_iA + m_iC;
 
 		coordinateA = aA - aC - m_referenceAngleA;
@@ -337,10 +337,10 @@ bool b2GearJoint::SolvePositionConstraints(const b2SolverData& data)
 		coordinateB = b2Dot(pB - pD, m_localAxisD);
 	}
 
-	float C = (coordinateA + m_ratio * coordinateB) - m_constant;
+	double C = (coordinateA + m_ratio * coordinateB) - m_constant;
 
-	float impulse = 0.0f;
-	if (mass > 0.0f)
+	double impulse = 0.0;
+	if (mass > 0.0)
 	{
 		impulse = -C / mass;
 	}
@@ -377,25 +377,25 @@ b2Vec2 b2GearJoint::GetAnchorB() const
 	return m_bodyB->GetWorldPoint(m_localAnchorB);
 }
 
-b2Vec2 b2GearJoint::GetReactionForce(float inv_dt) const
+b2Vec2 b2GearJoint::GetReactionForce(double inv_dt) const
 {
 	b2Vec2 P = m_impulse * m_JvAC;
 	return inv_dt * P;
 }
 
-float b2GearJoint::GetReactionTorque(float inv_dt) const
+double b2GearJoint::GetReactionTorque(double inv_dt) const
 {
-	float L = m_impulse * m_JwA;
+	double L = m_impulse * m_JwA;
 	return inv_dt * L;
 }
 
-void b2GearJoint::SetRatio(float ratio)
+void b2GearJoint::SetRatio(double ratio)
 {
 	b2Assert(b2IsValid(ratio));
 	m_ratio = ratio;
 }
 
-float b2GearJoint::GetRatio() const
+double b2GearJoint::GetRatio() const
 {
 	return m_ratio;
 }

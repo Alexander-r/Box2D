@@ -43,40 +43,40 @@ namespace Box2D
 				}
 			}
 
-			property float Friction
+			property double Friction
 			{
-				float get()
+				double get()
 				{
 					return def->friction;
 				}
 
-				void set(float value)
+				void set(double value)
 				{
 					def->friction = value;
 				}
 			}
 
-			property float Restitution
+			property double Restitution
 			{
-				float get()
+				double get()
 				{
 					return def->restitution;
 				}
 
-				void set(float value)
+				void set(double value)
 				{
 					def->restitution = value;
 				}
 			}
 
-			property float Density
+			property double Density
 			{
-				float get()
+				double get()
 				{
 					return def->density;
 				}
 
-				void set(float value)
+				void set(double value)
 				{
 					def->density = value;
 				}
@@ -145,14 +145,14 @@ namespace Box2D
 				ShapeDef::DeleteOnDtor = (true);
 			}
 
-			property float Radius
+			property double Radius
 			{
-				float get()
+				double get()
 				{
 					return reinterpret_cast<b2CircleDef*>(def)->radius;
 				}
 
-				void set(float value)
+				void set(double value)
 				{
 					reinterpret_cast<b2CircleDef*>(def)->radius = value;
 				}
@@ -167,12 +167,12 @@ namespace Box2D
 				DeleteOnDtor = (true);
 			}
 
-			void SetAsBox(float X, float Y)
+			void SetAsBox(double X, double Y)
 			{
 				reinterpret_cast<b2PolygonDef*>(def)->SetAsBox(X, Y);
 			}
 
-			void SetAsBox(float X, float Y, Vector^ Center, float Angle)
+			void SetAsBox(double X, double Y, Vector^ Center, double Angle)
 			{
 				reinterpret_cast<b2PolygonDef*>(def)->SetAsBox(X, Y, Center->getVec2(), Angle);
 			}

@@ -52,16 +52,16 @@ void b2BuoyancyController::Step(const b2TimeStep& step)
 		}
 		b2Vec2 areac(0,0);
 		b2Vec2 massc(0,0);
-		float area = 0;
-		float mass = 0;
+		double area = 0;
+		double mass = 0;
 		for(b2Fixture* shape=body->GetFixtureList();shape;shape=shape->GetNext())
 		{
 			b2Vec2 sc(0,0);
-			float sarea = shape->ComputeSubmergedArea(normal, offset, &sc);
+			double sarea = shape->ComputeSubmergedArea(normal, offset, &sc);
 			area += sarea;
 			areac.x += sarea * sc.x;
 			areac.y += sarea * sc.y;
-			float shapeDensity = 0;
+			double shapeDensity = 0;
 			if(useDensity)
 			{
 				//TODO: Expose density publicly
@@ -80,7 +80,7 @@ void b2BuoyancyController::Step(const b2TimeStep& step)
 		b2Vec2 localCentroid = b2MulT(body->GetXForm(),areac);
 		massc.x/=mass;
 		massc.y/=mass;
-		if(area<B2_FLT_EPSILON)
+		if(area<B2_DBL_EPSILON)
 			continue;
 		//Buoyancy
 		b2Vec2 buoyancyForce = -density*area*gravity;
@@ -98,11 +98,11 @@ void b2BuoyancyController::Step(const b2TimeStep& step)
 
 void b2BuoyancyController::Draw(b2DebugDraw *debugDraw)
 {
-	float r = 1000;
+	double r = 1000;
 	b2Vec2 p1 = offset * normal + b2Cross(normal, r);
 	b2Vec2 p2 = offset * normal - b2Cross(normal, r);
 
-	b2Color color(0,0,0.8f);
+	b2Color color(0,0,0.8);
 
 	debugDraw->DrawSegment(p1, p2, color);
 }
