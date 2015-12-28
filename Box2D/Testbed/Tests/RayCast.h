@@ -32,7 +32,7 @@ public:
 		m_hit = false;
 	}
 
-	float ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float fraction)
+        double ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, double fraction)
 	{
 		b2Body* body = fixture->GetBody();
 		void* userData = body->GetUserData();
@@ -72,7 +72,7 @@ public:
 		m_hit = false;
 	}
 
-	float ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float fraction)
+        double ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, double fraction)
 	{
 		b2Body* body = fixture->GetBody();
 		void* userData = body->GetUserData();
@@ -117,7 +117,7 @@ public:
 		m_count = 0;
 	}
 
-	float ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float fraction)
+        double ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, double fraction)
 	{
 		b2Body* body = fixture->GetBody();
 		void* userData = body->GetUserData();
@@ -200,9 +200,9 @@ public:
 		}
 
 		{
-			float w = 1.0f;
-			float b = w / (2.0f + b2Sqrt(2.0f));
-			float s = b2Sqrt(2.0f) * b;
+                        double w = 1.0f;
+                        double b = w / (2.0f + b2Sqrt(2.0f));
+                        double s = b2Sqrt(2.0f) * b;
 
 			b2Vec2 vertices[8];
 			vertices[0].Set(0.5f * s, 0.0f);
@@ -247,8 +247,8 @@ public:
 
 		b2BodyDef bd;
 
-		float x = RandomFloat(-10.0f, 10.0f);
-		float y = RandomFloat(0.0f, 20.0f);
+                double x = RandomFloat(-10.0f, 10.0f);
+                double y = RandomFloat(0.0f, 20.0f);
 		bd.position.Set(x, y);
 		bd.angle = RandomFloat(-b2_pi, b2_pi);
 
@@ -359,7 +359,7 @@ public:
 
 		m_textLine += DRAW_STRING_NEW_LINE;
 
-		float L = 11.0f;
+                double L = 11.0f;
 		b2Vec2 point1(0.0f, 10.0f);
 		b2Vec2 d(L * cosf(m_angle), L * sinf(m_angle));
 		b2Vec2 point2 = point1 + d;
@@ -473,7 +473,7 @@ public:
 	b2CircleShape m_circle;
 	b2EdgeShape m_edge;
 
-	float m_angle;
+        double m_angle;
 
 	Mode m_mode;
 };

@@ -67,10 +67,10 @@ public:
 	virtual void DrawSolidPolygon(const b2Vec2* vertices, int32_t vertexCount, const b2Color& color) = 0;
 
 	/// Draw a circle.
-	virtual void DrawCircle(const b2Vec2& center, double radius, const b2Color& color) = 0;
+    virtual void DrawCircle(const b2Vec2& center, double radius, const b2Color& color) = 0;
 	
 	/// Draw a solid circle.
-	virtual void DrawSolidCircle(const b2Vec2& center, double radius, const b2Vec2& axis, const b2Color& color) = 0;
+    virtual void DrawSolidCircle(const b2Vec2& center, double radius, const b2Vec2& axis, const b2Color& color) = 0;
 	
 	/// Draw a line segment.
 	virtual void DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color) = 0;

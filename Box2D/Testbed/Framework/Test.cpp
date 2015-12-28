@@ -82,7 +82,7 @@ void Test::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 	b2WorldManifold worldManifold;
 	contact->GetWorldManifold(&worldManifold);
 
-	for (int32_t i = 0; i < manifold->pointCount && m_pointCount < k_maxContactPoints; ++i)
+    for (int32_t i = 0; i < manifold->pointCount && m_pointCount < k_maxContactPoints; ++i)
 	{
 		ContactPoint* cp = m_points + m_pointCount;
 		cp->fixtureA = fixtureA;
@@ -283,7 +283,7 @@ void Test::Step(Settings* settings)
 		m_textLine += DRAW_STRING_NEW_LINE;
 	}
 
-	uint32_t flags = 0;
+    uint32_t flags = 0;
 	flags += settings->drawShapes			* b2Draw::e_shapeBit;
 	flags += settings->drawJoints			* b2Draw::e_jointBit;
 	flags += settings->drawAABBs			* b2Draw::e_aabbBit;
@@ -309,15 +309,15 @@ void Test::Step(Settings* settings)
 
 	if (settings->drawStats)
 	{
-		int32_t bodyCount = m_world->GetBodyCount();
-		int32_t contactCount = m_world->GetContactCount();
-		int32_t jointCount = m_world->GetJointCount();
+        int32_t bodyCount = m_world->GetBodyCount();
+        int32_t contactCount = m_world->GetContactCount();
+        int32_t jointCount = m_world->GetJointCount();
 		g_debugDraw.DrawString(5, m_textLine, "bodies/contacts/joints = %d/%d/%d", bodyCount, contactCount, jointCount);
 		m_textLine += DRAW_STRING_NEW_LINE;
 
-		int32_t proxyCount = m_world->GetProxyCount();
-		int32_t height = m_world->GetTreeHeight();
-		int32_t balance = m_world->GetTreeBalance();
+        int32_t proxyCount = m_world->GetProxyCount();
+        int32_t height = m_world->GetTreeHeight();
+        int32_t balance = m_world->GetTreeBalance();
 		float quality = m_world->GetTreeQuality();
 		g_debugDraw.DrawString(5, m_textLine, "proxies/height/balance/quality = %d/%d/%d/%g", proxyCount, height, balance, quality);
 		m_textLine += DRAW_STRING_NEW_LINE;
@@ -411,7 +411,7 @@ void Test::Step(Settings* settings)
 		const float k_impulseScale = 0.1f;
 		const float k_axisScale = 0.3f;
 
-		for (int32_t i = 0; i < m_pointCount; ++i)
+        for (int32_t i = 0; i < m_pointCount; ++i)
 		{
 			ContactPoint* point = m_points + i;
 

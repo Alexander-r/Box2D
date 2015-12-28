@@ -27,8 +27,8 @@ public:
 		m_fixture = NULL;
 	}
 
-	float ReportFixture(b2Fixture* fixture, const b2Vec2& point,
-						  const b2Vec2& normal, float fraction)
+        double ReportFixture(b2Fixture* fixture, const b2Vec2& point,
+                                                  const b2Vec2& normal, double fraction)
 	{
 		m_fixture = fixture;
 		m_point = point;
@@ -58,12 +58,12 @@ public:
 			b2BodyDef bd;
 			b2Body* ground = m_world->CreateBody(&bd);
 
-			float x1 = -20.0f;
-			float y1 = 2.0f * cosf(x1 / 10.0f * b2_pi);
+                        double x1 = -20.0f;
+                        double y1 = 2.0f * cosf(x1 / 10.0f * b2_pi);
 			for (int32_t i = 0; i < 80; ++i)
 			{
-				float x2 = x1 + 0.5f;
-				float y2 = 2.0f * cosf(x2 / 10.0f * b2_pi);
+                                double x2 = x1 + 0.5f;
+                                double y2 = 2.0f * cosf(x2 / 10.0f * b2_pi);
 
 				b2EdgeShape shape;
 				shape.Set(b2Vec2(x1, y1), b2Vec2(x2, y2));
@@ -91,9 +91,9 @@ public:
 		}
 
 		{
-			float w = 1.0f;
-			float b = w / (2.0f + b2Sqrt(2.0f));
-			float s = b2Sqrt(2.0f) * b;
+                        double w = 1.0f;
+                        double b = w / (2.0f + b2Sqrt(2.0f));
+                        double s = b2Sqrt(2.0f) * b;
 
 			b2Vec2 vertices[8];
 			vertices[0].Set(0.5f * s, 0.0f);
@@ -132,8 +132,8 @@ public:
 
 		b2BodyDef bd;
 
-		float x = RandomFloat(-10.0f, 10.0f);
-		float y = RandomFloat(10.0f, 20.0f);
+                double x = RandomFloat(-10.0f, 10.0f);
+                double y = RandomFloat(10.0f, 20.0f);
 		bd.position.Set(x, y);
 		bd.angle = RandomFloat(-b2_pi, b2_pi);
 		bd.type = b2_dynamicBody;
@@ -204,7 +204,7 @@ public:
 		g_debugDraw.DrawString(5, m_textLine, "Press 1-5 to drop stuff");
 		m_textLine += DRAW_STRING_NEW_LINE;
 
-		float L = 25.0f;
+                double L = 25.0f;
 		b2Vec2 point1(0.0f, 10.0f);
 		b2Vec2 d(L * cosf(m_angle), -L * b2Abs(sinf(m_angle)));
 		b2Vec2 point2 = point1 + d;
@@ -243,7 +243,7 @@ public:
 	b2PolygonShape m_polygons[4];
 	b2CircleShape m_circle;
 
-	float m_angle;
+        double m_angle;
 };
 
 #endif
