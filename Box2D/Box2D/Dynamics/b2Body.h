@@ -328,6 +328,19 @@ public:
 	/// @param flag set to true to wake the body, false to put it to sleep.
 	void SetAwake(bool flag);
 
+	/// Consider an island containing 2 bodies and 1 revolute
+	/// joint with limits. The joint has motor enabled and motor speed set
+	/// to "x". The joint reaches its limit, bodies calm down and about to go
+	/// to sleep, but just before the sleep timer reaches b2_timeToSleep user
+	/// code calls b2Joint::SetMotorSpeed(-x). Now the next world update must
+	/// move the bodies by at least b2_xxxSleepTolerance, i.e. the motor must
+	/// do this, if it won't the island will go to sleep and the reverse motor
+	/// will not work as expected. The solution is to use a variant of b2Body::SetAwake
+	/// in b2Joint::SetMotorSpeed that'll set m_sleepTime to 0 even when the body
+	/// is awake, that way we give b2_timeToSleep more seconds to the motor to
+	/// do its thing and the island will not fall asleep.
+	void SetAwakeResetSleepTime(bool flag);
+
 	/// Get the sleeping state of this body.
 	/// @return true if the body is awake.
 	bool IsAwake() const;
@@ -657,6 +670,12 @@ inline void b2Body::SetAwake(bool flag)
 		m_force.SetZero();
 		m_torque = 0.0;
 	}
+}
+
+inline void b2Body::SetAwakeResetSleepTime(bool flag)
+{
+	SetAwake(flag);
+	m_sleepTime = 0.0;
 }
 
 inline bool b2Body::IsAwake() const
