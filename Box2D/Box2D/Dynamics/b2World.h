@@ -41,6 +41,9 @@ class b2Joint;
 class b2World
 {
 public:
+    /// Construct a world object.
+    b2World();
+
 	/// Construct a world object.
 	/// @param gravity the world gravity vector.
 	b2World(const b2Vec2& gravity);
@@ -91,9 +94,9 @@ public:
 	/// @param timeStep the amount of time to simulate, this should not vary.
 	/// @param velocityIterations for the velocity constraint solver.
 	/// @param positionIterations for the position constraint solver.
-	void Step(	float32 timeStep,
-				int32 velocityIterations,
-				int32 positionIterations);
+	void Step(	float timeStep,
+				int32_t velocityIterations,
+				int32_t positionIterations);
 
 	/// Manually clear the force buffer on all bodies. By default, forces are cleared automatically
 	/// after each call to Step. The default behavior is modified by calling SetAutoClearForces.
@@ -158,26 +161,26 @@ public:
 	bool GetSubStepping() const { return m_subStepping; }
 
 	/// Get the number of broad-phase proxies.
-	int32 GetProxyCount() const;
+	int32_t GetProxyCount() const;
 
 	/// Get the number of bodies.
-	int32 GetBodyCount() const;
+	int32_t GetBodyCount() const;
 
 	/// Get the number of joints.
-	int32 GetJointCount() const;
+	int32_t GetJointCount() const;
 
 	/// Get the number of contacts (each may have 0 or more contact points).
-	int32 GetContactCount() const;
+	int32_t GetContactCount() const;
 
 	/// Get the height of the dynamic tree.
-	int32 GetTreeHeight() const;
+	int32_t GetTreeHeight() const;
 
 	/// Get the balance of the dynamic tree.
-	int32 GetTreeBalance() const;
+	int32_t GetTreeBalance() const;
 
 	/// Get the quality metric of the dynamic tree. The smaller the better.
 	/// The minimum is 1.
-	float32 GetTreeQuality() const;
+	float GetTreeQuality() const;
 
 	/// Change the global gravity vector.
 	void SetGravity(const b2Vec2& gravity);
@@ -233,15 +236,15 @@ private:
 	b2BlockAllocator m_blockAllocator;
 	b2StackAllocator m_stackAllocator;
 
-	int32 m_flags;
+	int32_t m_flags;
 
 	b2ContactManager m_contactManager;
 
 	b2Body* m_bodyList;
 	b2Joint* m_jointList;
 
-	int32 m_bodyCount;
-	int32 m_jointCount;
+	int32_t m_bodyCount;
+	int32_t m_jointCount;
 
 	b2Vec2 m_gravity;
 	bool m_allowSleep;
@@ -251,7 +254,7 @@ private:
 
 	// This is used to compute the time step ratio to
 	// support a variable time step.
-	float32 m_inv_dt0;
+	float m_inv_dt0;
 
 	// These are for debugging the solver.
 	bool m_warmStarting;
@@ -293,17 +296,17 @@ inline const b2Contact* b2World::GetContactList() const
 	return m_contactManager.m_contactList;
 }
 
-inline int32 b2World::GetBodyCount() const
+inline int32_t b2World::GetBodyCount() const
 {
 	return m_bodyCount;
 }
 
-inline int32 b2World::GetJointCount() const
+inline int32_t b2World::GetJointCount() const
 {
 	return m_jointCount;
 }
 
-inline int32 b2World::GetContactCount() const
+inline int32_t b2World::GetContactCount() const
 {
 	return m_contactManager.m_contactCount;
 }

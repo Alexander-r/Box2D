@@ -47,7 +47,7 @@ public:
 
 			for (int i = 0; i < 10; ++i)
 			{
-				float32 x = RandomFloat(-0.1f, 0.1f);
+				float x = RandomFloat(-0.1f, 0.1f);
 				b2BodyDef bd;
 				bd.position.Set(x + 5.0f, 1.05f + 2.5f * i);
 				bd.angle = RandomFloat(-b2_pi, b2_pi);
@@ -69,7 +69,7 @@ public:
 
 			for (int i = 0; i < 10; ++i)
 			{
-				float32 x = RandomFloat(-0.1f, 0.1f);
+				float x = RandomFloat(-0.1f, 0.1f);
 				b2BodyDef bd;
 				bd.position.Set(x - 5.0f, 1.05f + 2.5f * i);
 				bd.angle = RandomFloat(-b2_pi, b2_pi);
@@ -103,9 +103,9 @@ public:
 			sd2.vertices[2] = b2Mul(xf2, b2Vec2(0.0f, 0.5f));
 			sd2.density = 2.0f;
 
-			for (int32 i = 0; i < 10; ++i)
+			for (int32_t i = 0; i < 10; ++i)
 			{
-				float32 x = RandomFloat(-0.1f, 0.1f);
+				float x = RandomFloat(-0.1f, 0.1f);
 				b2BodyDef bd;
 				bd.position.Set(x, 2.05f + 2.5f * i);
 				bd.angle = 0.0f;
@@ -139,7 +139,7 @@ public:
 		}
 		
 		{
-			float32 loop1[] = 
+			float loop1[] = 
 			{
 				0.063134534f,8.3695248f,
 				0.94701801f,9.3165428f,
@@ -230,7 +230,7 @@ public:
 				0.063134534f,0.98278429f
 			};
 			
-			float32 loop2[] = 
+			float loop2[] = 
 			{
 				8.270624f,6.1598161f,
 				8.270624f,5.3390672f,
@@ -243,14 +243,14 @@ public:
 			b2Vec2 b2Loop1[87];
 			b2Vec2 b2Loop2[6];
 			
-			for (int32 i = 86; i >= 0; i--) {
+			for (int32_t i = 86; i >= 0; i--) {
 				b2Loop1[86 - i].Set(loop1[i*2] + 10.0f, loop1[i*2 + 1] + 1.0f);
 			}
-			/*for (int32 i = 0; i < 87; i++) {
+			/*for (int32_t i = 0; i < 87; i++) {
 				b2Loop1[i].Set(loop1[i*2] + 10.0f, loop1[i*2 + 1] + 1.0f);
 			}*/
 			
-			for (int32 i = 0; i < 6; i++) {
+			for (int32_t i = 0; i < 6; i++) {
 				b2Loop2[i].Set(loop2[i*2], loop2[i*2 + 1]);
 			}
 			

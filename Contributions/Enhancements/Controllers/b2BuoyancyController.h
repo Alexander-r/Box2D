@@ -29,15 +29,15 @@ public:
 	/// The outer surface normal
 	b2Vec2 normal;
 	/// The height of the fluid surface along the normal
-	float32 offset;
+	float offset;
 	/// The fluid density
-	float32 density;
+	float density;
 	/// Fluid velocity, for drag calculations
 	b2Vec2 velocity;
 	/// Linear drag co-efficient
-	float32 linearDrag;
+	float linearDrag;
 	/// Linear drag co-efficient
-	float32 angularDrag;
+	float angularDrag;
 	/// If false, bodies are assumed to be uniformly dense, otherwise use the shapes densities
 	bool useDensity; //False by default to prevent a gotcha
 	/// If true, gravity is taken from the world instead of the gravity parameter.
@@ -66,15 +66,15 @@ public:
 	/// The outer surface normal
 	b2Vec2 normal;
 	/// The height of the fluid surface along the normal
-	float32 offset;
+	float offset;
 	/// The fluid density
-	float32 density;
+	float density;
 	/// Fluid velocity, for drag calculations
 	b2Vec2 velocity;
 	/// Linear drag co-efficient
-	float32 linearDrag;
+	float linearDrag;
 	/// Linear drag co-efficient
-	float32 angularDrag;
+	float angularDrag;
 	/// If false, bodies are assumed to be uniformly dense, otherwise use the shapes densities
 	bool useDensity; //False by default to prevent a gotcha
 	/// If true, gravity is taken from the world instead of the gravity parameter.

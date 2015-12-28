@@ -415,7 +415,7 @@ static inline long nds_sqrt64(long long a)
 	return SQRT_RESULT32;
 }
 
-static inline int32 div6464(int64 num, int64 den)
+static inline int32_t div6464(int64_t num, int64_t den)
 {
 	DIV_CR = DIV_64_64;
 	while(DIV_CR & DIV_BUSY);

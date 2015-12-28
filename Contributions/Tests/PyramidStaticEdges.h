@@ -25,7 +25,7 @@ public:
 	PyramidStaticEdges()
 	{
 		{
-			float32 coords[] = 
+			float coords[] = 
 			{
 				50.0f,0.0f,
 				-50.0f,0.0f
@@ -33,7 +33,7 @@ public:
 			
 			b2Vec2 verts[2];
 			
-			for (int32 i = 0; i < 2; i++)
+			for (int32_t i = 0; i < 2; i++)
 			{
 				verts[i].Set(coords[i*2], coords[i*2 + 1]);
 			}
@@ -51,7 +51,7 @@ public:
 
 		{
 			b2PolygonDef sd;
-			float32 a = 0.5f;
+			float a = 0.5f;
 			sd.SetAsBox(a, a);
 			sd.density = 5.0f;
 
@@ -60,13 +60,13 @@ public:
 			b2Vec2 deltaX(0.5625f, 2.0f);
 			b2Vec2 deltaY(1.125f, 0.0f);
 
-			const int32 N = 2;
+			const int32_t N = 2;
 
-			for (int32 i = 0; i < N; ++i)
+			for (int32_t i = 0; i < N; ++i)
 			{
 				y = x;
 
-				for (int32 j = i; j < N; ++j)
+				for (int32_t j = i; j < N; ++j)
 				{
 					b2BodyDef bd;
 					bd.position = y;

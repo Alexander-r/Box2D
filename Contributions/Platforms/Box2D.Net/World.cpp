@@ -49,7 +49,7 @@ namespace Box2D
 				return gcnew Body(world->GetGroundBody());
 			}
 
-			void Step(float32 timeStep, int32 iterations)
+			void Step(float timeStep, int32_t iterations)
 			{
 				world->Step(timeStep, iterations);
 			}
@@ -108,9 +108,9 @@ namespace Box2D
 			/// </summary>
 			IList<Shape^>^ Query(AABB^ aabb)
 			{
-				const int32 k_maxCount = 25;
+				const int32_t k_maxCount = 25;
 				b2Shape* shapes[k_maxCount];
-				int32 count = world->Query(aabb->getAABB(), shapes, k_maxCount);
+				int32_t count = world->Query(aabb->getAABB(), shapes, k_maxCount);
 
 				List<Shape^>^ list = gcnew List<Shape^>();
 				for(int x = 0; x < count; ++x)

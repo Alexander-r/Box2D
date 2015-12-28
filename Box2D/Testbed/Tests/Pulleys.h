@@ -24,10 +24,10 @@ class Pulleys : public Test
 public:
 	Pulleys()
 	{
-		float32 y = 16.0f;
-		float32 L = 12.0f;
-		float32 a = 1.0f;
-		float32 b = 2.0f;
+		float y = 16.0f;
+		float L = 12.0f;
+		float a = 1.0f;
+		float b = 2.0f;
 
 		b2Body* ground = NULL;
 		{
@@ -80,8 +80,8 @@ public:
 	{
 		Test::Step(settings);
 
-		float32 ratio = m_joint1->GetRatio();
-		float32 L = m_joint1->GetCurrentLengthA() + ratio * m_joint1->GetCurrentLengthB();
+		float ratio = m_joint1->GetRatio();
+		float L = m_joint1->GetCurrentLengthA() + ratio * m_joint1->GetCurrentLengthB();
 		g_debugDraw.DrawString(5, m_textLine, "L1 + %4.2f * L2 = %4.2f", (float) ratio, (float) L);
 		m_textLine += DRAW_STRING_NEW_LINE;
 	}

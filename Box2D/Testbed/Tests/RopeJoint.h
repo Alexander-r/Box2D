@@ -56,12 +56,12 @@ public:
 			b2RevoluteJointDef jd;
 			jd.collideConnected = false;
 
-			const int32 N = 10;
-			const float32 y = 15.0f;
+			const int32_t N = 10;
+			const float y = 15.0f;
 			m_ropeDef.localAnchorA.Set(0.0f, y);
 
 			b2Body* prevBody = ground;
-			for (int32 i = 0; i < N; ++i)
+			for (int32_t i = 0; i < N; ++i)
 			{
 				b2BodyDef bd;
 				bd.type = b2_dynamicBody;
@@ -79,7 +79,7 @@ public:
 
 				body->CreateFixture(&fd);
 
-				b2Vec2 anchor(float32(i), y);
+				b2Vec2 anchor(float(i), y);
 				jd.Initialize(prevBody, body, anchor);
 				m_world->CreateJoint(&jd);
 
@@ -88,7 +88,7 @@ public:
 
 			m_ropeDef.localAnchorB.SetZero();
 
-			float32 extraLength = 0.01f;
+			float extraLength = 0.01f;
 			m_ropeDef.maxLength = N - 1.0f + extraLength;
 			m_ropeDef.bodyB = prevBody;
 		}

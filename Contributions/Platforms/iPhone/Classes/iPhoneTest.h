@@ -37,18 +37,18 @@ typedef Test* TestCreateFcn();
 #define	RAND_LIMIT	32767
 
 /// Random number in range [-1,1]
-inline float32 RandomFloat()
+inline float RandomFloat()
 {
-	float32 r = (float32)(rand() & (RAND_LIMIT));
+	float r = (float)(rand() & (RAND_LIMIT));
 	r /= RAND_LIMIT;
 	r = 2.0f * r - 1.0f;
 	return r;
 }
 
 /// Random floating point number in range [lo, hi]
-inline float32 RandomFloat(float32 lo, float32 hi)
+inline float RandomFloat(float lo, float hi)
 {
-	float32 r = (float32)(rand() & (RAND_LIMIT));
+	float r = (float)(rand() & (RAND_LIMIT));
 	r /= RAND_LIMIT;
 	r = (hi - lo) * r + lo;
 	return r;
@@ -80,24 +80,24 @@ struct Settings
 		{}
 
 	b2Vec2 viewCenter;
-	float32 hz;
-	int32 velocityIterations;
-	int32 positionIterations;
-	int32 drawShapes;
-	int32 drawJoints;
-	int32 drawAABBs;
-	int32 drawPairs;
-	int32 drawContactPoints;
-	int32 drawContactNormals;
-	int32 drawContactForces;
-	int32 drawFrictionForces;
-	int32 drawCOMs;
-	int32 drawStats;
-	int32 enableWarmStarting;
-	int32 enableContinuous;
-	int32 enableSubStepping;
-	int32 pause;
-	int32 singleStep;
+	float hz;
+	int32_t velocityIterations;
+	int32_t positionIterations;
+	int32_t drawShapes;
+	int32_t drawJoints;
+	int32_t drawAABBs;
+	int32_t drawPairs;
+	int32_t drawContactPoints;
+	int32_t drawContactNormals;
+	int32_t drawContactForces;
+	int32_t drawFrictionForces;
+	int32_t drawCOMs;
+	int32_t drawStats;
+	int32_t enableWarmStarting;
+	int32_t enableContinuous;
+	int32_t enableSubStepping;
+	int32_t pause;
+	int32_t singleStep;
 };
 
 struct TestEntry
@@ -119,7 +119,7 @@ class DestructionListener : public b2DestructionListener
 		Test* test;
 	};
 
-const int32 k_maxContactPoints = 2048;
+const int32_t k_maxContactPoints = 2048;
 
 struct ContactPoint
 {
@@ -138,7 +138,7 @@ class Test : public b2ContactListener
 		virtual ~Test();
 		
 		void SetGravity(float x,float y);
-		void SetTextLine(int32 line) { m_textLine = line; }
+		void SetTextLine(int32_t line) { m_textLine = line; }
 		void DrawTitle(int x, int y, const char *string);
 		virtual void Step(Settings* settings);
 		virtual void Keyboard(unsigned char key) { B2_NOT_USED(key); }
@@ -173,17 +173,17 @@ class Test : public b2ContactListener
 		b2Body* m_groundBody;
 		b2AABB m_worldAABB;
 		ContactPoint m_points[k_maxContactPoints];
-		int32 m_pointCount;
+		int32_t m_pointCount;
 		DestructionListener m_destructionListener;
 		GLESDebugDraw m_debugDraw;
-		int32 m_textLine;
+		int32_t m_textLine;
 		b2World* m_world;
 		b2Body* m_bomb;
 		b2MouseJoint* m_mouseJoint;
 		b2Vec2 m_bombSpawnPoint;
 		bool m_bombSpawning;
 		b2Vec2 m_mouseWorld;
-		int32 m_stepCount;
+		int32_t m_stepCount;
 	};
 
 #endif

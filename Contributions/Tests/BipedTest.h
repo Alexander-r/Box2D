@@ -27,7 +27,7 @@ public:
 
 	BipedTest()
 	{
-		const float32 k_restitution = 1.4f;
+		const float k_restitution = 1.4f;
 
 		{
 			b2BodyDef bd;
@@ -53,7 +53,7 @@ public:
 
 		m_biped = new Biped(m_world, b2Vec2(0.0f, 20.0f));
 
-		for (int32 i = 0; i < 8; ++i)
+		for (int32_t i = 0; i < 8; ++i)
 		{
 			b2BodyDef bd;
 			bd.position.Set(5.0f, 20.0f + i);

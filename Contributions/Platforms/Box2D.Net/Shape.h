@@ -74,14 +74,14 @@ namespace Box2D
 			}
 
 			//TODO: this is not technically part of the "public" interface for CircleShape
-			property float32 Radius
+			property float Radius
 			{
-				float32 get()
+				float get()
 				{
 					return circleShape->m_radius;
 				}
 
-				void set(float32 value)
+				void set(float value)
 				{
 					circleShape->m_radius = value;
 				}

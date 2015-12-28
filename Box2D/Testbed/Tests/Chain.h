@@ -46,9 +46,9 @@ public:
 			b2RevoluteJointDef jd;
 			jd.collideConnected = false;
 
-			const float32 y = 25.0f;
+			const float y = 25.0f;
 			b2Body* prevBody = ground;
-			for (int32 i = 0; i < 30; ++i)
+			for (int32_t i = 0; i < 30; ++i)
 			{
 				b2BodyDef bd;
 				bd.type = b2_dynamicBody;
@@ -56,7 +56,7 @@ public:
 				b2Body* body = m_world->CreateBody(&bd);
 				body->CreateFixture(&fd);
 
-				b2Vec2 anchor(float32(i), y);
+				b2Vec2 anchor(float(i), y);
 				jd.Initialize(prevBody, body, anchor);
 				m_world->CreateJoint(&jd);
 

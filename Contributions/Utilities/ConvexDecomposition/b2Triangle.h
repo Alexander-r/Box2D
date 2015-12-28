@@ -26,9 +26,9 @@ public:
 	float* x;
     float* y;
 	b2Triangle();
-	b2Triangle(float32 x1, float32 y1, float32 x2, float32 y2, float32 x3, float32 y3);
+	b2Triangle(float x1, float y1, float x2, float y2, float x3, float y3);
     ~b2Triangle();
-	bool IsInside(float32 _x, float32 _y);
+	bool IsInside(float _x, float _y);
 	void Set(const b2Triangle& toMe);
 
 };

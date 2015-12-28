@@ -10,7 +10,7 @@
 #import "Delegates.h"
 
 @interface TestEntriesViewController : UITableViewController {
-	int32 testCount;
+	int32_t testCount;
 	id<TestSelectDelegate> _delegate;
 }
 

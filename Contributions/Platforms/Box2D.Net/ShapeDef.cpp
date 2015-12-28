@@ -43,40 +43,40 @@ namespace Box2D
 				}
 			}
 
-			property float32 Friction
+			property float Friction
 			{
-				float32 get()
+				float get()
 				{
 					return def->friction;
 				}
 
-				void set(float32 value)
+				void set(float value)
 				{
 					def->friction = value;
 				}
 			}
 
-			property float32 Restitution
+			property float Restitution
 			{
-				float32 get()
+				float get()
 				{
 					return def->restitution;
 				}
 
-				void set(float32 value)
+				void set(float value)
 				{
 					def->restitution = value;
 				}
 			}
 
-			property float32 Density
+			property float Density
 			{
-				float32 get()
+				float get()
 				{
 					return def->density;
 				}
 
-				void set(float32 value)
+				void set(float value)
 				{
 					def->density = value;
 				}
@@ -145,14 +145,14 @@ namespace Box2D
 				ShapeDef::DeleteOnDtor = (true);
 			}
 
-			property float32 Radius
+			property float Radius
 			{
-				float32 get()
+				float get()
 				{
 					return reinterpret_cast<b2CircleDef*>(def)->radius;
 				}
 
-				void set(float32 value)
+				void set(float value)
 				{
 					reinterpret_cast<b2CircleDef*>(def)->radius = value;
 				}

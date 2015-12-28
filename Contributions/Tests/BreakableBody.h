@@ -36,9 +36,9 @@ public:
    BreakableBody()
    {   
         /// geometries
-        float32  gx  = 100.0f, gy =  1.0f, 
+        float  gx  = 100.0f, gy =  1.0f, 
                  dx  =  34.0f, br =   0.3f; 
-        float32  sx=-dx-H(dx), sy = 30.f;  
+        float  sx=-dx-H(dx), sy = 30.f;  
         /// break joint, if the reactionforce exceeds: 
         maxAllowableForce = 100.0f;
         m_drawMode = m_staticBodies = false;
@@ -114,7 +114,7 @@ public:
          cd.radius = br;
          cd.density= 0.001f; 
          bd.position.Set(0.0f,10.0f*gy);
-         for (int32 i=0; i<60; i++ )
+         for (int32_t i=0; i<60; i++ )
          {
            b = m_world->CreateBody(&bd);
            b->CreateFixture (&cd);
@@ -127,13 +127,13 @@ public:
     /// Create compound (soft) body using a triangle mesh
     /// If meshDensity is 0, a minimal grid is generated.
     /// Actually pd and dj define the behaviour for all triangles
-    void CreateSoftBody(b2Vec2 pos, int32 meshDensity,int32 options,
+    void CreateSoftBody(b2Vec2 pos, int32_t meshDensity,int32_t options,
                        b2PolygonDef pd, b2DistanceJointDef dj,
-                       tmVertex* nodes,int32 n_nodes,
-                       tmSegmentId *segments=NULL, int32 n_segments=0,
-                       tmVertex* holes=NULL, int32 n_holes=0)
+                       tmVertex* nodes,int32_t n_nodes,
+                       tmSegmentId *segments=NULL, int32_t n_segments=0,
+                       tmVertex* holes=NULL, int32_t n_holes=0)
     {
-        int32   i;
+        int32_t   i;
         /// TriangleMesh defs
         tmTriangle *triangles;        
         TriangleMesh     md;
@@ -194,7 +194,7 @@ public:
     void Step(Settings* settings)
     {
       b2Joint *jStressed=NULL; 
-      float32 F=0.0f, tmp;
+      float F=0.0f, tmp;
 
       Test::Step(settings);
 
@@ -218,7 +218,7 @@ public:
       m_debugDraw.DrawString(1, m_textLine,"drawmode(%s):d  mesh:m  static(%s):s", (m_drawMode)?"on":"off", (m_staticBodies)?"on":"off");       
       m_textLine += 12;
 
-      for ( int32 i=0; i<m_drawCount-1; i++ )
+      for ( int32_t i=0; i<m_drawCount-1; i++ )
       {
           b2Vec2 p1,p2;
           p1.Set(m_drawVertices[i].x,m_drawVertices[i].y);
@@ -586,16 +586,16 @@ public:
     ///
     bool        m_drawMode, m_staticBodies;
     tmVertex    m_drawVertices[N_MAXVERTEX];
-    int32       m_drawCount;
+    int32_t       m_drawCount;
     /// 
-    float32     maxAllowableForce;
+    float     maxAllowableForce;
     /// temporary vars to hold the examples
     tmVertex    *nodes;
-    int32        n_nodes;
+    int32_t        n_nodes;
     tmVertex    *holes;
-    int32        n_holes;
+    int32_t        n_holes;
     tmSegmentId *segments;
-    int32        n_segments;
+    int32_t        n_segments;
 };
 
 #undef H

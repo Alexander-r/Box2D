@@ -40,13 +40,13 @@ struct Camera
 
 	b2Vec2 ConvertScreenToWorld(const b2Vec2& screenPoint);
 	b2Vec2 ConvertWorldToScreen(const b2Vec2& worldPoint);
-	void BuildProjectionMatrix(float32* m, float32 zBias);
+	void BuildProjectionMatrix(float* m, float zBias);
 
 	b2Vec2 m_center;
-	float32 m_extent;
-	float32 m_zoom;
-	int32 m_width;
-	int32 m_height;
+	float m_extent;
+	float m_zoom;
+	int32_t m_width;
+	int32_t m_height;
 };
 
 // This class implements debug drawing callbacks that are invoked
@@ -60,19 +60,19 @@ public:
 	void Create();
 	void Destroy();
 
-	void DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color);
+	void DrawPolygon(const b2Vec2* vertices, int32_t vertexCount, const b2Color& color);
 
-	void DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color);
+	void DrawSolidPolygon(const b2Vec2* vertices, int32_t vertexCount, const b2Color& color);
 
-	void DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color);
+	void DrawCircle(const b2Vec2& center, float radius, const b2Color& color);
 
-	void DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color);
+	void DrawSolidCircle(const b2Vec2& center, float radius, const b2Vec2& axis, const b2Color& color);
 
 	void DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color);
 
 	void DrawTransform(const b2Transform& xf);
 
-    void DrawPoint(const b2Vec2& p, float32 size, const b2Color& color);
+    void DrawPoint(const b2Vec2& p, float size, const b2Color& color);
 
     void DrawString(int x, int y, const char* string, ...); 
 

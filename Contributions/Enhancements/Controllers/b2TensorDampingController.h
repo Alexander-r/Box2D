@@ -37,7 +37,7 @@ public:
 	//By the way, tensor in this case just means matrix, don't let the terminology get you down.
 
 	/// Set this to a positive number to clamp the maximum amount of damping done.
-	float32 maxTimestep;
+	float maxTimestep;
 	// Typically one wants maxTimestep to be 1/(max eigenvalue of T), so that damping will never cause something to reverse direction
 
 	/// @see b2Controller::Step
@@ -59,9 +59,9 @@ public:
 	/// Tensor to use in damping model
 	b2Mat22 T;
 	/// Set this to a positive number to clamp the maximum amount of damping done.
-	float32 maxTimestep;
+	float maxTimestep;
 	/// Sets damping independantly along the x and y axes
-	void SetAxisAligned(float32 xDamping,float32 yDamping);
+	void SetAxisAligned(float xDamping,float yDamping);
 private:
 	b2TensorDampingController* Create(b2BlockAllocator* allocator) const;
 };

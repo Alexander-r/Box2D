@@ -155,8 +155,8 @@ void b2Body::SetType(b2BodyType type)
 	b2BroadPhase* broadPhase = &m_world->m_contactManager.m_broadPhase;
 	for (b2Fixture* f = m_fixtureList; f; f = f->m_next)
 	{
-		int32 proxyCount = f->m_proxyCount;
-		for (int32 i = 0; i < proxyCount; ++i)
+		int32_t proxyCount = f->m_proxyCount;
+		for (int32_t i = 0; i < proxyCount; ++i)
 		{
 			broadPhase->TouchProxy(f->m_proxies[i].proxyId);
 		}
@@ -202,7 +202,7 @@ b2Fixture* b2Body::CreateFixture(const b2FixtureDef* def)
 	return fixture;
 }
 
-b2Fixture* b2Body::CreateFixture(const b2Shape* shape, float32 density)
+b2Fixture* b2Body::CreateFixture(const b2Shape* shape, float density)
 {
 	b2FixtureDef def;
 	def.shape = shape;
@@ -393,8 +393,8 @@ void b2Body::SetMassData(const b2MassData* massData)
 
 bool b2Body::ShouldCollide(const b2Body* other) const
 {
-	// At least one body should be dynamic.
-	if (m_type != b2_dynamicBody && other->m_type != b2_dynamicBody)
+    // At least one body should be dynamic or kinematic.
+    if (m_type == b2_staticBody && other->m_type == b2_staticBody)
 	{
 		return false;
 	}
@@ -414,7 +414,7 @@ bool b2Body::ShouldCollide(const b2Body* other) const
 	return true;
 }
 
-void b2Body::SetTransform(const b2Vec2& position, float32 angle)
+void b2Body::SetTransform(const b2Vec2& position, float angle)
 {
 	b2Assert(m_world->IsLocked() == false);
 	if (m_world->IsLocked() == true)
@@ -520,7 +520,7 @@ void b2Body::SetFixedRotation(bool flag)
 
 void b2Body::Dump()
 {
-	int32 bodyIndex = m_islandIndex;
+	int32_t bodyIndex = m_islandIndex;
 
 	b2Log("{\n");
 	b2Log("  b2BodyDef bd;\n");

@@ -24,38 +24,38 @@
 
 class b2Polygon;
 
-int32 remainder(int32 x, int32 modulus);
-int32 TriangulatePolygon(float32* xv, float32* yv, int32 vNum, b2Triangle* results);
-bool IsEar(int32 i, float32* xv, float32* yv, int32 xvLength); //Not for external use
-int32 PolygonizeTriangles(b2Triangle* triangulated, int32 triangulatedLength, b2Polygon* polys, int32 polysLength);
-int32 DecomposeConvex(b2Polygon* p, b2Polygon* results, int32 maxPolys);
+int32_t remainder(int32_t x, int32_t modulus);
+int32_t TriangulatePolygon(float* xv, float* yv, int32_t vNum, b2Triangle* results);
+bool IsEar(int32_t i, float* xv, float* yv, int32_t xvLength); //Not for external use
+int32_t PolygonizeTriangles(b2Triangle* triangulated, int32_t triangulatedLength, b2Polygon* polys, int32_t polysLength);
+int32_t DecomposeConvex(b2Polygon* p, b2Polygon* results, int32_t maxPolys);
 void DecomposeConvexAndAddTo(b2Polygon* p, b2Body* bd, b2FixtureDef* prototype);
 b2Polygon ConvexHull(b2Vec2* v, int nVert);
-b2Polygon ConvexHull(float32* cloudX, float32* cloudY, int32 nVert);
-void ReversePolygon(float32* x, float32* y, int n);
+b2Polygon ConvexHull(float* cloudX, float* cloudY, int32_t nVert);
+void ReversePolygon(float* x, float* y, int n);
 
 b2Polygon TraceEdge(b2Polygon* p); //For use with self-intersecting polygons, finds outline
 
 class b2Polygon {
 	
 public:
-    const static int32 maxVerticesPerPolygon = b2_maxPolygonVertices;
+    const static int32_t maxVerticesPerPolygon = b2_maxPolygonVertices;
 
-    float32* x; //vertex arrays
-    float32* y;
-    int32 nVertices;
+    float* x; //vertex arrays
+    float* y;
+    int32_t nVertices;
 	
-	float32 area;
+	float area;
 	bool areaIsSet;
 	
-    b2Polygon(float32* _x, float32* _y, int32 nVert);
-    b2Polygon(b2Vec2* v, int32 nVert);
+    b2Polygon(float* _x, float* _y, int32_t nVert);
+    b2Polygon(b2Vec2* v, int32_t nVert);
 	b2Polygon();
     ~b2Polygon();
 	
-	float32 GetArea();
+	float GetArea();
 	
-	void MergeParallelEdges(float32 tolerance);
+	void MergeParallelEdges(float tolerance);
     b2Vec2* GetVertexVecs();
     b2Polygon(b2Triangle& t);
     void Set(const b2Polygon& p);
@@ -70,18 +70,18 @@ public:
 
 	void print(){
 		printFormatted();
-//		for (int32 i=0; i<nVertices; ++i){
+//		for (int32_t i=0; i<nVertices; ++i){
 //			printf("i: %d, x:%f, y:%f\n",i,x[i],y[i]);
 //		}
 	}
 
 	void printFormatted(){
 		printf("float xv[] = {");
-		for (int32 i=0; i<nVertices; ++i){
+		for (int32_t i=0; i<nVertices; ++i){
 			printf("%ff,",x[i]);
 		}
 		printf("};\nfloat yv[] = {");
-		for (int32 i=0; i<nVertices; ++i){
+		for (int32_t i=0; i<nVertices; ++i){
 			printf("%ff,",y[i]);
 		}
 		printf("};\n");
@@ -91,30 +91,30 @@ public:
 		nVertices = p.nVertices;
 		area = p.area;
 		areaIsSet = p.areaIsSet;
-		x = new float32[nVertices];
-		y = new float32[nVertices];
-		memcpy(x, p.x, nVertices * sizeof(float32));
-		memcpy(y, p.y, nVertices * sizeof(float32));
+		x = new float[nVertices];
+		y = new float[nVertices];
+		memcpy(x, p.x, nVertices * sizeof(float));
+		memcpy(y, p.y, nVertices * sizeof(float));
 	}
 
 	
 };
 
-const int32 MAX_CONNECTED = 32;
-const float32 COLLAPSE_DIST_SQR = FLT_EPSILON*FLT_EPSILON;//0.1f;//1000*FLT_EPSILON*1000*FLT_EPSILON;
+const int32_t MAX_CONNECTED = 32;
+const float COLLAPSE_DIST_SQR = FLT_EPSILON*FLT_EPSILON;//0.1f;//1000*FLT_EPSILON*1000*FLT_EPSILON;
 	
 class b2PolyNode{
 public:
 	b2Vec2 position;
 	b2PolyNode* connected[MAX_CONNECTED];
-	int32 nConnected;
+	int32_t nConnected;
 	bool visited;
 
 	b2PolyNode(b2Vec2& pos);
 	b2PolyNode();
 	void AddConnection(b2PolyNode& toMe);
 	void RemoveConnection(b2PolyNode& fromMe);
-	void RemoveConnectionByIndex(int32 index);
+	void RemoveConnectionByIndex(int32_t index);
 	bool IsConnectedTo(b2PolyNode& me);
 	b2PolyNode* GetRightestConnection(b2PolyNode* incoming);
 	b2PolyNode* GetRightestConnection(b2Vec2& incomingDir);

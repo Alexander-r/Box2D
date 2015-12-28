@@ -52,12 +52,12 @@ void b2BuoyancyController::Step(const b2TimeStep& step)
 		}
 		b2Vec2 areac(0,0);
 		b2Vec2 massc(0,0);
-		float32 area = 0;
-		float32 mass = 0;
+		float area = 0;
+		float mass = 0;
 		for(b2Fixture* shape=body->GetFixtureList();shape;shape=shape->GetNext())
 		{
 			b2Vec2 sc(0,0);
-			float32 sarea = shape->ComputeSubmergedArea(normal, offset, &sc);
+			float sarea = shape->ComputeSubmergedArea(normal, offset, &sc);
 			area += sarea;
 			areac.x += sarea * sc.x;
 			areac.y += sarea * sc.y;
@@ -98,7 +98,7 @@ void b2BuoyancyController::Step(const b2TimeStep& step)
 
 void b2BuoyancyController::Draw(b2DebugDraw *debugDraw)
 {
-	float32 r = 1000;
+	float r = 1000;
 	b2Vec2 p1 = offset * normal + b2Cross(normal, r);
 	b2Vec2 p2 = offset * normal - b2Cross(normal, r);
 

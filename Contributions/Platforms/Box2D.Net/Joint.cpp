@@ -60,7 +60,7 @@ namespace Box2D
 				return gcnew Vector(joint->GetReactionForce());
 			}
 
-			float32 GetReactionTorque()
+			float GetReactionTorque()
 			{
 				return joint->GetReactionTorque();
 			}

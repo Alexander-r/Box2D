@@ -82,7 +82,7 @@ protected:
 	b2World* m_world;
 
 	b2ControllerEdge* m_bodyList;
-	int32 m_bodyCount;
+	int32_t m_bodyCount;
 
 	b2Controller(const b2ControllerDef* def):
 		m_world(NULL),

@@ -20,7 +20,7 @@ namespace Box2D
 
 			Matrix() : col1(gcnew Vector()), col2(gcnew Vector()) {}
 			Matrix(Vector^ c1, Vector^ c2) : col1(gcnew Vector(c1)), col2(gcnew Vector(c2)) { }
-			explicit Matrix(float32 angle)
+			explicit Matrix(float angle)
 			{
 				Set(angle);
 			}
@@ -34,9 +34,9 @@ namespace Box2D
 				col2->Y = c2->Y;
 			}
 
-			void Set(float32 angle)
+			void Set(float angle)
 			{
-				float32 c = cosf(angle), s = sinf(angle);
+				float c = cosf(angle), s = sinf(angle);
 				col1->X = c; col2->X = -s;
 				col1->Y = s; col2->Y = c;
 			}
@@ -66,9 +66,9 @@ struct b2Mat22
 
 	b2Mat22 Invert() const
 	{
-		float32 a = col1.x, b = col2.x, c = col1.y, d = col2.y;
+		float a = col1.x, b = col2.x, c = col1.y, d = col2.y;
 		b2Mat22 B;
-		float32 det = a * d - b * c;
+		float det = a * d - b * c;
 		b2Assert(det != 0.0f);
 		det = 1.0f / det;
 		B.col1.x =  det * d;	B.col2.x = -det * b;
@@ -79,8 +79,8 @@ struct b2Mat22
 	// Solve A * x = b
 	b2Vec2 Solve(const b2Vec2& b) const
 	{
-		float32 a11 = col1.x, a12 = col2.x, a21 = col1.y, a22 = col2.y;
-		float32 det = a11 * a22 - a12 * a21;
+		float a11 = col1.x, a12 = col2.x, a21 = col1.y, a22 = col2.y;
+		float det = a11 * a22 - a12 * a21;
 		b2Assert(det != 0.0f);
 		det = 1.0f / det;
 		b2Vec2 x;

@@ -25,7 +25,7 @@ namespace Box2D
 			/// Set the position of the body's origin and rotation (radians).
 			/// This breaks any contacts and wakes the other bodies.
 			/// </summary>
-			void SetXForm(Vector^ position, float32 rotation)
+			void SetXForm(Vector^ position, float rotation)
 			{
 				body->SetXForm(position->getVec2(), rotation);
 			}
@@ -55,14 +55,14 @@ namespace Box2D
 			}
 
 			///<summary>Accesses the angular velocity.</summary>
-			property float32 AngularVelocity
+			property float AngularVelocity
 			{
-				float32 get()
+				float get()
 				{
 					return body->GetAngularVelocity();
 				}
 
-				void set(float32 value)
+				void set(float value)
 				{
 					body->SetAngularVelocity(value);
 				}
@@ -75,7 +75,7 @@ namespace Box2D
 			}
 			
 			///<summary> Apply a torque.  Additive. </summary>
-			void ApplyTorque(float32 Torque)
+			void ApplyTorque(float Torque)
 			{
 				body->ApplyTorque(Torque);
 			}
@@ -87,18 +87,18 @@ namespace Box2D
 			}
 
 			///<summary>Accesses the Mass.</summary>
-			property float32 Mass
+			property float Mass
 			{
-				float32 get()
+				float get()
 				{
 					return body->GetMass();
 				}
 			}
 
 			///<summary>Accesses the Mass.</summary>
-			property float32 Inertia
+			property float Inertia
 			{
-				float32 get()
+				float get()
 				{
 					return body->GetInertia();
 				}

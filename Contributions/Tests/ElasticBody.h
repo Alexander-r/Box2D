@@ -373,8 +373,8 @@ public:
 				int ind = i*8+j;
 				int indr = ind+1;
 				int indd = ind+8;
-				float32 spring = 500.0f;
-				float32 damp = 5.0f;
+				float spring = 500.0f;
+				float damp = 5.0f;
 				if (j<7) {
 					AddSpringForce(*(bodies[ind]),zero,*(bodies[indr]),zero,spring, damp, 1.0f);
 					AddSpringForce(*(bodies[ind]),right,*(bodies[indr]),left,0.5f*spring, damp, 0.0f);
@@ -385,7 +385,7 @@ public:
 				}
 				int inddr = indd + 1;
 				int inddl = indd - 1;
-				float32 drdist = sqrtf(2.0f);
+				float drdist = sqrtf(2.0f);
 				if (i < 7 && j < 7){
 					AddSpringForce(*(bodies[ind]),zero,*(bodies[inddr]),zero,spring, damp, drdist);
 				}
@@ -438,7 +438,7 @@ public:
 		}
 	}
    /// Add a spring force
-   void AddSpringForce(b2Body& bA, b2Vec2& localA, b2Body& bB, b2Vec2& localB, float32 k, float32 friction, float32 desiredDist)
+   void AddSpringForce(b2Body& bA, b2Vec2& localA, b2Body& bB, b2Vec2& localB, float k, float friction, float desiredDist)
    {
         b2Vec2 pA = bA.GetWorldPoint(localA);
         b2Vec2 pB = bB.GetWorldPoint(localB);
@@ -447,9 +447,9 @@ public:
         b2Vec2 vA = bA.GetLinearVelocity() - b2Cross(bA.GetWorldVector(localA), bA.GetAngularVelocity());
         b2Vec2 vB = bB.GetLinearVelocity() - b2Cross(bB.GetWorldVector(localB), bB.GetAngularVelocity());
         b2Vec2 vdiff = vB-vA;
-        float32 dx = diff.Normalize(); //normalizes diff and puts length into dx
-        float32 vrel = vdiff.x*diff.x + vdiff.y*diff.y;
-        float32 forceMag = -k*(dx-desiredDist) - friction*vrel;
+        float dx = diff.Normalize(); //normalizes diff and puts length into dx
+        float vrel = vdiff.x*diff.x + vdiff.y*diff.y;
+        float forceMag = -k*(dx-desiredDist) - friction*vrel;
         diff *= forceMag; // diff *= forceMag
         bB.ApplyForce(diff, bA.GetWorldPoint(localA));
         diff *= -1.0f;

@@ -144,9 +144,9 @@ public:
 #if 1
 		b2PolygonDef cd;
 		cd.vertexCount = 8;
-		float32 w = 0.95f;
-		float32 b = w / (2.0f + sqrtf(2.0f));
-		float32 s = sqrtf(2.0f) * b;
+		float w = 0.95f;
+		float b = w / (2.0f + sqrtf(2.0f));
+		float s = sqrtf(2.0f) * b;
 		cd.vertices[0].Set(0.5f * s, 0.0f);
 		cd.vertices[1].Set(0.5f * w, b);
 		cd.vertices[2].Set(0.5f * w, b + s);
@@ -173,7 +173,7 @@ public:
 		std::ostringstream oss;
 		oss << std::hex;
 
-		for (int32 i=0; i< m_pointCount; ++i)
+		for (int32_t i=0; i< m_pointCount; ++i)
 		{
 #if 0
 			if (m_points[i].shape1 > m_points[i].shape2)

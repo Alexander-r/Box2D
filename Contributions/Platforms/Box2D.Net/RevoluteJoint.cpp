@@ -39,53 +39,53 @@ namespace Box2D
 				}
 			}
 
-			property float32 LowerAngle
+			property float LowerAngle
 			{
-				float32 get()
+				float get()
 				{
 					return reinterpret_cast<b2RevoluteJointDef *>(def)->lowerAngle;
 				}
 
-				void set(float32 value)
+				void set(float value)
 				{
 					reinterpret_cast<b2RevoluteJointDef *>(def)->lowerAngle = value;
 				}
 			}
 
-			property float32 UpperAngle
+			property float UpperAngle
 			{
-				float32 get()
+				float get()
 				{
 					return reinterpret_cast<b2RevoluteJointDef *>(def)->upperAngle;
 				}
 
-				void set(float32 value)
+				void set(float value)
 				{
 					reinterpret_cast<b2RevoluteJointDef *>(def)->upperAngle = value;
 				}
 			}
 
-			property float32 MotorTorque
+			property float MotorTorque
 			{
-				float32 get()
+				float get()
 				{
 					return reinterpret_cast<b2RevoluteJointDef *>(def)->maxMotorTorque;
 				}
 
-				void set(float32 value)
+				void set(float value)
 				{
 					reinterpret_cast<b2RevoluteJointDef *>(def)->maxMotorTorque = value;
 				}
 			}
 
-			property float32 MotorSpeed
+			property float MotorSpeed
 			{
-				float32 get()
+				float get()
 				{
 					return reinterpret_cast<b2RevoluteJointDef *>(def)->motorSpeed;
 				}
 
-				void set(float32 value)
+				void set(float value)
 				{
 					reinterpret_cast<b2RevoluteJointDef *>(def)->motorSpeed = value;
 				}
@@ -150,38 +150,38 @@ namespace Box2D
 				return gcnew Vector(reinterpret_cast<b2RevoluteJoint*>(joint)->GetReactionForce());
 			}
 
-			float32 GetReactionTorque()
+			float GetReactionTorque()
 			{
 				return (reinterpret_cast<b2RevoluteJoint*>(joint)->GetReactionTorque());
 			}
 
-			property float32 JointAngle
+			property float JointAngle
 			{
-				float32 get()
+				float get()
 				{
 					return (reinterpret_cast<b2RevoluteJoint*>(joint)->GetJointAngle());
 				}
 			}
 
-			property float32 JointSpeed
+			property float JointSpeed
 			{
-				float32 get()
+				float get()
 				{
 					return (reinterpret_cast<b2RevoluteJoint*>(joint)->GetJointSpeed());
 				}
 			}
 
-			float32 GetMotorTorque()
+			float GetMotorTorque()
 			{
 				return reinterpret_cast<b2RevoluteJoint*>(joint)->GetMotorTorque();
 			}
 
-			void SetMotorSpeed(float32 speed)
+			void SetMotorSpeed(float speed)
 			{
 				reinterpret_cast<b2RevoluteJoint*>(joint)->SetMotorSpeed(speed);
 			}
 
-			void SetMotorTorque(float32 torque)
+			void SetMotorTorque(float torque)
 			{
 				reinterpret_cast<b2RevoluteJoint*>(joint)->SetMaxMotorTorque(torque);
 			}

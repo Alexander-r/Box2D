@@ -1,8 +1,8 @@
 #include "BipedDef.h"
 
-int16 BipedDef::count = 0;
+int16_t BipedDef::count = 0;
 
-const float32 k_scale = 3.0f;
+const float k_scale = 3.0f;
 
 BipedDef::BipedDef()
 {
@@ -47,7 +47,7 @@ void BipedDef::IsFast(bool b)
 	*/
 }
 
-void BipedDef::SetGroupIndex(int16 i)
+void BipedDef::SetGroupIndex(int16_t i)
 {
 	LFootPoly.filter.groupIndex		= i;
 	RFootPoly.filter.groupIndex		= i;

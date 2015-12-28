@@ -122,53 +122,53 @@ namespace Box2D
 				}
 			}
 
-			property float32 MaxForce
+			property float MaxForce
 			{
-				float32 get()
+				float get()
 				{
 					return mouseJoint->maxForce;
 				}
 
-				void set(float32 value)
+				void set(float value)
 				{
 					mouseJoint->maxForce = value;
 				}
 			}
 
-			property float32 FrequencyHz
+			property float FrequencyHz
 			{
-				float32 get()
+				float get()
 				{
 					return mouseJoint->frequencyHz;
 				}
 
-				void set(float32 value)
+				void set(float value)
 				{
 					mouseJoint->frequencyHz = value;
 				}
 			}
 
-			property float32 DampingRatio
+			property float DampingRatio
 			{
-				float32 get()
+				float get()
 				{
 					return mouseJoint->dampingRatio;
 				}
 
-				void set(float32 value)
+				void set(float value)
 				{
 					mouseJoint->dampingRatio = value;
 				}
 			}
 
-			property float32 TimeStep
+			property float TimeStep
 			{
-				float32 get()
+				float get()
 				{
 					return mouseJoint->timeStep;
 				}
 
-				void set(float32 value)
+				void set(float value)
 				{
 					mouseJoint->timeStep = value;
 				}

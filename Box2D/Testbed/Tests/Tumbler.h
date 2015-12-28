@@ -93,7 +93,7 @@ public:
 	}
 
 	b2RevoluteJoint* m_joint;
-	int32 m_count;
+	int32_t m_count;
 };
 
 #endif

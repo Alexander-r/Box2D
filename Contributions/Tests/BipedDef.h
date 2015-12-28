@@ -22,12 +22,12 @@ public:
 	void EnableMotor();
 	void DisableMotor();
 	void SetMotor(bool);
-	void SetGroupIndex(int16);
+	void SetGroupIndex(int16_t);
 	void SetPosition(float, float);
 	void SetPosition(b2Vec2);
 	void IsFast(bool);
 
-	static int16 count;
+	static int16_t count;
 
 	b2BodyDef			LFootDef, RFootDef, LCalfDef, RCalfDef, LThighDef, RThighDef, 
 						PelvisDef, StomachDef, ChestDef, NeckDef, HeadDef, 

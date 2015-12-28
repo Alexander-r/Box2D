@@ -51,7 +51,7 @@ public:
 				b2CircleShape* circle = (b2CircleShape*)fixture->GetShape();
 
 				b2Vec2 center = b2Mul(xf, circle->m_p);
-				float32 radius = circle->m_radius;
+				float radius = circle->m_radius;
 
 				g_debugDraw->DrawCircle(center, radius, color);
 			}
@@ -60,11 +60,11 @@ public:
 		case b2Shape::e_polygon:
 			{
 				b2PolygonShape* poly = (b2PolygonShape*)fixture->GetShape();
-				int32 vertexCount = poly->m_count;
+				int32_t vertexCount = poly->m_count;
 				b2Assert(vertexCount <= b2_maxPolygonVertices);
 				b2Vec2 vertices[b2_maxPolygonVertices];
 
-				for (int32 i = 0; i < vertexCount; ++i)
+				for (int32_t i = 0; i < vertexCount; ++i)
 				{
 					vertices[i] = b2Mul(xf, poly->m_vertices[i]);
 				}
@@ -104,7 +104,7 @@ public:
 	b2CircleShape m_circle;
 	b2Transform m_transform;
 	b2Draw* g_debugDraw;
-	int32 m_count;
+	int32_t m_count;
 };
 
 class PolyShapes : public Test
@@ -145,9 +145,9 @@ public:
 		}
 
 		{
-			float32 w = 1.0f;
-			float32 b = w / (2.0f + b2Sqrt(2.0f));
-			float32 s = b2Sqrt(2.0f) * b;
+			float w = 1.0f;
+			float b = w / (2.0f + b2Sqrt(2.0f));
+			float s = b2Sqrt(2.0f) * b;
 
 			b2Vec2 vertices[8];
 			vertices[0].Set(0.5f * s, 0.0f);
@@ -174,7 +174,7 @@ public:
 		memset(m_bodies, 0, sizeof(m_bodies));
 	}
 
-	void Create(int32 index)
+	void Create(int32_t index)
 	{
 		if (m_bodies[m_bodyIndex] != NULL)
 		{
@@ -185,7 +185,7 @@ public:
 		b2BodyDef bd;
 		bd.type = b2_dynamicBody;
 
-		float32 x = RandomFloat(-2.0f, 2.0f);
+		float x = RandomFloat(-2.0f, 2.0f);
 		bd.position.Set(x, 10.0f);
 		bd.angle = RandomFloat(-b2_pi, b2_pi);
 
@@ -219,7 +219,7 @@ public:
 
 	void DestroyBody()
 	{
-		for (int32 i = 0; i < e_maxBodies; ++i)
+		for (int32_t i = 0; i < e_maxBodies; ++i)
 		{
 			if (m_bodies[i] != NULL)
 			{
@@ -243,7 +243,7 @@ public:
 			break;
 
 		case GLFW_KEY_A:
-			for (int32 i = 0; i < e_maxBodies; i += 2)
+			for (int32_t i = 0; i < e_maxBodies; i += 2)
 			{
 				if (m_bodies[i])
 				{
@@ -290,7 +290,7 @@ public:
 		return new PolyShapes;
 	}
 
-	int32 m_bodyIndex;
+	int32_t m_bodyIndex;
 	b2Body* m_bodies[e_maxBodies];
 	b2PolygonShape m_polygons[4];
 	b2CircleShape m_circle;

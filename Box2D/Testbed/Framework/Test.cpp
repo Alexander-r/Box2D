@@ -82,7 +82,7 @@ void Test::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 	b2WorldManifold worldManifold;
 	contact->GetWorldManifold(&worldManifold);
 
-	for (int32 i = 0; i < manifold->pointCount && m_pointCount < k_maxContactPoints; ++i)
+	for (int32_t i = 0; i < manifold->pointCount && m_pointCount < k_maxContactPoints; ++i)
 	{
 		ContactPoint* cp = m_points + m_pointCount;
 		cp->fixtureA = fixtureA;
@@ -266,7 +266,7 @@ void Test::LaunchBomb(const b2Vec2& position, const b2Vec2& velocity)
 
 void Test::Step(Settings* settings)
 {
-	float32 timeStep = settings->hz > 0.0f ? 1.0f / settings->hz : float32(0.0f);
+	float timeStep = settings->hz > 0.0f ? 1.0f / settings->hz : float(0.0f);
 
 	if (settings->pause)
 	{
@@ -283,7 +283,7 @@ void Test::Step(Settings* settings)
 		m_textLine += DRAW_STRING_NEW_LINE;
 	}
 
-	uint32 flags = 0;
+	uint32_t flags = 0;
 	flags += settings->drawShapes			* b2Draw::e_shapeBit;
 	flags += settings->drawJoints			* b2Draw::e_jointBit;
 	flags += settings->drawAABBs			* b2Draw::e_aabbBit;
@@ -309,16 +309,16 @@ void Test::Step(Settings* settings)
 
 	if (settings->drawStats)
 	{
-		int32 bodyCount = m_world->GetBodyCount();
-		int32 contactCount = m_world->GetContactCount();
-		int32 jointCount = m_world->GetJointCount();
+		int32_t bodyCount = m_world->GetBodyCount();
+		int32_t contactCount = m_world->GetContactCount();
+		int32_t jointCount = m_world->GetJointCount();
 		g_debugDraw.DrawString(5, m_textLine, "bodies/contacts/joints = %d/%d/%d", bodyCount, contactCount, jointCount);
 		m_textLine += DRAW_STRING_NEW_LINE;
 
-		int32 proxyCount = m_world->GetProxyCount();
-		int32 height = m_world->GetTreeHeight();
-		int32 balance = m_world->GetTreeBalance();
-		float32 quality = m_world->GetTreeQuality();
+		int32_t proxyCount = m_world->GetProxyCount();
+		int32_t height = m_world->GetTreeHeight();
+		int32_t balance = m_world->GetTreeBalance();
+		float quality = m_world->GetTreeQuality();
 		g_debugDraw.DrawString(5, m_textLine, "proxies/height/balance/quality = %d/%d/%d/%g", proxyCount, height, balance, quality);
 		m_textLine += DRAW_STRING_NEW_LINE;
 	}
@@ -353,7 +353,7 @@ void Test::Step(Settings* settings)
 		memset(&aveProfile, 0, sizeof(b2Profile));
 		if (m_stepCount > 0)
 		{
-			float32 scale = 1.0f / m_stepCount;
+			float scale = 1.0f / m_stepCount;
 			aveProfile.step = scale * m_totalProfile.step;
 			aveProfile.collide = scale * m_totalProfile.collide;
 			aveProfile.solve = scale * m_totalProfile.solve;
@@ -408,10 +408,10 @@ void Test::Step(Settings* settings)
 
 	if (settings->drawContactPoints)
 	{
-		const float32 k_impulseScale = 0.1f;
-		const float32 k_axisScale = 0.3f;
+		const float k_impulseScale = 0.1f;
+		const float k_axisScale = 0.3f;
 
-		for (int32 i = 0; i < m_pointCount; ++i)
+		for (int32_t i = 0; i < m_pointCount; ++i)
 		{
 			ContactPoint* point = m_points + i;
 

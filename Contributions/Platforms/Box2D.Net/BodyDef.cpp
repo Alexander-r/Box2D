@@ -42,40 +42,40 @@ namespace Box2D
 				}
 			}
 
-			property float32 Angle
+			property float Angle
 			{
-				float32 get()
+				float get()
 				{
 					return def->angle;
 				}
 
-				void set(float32 value)
+				void set(float value)
 				{
 					def->angle = value;
 				}
 			}
 
-			property float32 LinearDamping
+			property float LinearDamping
 			{
-				float32 get()
+				float get()
 				{
 					return def->linearDamping;
 				}
 
-				void set(float32 value)
+				void set(float value)
 				{
 					def->linearDamping = value;
 				}
 			}
 
-			property float32 AngularDamping
+			property float AngularDamping
 			{
-				float32 get()
+				float get()
 				{
 					return def->angularDamping;
 				}
 
-				void set(float32 value)
+				void set(float value)
 				{
 					def->angularDamping = value;
 				}
