@@ -53,10 +53,6 @@ private:
 	int32_t m_chunkSpace;
 
 	b2Block* m_freeLists[b2_blockSizes];
-
-	static int32_t s_blockSizes[b2_blockSizes];
-	static uint8_t s_blockSizeLookup[b2_maxBlockSize + 1];
-	static bool s_blockSizeLookupInitialized;
 };
 
 #endif
