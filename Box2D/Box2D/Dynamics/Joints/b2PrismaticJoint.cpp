@@ -174,10 +174,6 @@ void b2PrismaticJoint::InitVelocityConstraints(const b2SolverData& data)
 		m_s1 = b2Cross(d + rA, m_perp);
 		m_s2 = b2Cross(rB, m_perp);
 
-        double s1test;
-        (void)s1test;
-        s1test = b2Cross(rA, m_perp);
-
 		double k11 = mA + mB + iA * m_s1 * m_s1 + iB * m_s2 * m_s2;
 		double k12 = iA * m_s1 + iB * m_s2;
 		double k13 = iA * m_s1 * m_a1 + iB * m_s2 * m_a2;
