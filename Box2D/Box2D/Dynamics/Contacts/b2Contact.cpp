@@ -34,8 +34,8 @@
 #include <Box2D/Dynamics/b2Fixture.h>
 #include <Box2D/Dynamics/b2World.h>
 
-typedef b2Contact* b2ContactCreateFcn(b2Fixture* fixtureA, int32 indexA,
-									  b2Fixture* fixtureB, int32 indexB,
+typedef b2Contact* b2ContactCreateFcn(b2Fixture* fixtureA, int32_t indexA,
+									  b2Fixture* fixtureB, int32_t indexB,
 									  b2BlockAllocator* allocator);
 typedef void b2ContactDestroyFcn(b2Contact* contact, b2BlockAllocator* allocator);
 
