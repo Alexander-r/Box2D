@@ -46,7 +46,7 @@ inline double b2InvSqrt(double x)
 
 	convert.x = x;
     double xhalf = 0.5 * x;
-    convert.i = 0x53759df - (convert.i >> 1);
+    convert.i = 0x5f3759df - (convert.i >> 1);
 	x = convert.x;
     x = x * (1.5 - xhalf * x * x);
 	return x;
@@ -62,10 +62,10 @@ struct b2Vec2
 	b2Vec2() {}
 
 	/// Construct using coordinates.
-    b2Vec2(double x, double y) : x(x), y(y) {}
+    b2Vec2(double xIn, double yIn) : x(xIn), y(yIn) {}
 
 	/// Set this vector to all zeros.
-    void SetZero() { x = 0.0L; y = 0.0L; }
+    void SetZero() { x = 0.0; y = 0.0; }
 
 	/// Set this vector to some specified coordinates.
     void Set(double x_, double y_) { x = x_; y = y_; }
@@ -153,7 +153,7 @@ struct b2Vec3
 	b2Vec3() {}
 
 	/// Construct using coordinates.
-    b2Vec3(double x, double y, double z) : x(x), y(y), z(z) {}
+    b2Vec3(double xIn, double yIn, double zIn) : x(xIn), y(yIn), z(zIn) {}
 
 	/// Set this vector to all zeros.
     void SetZero() { x = 0.0; y = 0.0; z = 0.0; }

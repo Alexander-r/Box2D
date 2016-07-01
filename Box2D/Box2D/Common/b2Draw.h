@@ -25,8 +25,16 @@
 struct b2Color
 {
 	b2Color() {}
-	b2Color(double r, double g, double b, double a = 1.0) : r(r), g(g), b(b), a(a) {}
-	void Set(double ri, double gi, double bi, double ai = 1.0) { r = ri; g = gi; b = bi; a = ai; }
+	b2Color(double rIn, double gIn, double bIn, double aIn = 1.0)
+	{
+		r = rIn; g = gIn; b = bIn; a = aIn;
+	}
+	
+	void Set(double rIn, double gIn, double bIn, double aIn = 1.0)
+	{
+		r = rIn; g = gIn; b = bIn; a = aIn;
+	}
+
 	double r, g, b, a;
 };
 
