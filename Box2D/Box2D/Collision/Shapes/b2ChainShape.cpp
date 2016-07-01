@@ -37,6 +37,11 @@ void b2ChainShape::CreateLoop(const b2Vec2* vertices, int32_t count)
 {
 	b2Assert(m_vertices == NULL && m_count == 0);
 	b2Assert(count >= 3);
+	if (count < 3)
+	{
+		return;
+	}
+
 	for (int32_t i = 1; i < count; ++i)
 	{
 		b2Vec2 v1 = vertices[i-1];
