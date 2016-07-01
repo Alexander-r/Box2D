@@ -360,7 +360,7 @@ double b2WheelJoint::GetPrismaticJointTranslation() const
 	return translation;
 }
 
-double b2WheelJoint::GetPrismaticJointSpeed() const
+double b2WheelJoint::GetJointLinearSpeed() const
 {
 	b2Body* bA = m_bodyA;
 	b2Body* bB = m_bodyB;
@@ -381,14 +381,14 @@ double b2WheelJoint::GetPrismaticJointSpeed() const
 	return speed;
 }
 
-double b2WheelJoint::GetRevoluteJointAngle() const
+double b2WheelJoint::GetJointAngle() const
 {
 	b2Body* bA = m_bodyA;
 	b2Body* bB = m_bodyB;
 	return bB->m_sweep.a - bA->m_sweep.a;
 }
 
-double b2WheelJoint::GetRevoluteJointSpeed() const
+double b2WheelJoint::GetJointAngularSpeed() const
 {
 	double wA = m_bodyA->m_angularVelocity;
 	double wB = m_bodyB->m_angularVelocity;
