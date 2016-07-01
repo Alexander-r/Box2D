@@ -1087,13 +1087,31 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 			int32_t count = chain->m_count;
 			const b2Vec2* vertices = chain->m_vertices;
 
+			b2Color ghostColor(0.75 * color.r, 0.75 * color.g, 0.75 * color.b, color.a);
+
 			b2Vec2 v1 = b2Mul(xf, vertices[0]);
+			g_debugDraw->DrawPoint(v1, 4.0f color);
+
+			if (chain->m_hasPrevVertex)
+			{
+				b2Vec2 vp = b2Mul(xf, chain->m_prevVertex);
+				g_debugDraw->DrawSegment(vp, v1, ghostColor);
+				g_debugDraw->DrawCircle(vp, 0.1, ghostColor);
+			}
+
 			for (int32_t i = 1; i < count; ++i)
 			{
 				b2Vec2 v2 = b2Mul(xf, vertices[i]);
 				g_debugDraw->DrawSegment(v1, v2, color);
-				g_debugDraw->DrawCircle(v1, 0.05, color);
+				g_debugDraw->DrawPoint(v2, 4.0, color);
 				v1 = v2;
+			}
+
+			if (chain->m_hasNextVertex)
+			{
+				b2Vec2 vn = b2Mul(xf, chain->m_nextVertex);
+				g_debugDraw->DrawSegment(v1, vn, ghostColor);
+				g_debugDraw->DrawCircle(vn, 0.1, ghostColor);
 			}
 		}
 		break;
