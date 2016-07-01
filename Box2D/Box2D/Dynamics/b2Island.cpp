@@ -312,9 +312,9 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 		bool contactsOkay = contactSolver.SolvePositionConstraints();
 
 		bool jointsOkay = true;
-		for (int32_t i = 0; i < m_jointCount; ++i)
+		for (int32_t j = 0; j < m_jointCount; ++j)
 		{
-			bool jointOkay = m_joints[i]->SolvePositionConstraints(solverData);
+			bool jointOkay = m_joints[j]->SolvePositionConstraints(solverData);
 			jointsOkay = jointsOkay && jointOkay;
 		}
 
