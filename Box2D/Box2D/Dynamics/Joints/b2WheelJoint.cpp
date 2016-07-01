@@ -346,7 +346,7 @@ double b2WheelJoint::GetReactionTorque(double inv_dt) const
 	return inv_dt * m_motorImpulse;
 }
 
-double b2WheelJoint::GetPrismaticJointTranslation() const
+double b2WheelJoint::GetJointTranslation() const
 {
 	b2Body* bA = m_bodyA;
 	b2Body* bB = m_bodyB;
