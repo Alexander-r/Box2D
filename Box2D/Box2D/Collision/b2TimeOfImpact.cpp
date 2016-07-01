@@ -237,7 +237,7 @@ struct b2SeparationFunction
 
 		default:
 			b2Assert(false);
-            return 0.0;
+			return 0.0;
 		}
 	}
 
@@ -418,7 +418,7 @@ void b2TimeOfImpact(b2TOIOutput* output, const b2TOIInput* input)
 				else
 				{
 					// Bisection to guarantee progress.
-                    t = 0.5 * (a1 + a2);
+					t = 0.5 * (a1 + a2);
 				}
 
 				++rootIterCount;

@@ -58,7 +58,7 @@ double b2Timer::GetMilliseconds() const
 	LARGE_INTEGER largeInteger;
 	QueryPerformanceCounter(&largeInteger);
 	double count = double(largeInteger.QuadPart);
-    double ms = double(s_invFrequency * (count - m_start));
+	double ms = double(s_invFrequency * (count - m_start));
 	return ms;
 }
 
@@ -83,7 +83,7 @@ double b2Timer::GetMilliseconds() const
 {
     timeval t;
     gettimeofday(&t, 0);
-    return 1000.0L * (t.tv_sec - m_start_sec) + 0.001L * (t.tv_usec - m_start_usec);
+    return 1000.0 * (t.tv_sec - m_start_sec) + 0.001 * (t.tv_usec - m_start_usec);
 }
 
 #else
@@ -98,7 +98,7 @@ void b2Timer::Reset()
 
 double b2Timer::GetMilliseconds() const
 {
-    return 0.0L;
+	return 0.0;
 }
 
 #endif

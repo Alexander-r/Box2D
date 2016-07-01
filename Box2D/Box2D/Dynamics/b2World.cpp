@@ -1090,7 +1090,7 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 			b2Color ghostColor(0.75 * color.r, 0.75 * color.g, 0.75 * color.b, color.a);
 
 			b2Vec2 v1 = b2Mul(xf, vertices[0]);
-			g_debugDraw->DrawPoint(v1, 4.0f color);
+			g_debugDraw->DrawPoint(v1, 4.0 color);
 
 			if (chain->m_hasPrevVertex)
 			{
