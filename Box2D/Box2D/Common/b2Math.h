@@ -52,8 +52,8 @@ inline double b2InvSqrt(double x)
 	return x;
 }
 
-#define	b2Sqrt(x)	sqrtf(x)
-#define	b2Atan2(y, x)	atan2f(y, x)
+#define	b2Sqrt(x)	sqrt(x)
+#define	b2Atan2(y, x)	atan2(y, x)
 
 /// A 2D column vector.
 struct b2Vec2
@@ -310,16 +310,16 @@ struct b2Rot
     explicit b2Rot(double angle)
 	{
 		/// TODO_ERIN optimize
-		s = sinf(angle);
-		c = cosf(angle);
+		s = sin(angle);
+		c = cos(angle);
 	}
 
 	/// Set using an angle in radians.
     void Set(double angle)
 	{
 		/// TODO_ERIN optimize
-		s = sinf(angle);
-		c = cosf(angle);
+		s = sin(angle);
+		c = cos(angle);
 	}
 
 	/// Set to the identity rotation
@@ -723,7 +723,7 @@ inline void b2Sweep::Advance(double alpha)
 inline void b2Sweep::Normalize()
 {
     double twoPi = 2.0 * b2_pi;
-    double d =  twoPi * floorf(a0 / twoPi);
+    double d =  twoPi * floor(a0 / twoPi);
 	a0 -= d;
 	a -= d;
 }
