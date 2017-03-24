@@ -664,7 +664,9 @@ inline b2Vec2 b2Max(const b2Vec2& a, const b2Vec2& b)
 template <typename T>
 inline T b2Clamp(T a, T low, T high)
 {
-	return b2Max(low, b2Min(a, high));
+	T b = isnan(high) ? a : b2Min(a, high);
+	T c = isnan(low) ? b : b2Max(b, low);
+	return c;
 }
 
 inline b2Vec2 b2Clamp(const b2Vec2& a, const b2Vec2& low, const b2Vec2& high)
