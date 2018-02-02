@@ -623,6 +623,28 @@ inline b2Transform b2MulT(const b2Transform& A, const b2Transform& B)
 	return C;
 }
 
+/// Check if the projected testpoint onto the line is on the line segment
+inline bool b2IsProjectedPointOnLineSegment(const b2Vec2& v1, const b2Vec2& v2, const b2Vec2& p)
+{
+  b2Vec2 e1 = b2Vec2(v2.x - v1.x, v2.y - v1.y);
+  double recArea = b2Dot(e1, e1);
+  b2Vec2 e2 = b2Vec2(p.x - v1.x, p.y - v1.y);
+  double val = b2Dot(e1, e2);
+  return (val >= 0.0 && val <= recArea);
+}
+
+/// Get projected point p' of p on line v1,v2
+inline b2Vec2 b2ProjectPointOnLine(const b2Vec2& v1, const b2Vec2& v2, const b2Vec2& p)
+{
+  b2Vec2 e1 = b2Vec2(v2.x - v1.x, v2.y - v1.y);
+  b2Vec2 e2 = b2Vec2(p.x - v1.x, p.y - v1.y);
+  double valDp = b2Dot(e1, e2);
+  double len2 = e1.x * e1.x + e1.y * e1.y;
+  b2Vec2 p1 = b2Vec2(v1.x + (valDp * e1.x) / len2,
+                      v1.y + (valDp * e1.y) / len2);
+  return p1;
+}
+
 template <typename T>
 inline T b2Abs(T a)
 {
