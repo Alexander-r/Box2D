@@ -89,11 +89,13 @@ struct b2BodyDef
 	/// Linear damping is use to reduce the linear velocity. The damping parameter
 	/// can be larger than 1.0 but the damping effect becomes sensitive to the
 	/// time step when the damping parameter is large.
+	/// Units are 1/time
 	double linearDamping;
 
 	/// Angular damping is use to reduce the angular velocity. The damping parameter
 	/// can be larger than 1.0 but the damping effect becomes sensitive to the
 	/// time step when the damping parameter is large.
+	/// Units are 1/time
 	double angularDamping;
 
 	/// Set this flag to false if this body should never fall asleep. Note that
