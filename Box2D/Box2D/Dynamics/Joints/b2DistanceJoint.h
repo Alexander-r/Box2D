@@ -99,7 +99,7 @@ public:
 	double GetDampingRatio() const;
 
 	/// Dump joint to dmLog
-	void Dump() override;
+	void Dump();
 
 protected:
 
