@@ -402,22 +402,22 @@ bool b2WheelJoint::IsMotorEnabled() const
 
 void b2WheelJoint::EnableMotor(bool flag)
 {
-	m_bodyA->SetAwakeResetSleepTime(true);
-	m_bodyB->SetAwakeResetSleepTime(true);
+	m_bodyA->SetAwake(true);
+	m_bodyB->SetAwake(true);
 	m_enableMotor = flag;
 }
 
 void b2WheelJoint::SetMotorSpeed(double speed)
 {
-	m_bodyA->SetAwakeResetSleepTime(true);
-	m_bodyB->SetAwakeResetSleepTime(true);
+	m_bodyA->SetAwake(true);
+	m_bodyB->SetAwake(true);
 	m_motorSpeed = speed;
 }
 
 void b2WheelJoint::SetMaxMotorTorque(double torque)
 {
-	m_bodyA->SetAwakeResetSleepTime(true);
-	m_bodyB->SetAwakeResetSleepTime(true);
+	m_bodyA->SetAwake(true);
+	m_bodyB->SetAwake(true);
 	m_maxMotorTorque = torque;
 }
 
