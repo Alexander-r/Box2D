@@ -579,23 +579,32 @@ bool b2PrismaticJoint::IsMotorEnabled() const
 
 void b2PrismaticJoint::EnableMotor(bool flag)
 {
-	m_bodyA->SetAwake(true);
-	m_bodyB->SetAwake(true);
-	m_enableMotor = flag;
+	if (flag != m_enableMotor)
+	{
+		m_bodyA->SetAwake(true);
+		m_bodyB->SetAwake(true);
+		m_enableMotor = flag;
+	}
 }
 
 void b2PrismaticJoint::SetMotorSpeed(double speed)
 {
-	m_bodyA->SetAwake(true);
-	m_bodyB->SetAwake(true);
-	m_motorSpeed = speed;
+	if (speed != m_motorSpeed)
+	{
+		m_bodyA->SetAwake(true);
+		m_bodyB->SetAwake(true);
+		m_motorSpeed = speed;
+	}
 }
 
 void b2PrismaticJoint::SetMaxMotorForce(double force)
 {
-	m_bodyA->SetAwake(true);
-	m_bodyB->SetAwake(true);
-	m_maxMotorForce = force;
+	if (force != m_maxMotorForce)
+	{
+		m_bodyA->SetAwake(true);
+		m_bodyB->SetAwake(true);
+		m_maxMotorForce = force;
+	}
 }
 
 double b2PrismaticJoint::GetMotorForce(double inv_dt) const

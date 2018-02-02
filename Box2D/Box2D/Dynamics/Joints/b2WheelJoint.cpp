@@ -402,23 +402,32 @@ bool b2WheelJoint::IsMotorEnabled() const
 
 void b2WheelJoint::EnableMotor(bool flag)
 {
-	m_bodyA->SetAwake(true);
-	m_bodyB->SetAwake(true);
-	m_enableMotor = flag;
+	if (flag != m_enableMotor)
+	{
+		m_bodyA->SetAwake(true);
+		m_bodyB->SetAwake(true);
+		m_enableMotor = flag;
+	}
 }
 
 void b2WheelJoint::SetMotorSpeed(double speed)
 {
-	m_bodyA->SetAwake(true);
-	m_bodyB->SetAwake(true);
-	m_motorSpeed = speed;
+	if (speed != m_motorSpeed)
+	{
+		m_bodyA->SetAwake(true);
+		m_bodyB->SetAwake(true);
+		m_motorSpeed = speed;
+	}
 }
 
 void b2WheelJoint::SetMaxMotorTorque(double torque)
 {
-	m_bodyA->SetAwake(true);
-	m_bodyB->SetAwake(true);
-	m_maxMotorTorque = torque;
+	if (torque != m_maxMotorTorque)
+	{
+		m_bodyA->SetAwake(true);
+		m_bodyB->SetAwake(true);
+		m_maxMotorTorque = torque;
+	}
 }
 
 double b2WheelJoint::GetMotorTorque(double inv_dt) const
