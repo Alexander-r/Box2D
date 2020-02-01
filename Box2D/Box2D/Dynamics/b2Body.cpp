@@ -482,6 +482,7 @@ void b2Body::SetActive(bool flag)
 		}
 
 		// Contacts are created the next time step.
+        m_world->m_flags |= b2World::e_newFixture;
 	}
 	else
 	{
