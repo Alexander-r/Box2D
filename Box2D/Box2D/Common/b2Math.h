@@ -386,6 +386,7 @@ struct b2Transform
 struct b2Sweep
 {
 	/// Get the interpolated transform at a specific time.
+    /// @param transform the output transform
 	/// @param beta is a factor in [0,1], where 0 indicates alpha0.
     void GetTransform(b2Transform* xfb, double beta) const;
 
