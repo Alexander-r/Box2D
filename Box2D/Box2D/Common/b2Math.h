@@ -25,14 +25,7 @@
 /// This function is used to ensure that a doubleing point number is not a NaN or infinity.
 inline bool b2IsValid(double x)
 {
-    //int32_t ix = *reinterpret_cast<int32_t*>(&x);
-    //return (ix & 0x7f800000) != 0x7f800000;
-    //the C99 way of doing it without warnings
-    if(isinf(x))
-        return false;
-    if(isinf(x))
-        return false;
-    return true;
+    return isfinite(x);
 }
 
 /// This is a approximate yet fast inverse square-root.
