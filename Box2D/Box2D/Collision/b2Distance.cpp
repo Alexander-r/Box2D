@@ -587,3 +587,117 @@ void b2Distance(b2DistanceOutput* output,
 		}
 	}
 }
+
+//
+bool b2ShapeCast(b2ShapeCastOutput * output, const b2ShapeCastInput * input)
+{
+    const b2DistanceProxy* proxyA = &input->proxyA;
+    const b2DistanceProxy* proxyB = &input->proxyB;
+
+    b2Transform transformA = input->transformA;
+    b2Transform transformB = input->transformB;
+
+    b2Vec2 r = input->translationB;
+    b2Vec2 s(0.0, 0.0);
+    b2Vec2 n(0.0, 0.0);
+    double lambda = 0.0;
+    b2Vec2 x = s;
+
+    // Initial simplex
+    b2Simplex simplex;
+    simplex.m_count = 0;
+
+    // Get simplex vertices as an array.
+    b2SimplexVertex* vertices = &simplex.m_v1;
+
+    // Get support point in -r direction (A - B)
+    b2SimplexVertex* vertex = vertices + simplex.m_count;
+    vertex->indexA = proxyA->GetSupport(b2MulT(transformA.q, -r));
+    vertex->wA = b2Mul(transformA, proxyA->GetVertex(vertex->indexA));
+    b2Vec2 wBLocal;
+    vertex->indexB = proxyB->GetSupport(b2MulT(transformB.q, r));
+    vertex->wB = b2Mul(transformB, proxyB->GetVertex(vertex->indexB));
+    vertex->w = vertex->wB - vertex->wA;
+
+    b2Vec2 v = x - vertex->w;
+
+    const int32_t k_maxIters = 20;
+
+    // TODO_ERIN
+    const double tol = 0.1 * b2_linearSlop;
+
+    // Main iteration loop.
+    int32_t iter = 0;
+    while (iter < k_maxIters && v.LengthSquared() > tol * tol)
+    {
+        b2Assert(simplex.m_count < 3);
+
+        // Support in direction v (A - B)
+        b2SimplexVertex* vertex = vertices + simplex.m_count;
+        vertex->indexA = proxyA->GetSupport(b2MulT(transformA.q, v));
+        vertex->wA = b2Mul(transformA, proxyA->GetVertex(vertex->indexA));
+        b2Vec2 wBLocal;
+        vertex->indexB = proxyB->GetSupport(b2MulT(transformB.q, -v));
+        vertex->wB = b2Mul(transformB, proxyB->GetVertex(vertex->indexB));
+        vertex->w = vertex->wB - vertex->wA;
+
+        b2Vec2 p = vertex->w;
+        b2Vec2 w = x - p;
+
+        double vw = b2Dot(v, w);
+        if (vw > 0.0)
+        {
+            double vr = b2Dot(v, r);
+            if (vr >= 0.0)
+            {
+                return false;
+            }
+
+            lambda = lambda - vw / vr;
+            x = s + lambda * r;
+            n = v;
+        }
+
+        simplex.m_count += 1;
+
+        switch (simplex.m_count)
+        {
+        case 1:
+            break;
+
+        case 2:
+            simplex.Solve2();
+            break;
+
+        case 3:
+            simplex.Solve3();
+            break;
+
+        default:
+            b2Assert(false);
+        }
+
+        // If we have 3 points, then the origin is in the corresponding triangle.
+        if (simplex.m_count == 3)
+        {
+            // Overlap
+            return false;
+        }
+
+        // Get search direction.
+        v = simplex.GetSearchDirection();
+
+        // Iteration count is equated to the number of support point calls.
+        ++iter;
+    }
+
+    // Prepare output.
+    b2Vec2 pointA, pointB;
+    simplex.GetWitnessPoints(&pointA, &pointB);
+
+    output->point = 0.5 * (pointA + pointB);
+    output->normal = n;
+    output->lambda = lambda;
+    output->iterations = iter;
+    return true;
+}
