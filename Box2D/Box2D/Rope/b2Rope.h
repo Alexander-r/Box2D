@@ -22,94 +22,117 @@
 #include <Box2D/Common/b2Math.h>
 
 class b2Draw;
+struct b2RopeStretch;
+struct b2RopeBend;
 
-/// 
-struct b2RopeDef
+enum b2BendingModel
 {
-	b2RopeDef()
-	{
-        vertices = nullptr;
-		count = 0;
-        masses = nullptr;
-		gravity.SetZero();
-		damping = 0.1;
-		k2 = 0.9;
-		k3 = 0.1;
-	}
-
-	///
-	b2Vec2* vertices;
-
-	///
-	int32_t count;
-
-	///
-	double* masses;
-
-	///
-	b2Vec2 gravity;
-
-	///
-	double damping;
-
-	/// Stretching stiffness
-	double k2;
-
-	/// Bending stiffness. Values above 0.5 can make the simulation blow up.
-	double k3;
+    b2_springAngleBendingModel = 0,
+    b2_pbdAngleBendingModel,
+    b2_xpbdAngleBendingModel,
+    b2_softAngleBendingModel,
+    b2_pbdDistanceBendingModel,
+    b2_pbdHeightBendingModel
 };
 
-/// 
+///
+struct b2RopeTuning
+{
+    b2RopeTuning()
+    {
+        bendingModel = b2_springAngleBendingModel;
+        damping = 0.0;
+        stretchStiffness = 1.0;
+        bendStiffness = 0.5;
+        bendHertz = 1.0;
+        bendDamping = 0.0;
+        isometric = false;
+        fixedEffectiveMass = false;
+        warmStart = false;
+    }
+
+    b2BendingModel bendingModel;
+    double damping;
+    double stretchStiffness;
+    double bendStiffness;
+    double bendHertz;
+    double bendDamping;
+    bool isometric;
+    bool fixedEffectiveMass;
+    bool warmStart;
+};
+
+///
+struct b2RopeDef
+{
+    b2RopeDef()
+    {
+        position.SetZero();
+        vertices = nullptr;
+        count = 0;
+        masses = nullptr;
+        gravity.SetZero();
+    }
+
+    b2Vec2 position;
+    b2Vec2* vertices;
+    int32_t count;
+    double* masses;
+    b2Vec2 gravity;
+    b2RopeTuning tuning;
+};
+
+///
 class b2Rope
 {
 public:
-	b2Rope();
-	~b2Rope();
+    b2Rope();
+    ~b2Rope();
 
-	///
-	void Initialize(const b2RopeDef* def);
+    ///
+    void Create(const b2RopeDef& def);
 
-	///
-	void Step(double timeStep, int32_t iterations);
+    ///
+    void SetTuning(const b2RopeTuning& tuning);
 
-	///
-	int32_t GetVertexCount() const
-	{
-		return m_count;
-	}
+    ///
+    void Step(double timeStep, int32_t iterations, const b2Vec2& position);
 
-	///
-	const b2Vec2* GetVertices() const
-	{
-		return m_ps;
-	}
+    ///
+    void Reset(const b2Vec2& position);
 
-	///
-	void Draw(b2Draw* draw) const;
-
-	///
-	void SetAngle(double angle);
+    ///
+    void Draw(b2Draw* draw) const;
 
 private:
 
-	void SolveC2();
-	void SolveC3();
+    void SolveStretch();
+    //void SolveBend_PBD_Distance();
+    void SolveBend_PBD_Angle();
+    void SolveBend_XPBD_Angle(double dt);
+    void SolveBend_Soft_Angle(double dt);
+    void SolveBend_PBD_Distance();
+    void SolveBend_PBD_Height();
+    void ApplyBendForces(double dt);
 
-	int32_t m_count;
-	b2Vec2* m_ps;
-	b2Vec2* m_p0s;
-	b2Vec2* m_vs;
+    b2Vec2 m_position;
 
-	double* m_ims;
+    int32_t m_count;
+    int32_t m_stretchCount;
+    int32_t m_bendCount;
 
-	double* m_Ls;
-	double* m_as;
+    b2RopeStretch* m_stretchConstraints;
+    b2RopeBend* m_bendConstraints;
 
-	b2Vec2 m_gravity;
-	double m_damping;
+    b2Vec2* m_bindPositions;
+    b2Vec2* m_ps;
+    b2Vec2* m_p0s;
+    b2Vec2* m_vs;
 
-	double m_k2;
-	double m_k3;
+    double* m_invMasses;
+    b2Vec2 m_gravity;
+
+    b2RopeTuning m_tuning;
 };
 
 #endif
