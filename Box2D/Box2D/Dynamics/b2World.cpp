@@ -37,7 +37,7 @@
 b2World::b2World()
 {
     m_destructionListener = nullptr;
-    g_debugDraw = nullptr;
+    m_debugDraw = nullptr;
 
     m_bodyList = nullptr;
     m_jointList = nullptr;
@@ -66,7 +66,7 @@ b2World::b2World()
 b2World::b2World(const b2Vec2& gravity)
 {
     m_destructionListener = nullptr;
-    g_debugDraw = nullptr;
+    m_debugDraw = nullptr;
 
     m_bodyList = nullptr;
     m_jointList = nullptr;
@@ -130,7 +130,7 @@ void b2World::SetContactListener(b2ContactListener* listener)
 
 void b2World::SetDebugDraw(b2Draw* debugDraw)
 {
-	g_debugDraw = debugDraw;
+    m_debugDraw = debugDraw;
 }
 
 b2Body* b2World::CreateBody(const b2BodyDef* def)
@@ -1068,7 +1068,7 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 			double radius = circle->m_radius;
 			b2Vec2 axis = b2Mul(xf.q, b2Vec2(1.0, 0.0));
 
-			g_debugDraw->DrawSolidCircle(center, radius, axis, color);
+            m_debugDraw->DrawSolidCircle(center, radius, axis, color);
 		}
 		break;
 
@@ -1077,7 +1077,7 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 			b2EdgeShape* edge = (b2EdgeShape*)fixture->GetShape();
 			b2Vec2 v1 = b2Mul(xf, edge->m_vertex1);
 			b2Vec2 v2 = b2Mul(xf, edge->m_vertex2);
-			g_debugDraw->DrawSegment(v1, v2, color);
+            m_debugDraw->DrawSegment(v1, v2, color);
 		}
 		break;
 
@@ -1090,28 +1090,28 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 			b2Color ghostColor(0.75 * color.r, 0.75 * color.g, 0.75 * color.b, color.a);
 
 			b2Vec2 v1 = b2Mul(xf, vertices[0]);
-			g_debugDraw->DrawPoint(v1, 4.0, color);
+            m_debugDraw->DrawPoint(v1, 4.0, color);
 
 			if (chain->m_hasPrevVertex)
 			{
 				b2Vec2 vp = b2Mul(xf, chain->m_prevVertex);
-				g_debugDraw->DrawSegment(vp, v1, ghostColor);
-				g_debugDraw->DrawCircle(vp, 0.1, ghostColor);
+                m_debugDraw->DrawSegment(vp, v1, ghostColor);
+                m_debugDraw->DrawCircle(vp, 0.1, ghostColor);
 			}
 
 			for (int32_t i = 1; i < count; ++i)
 			{
 				b2Vec2 v2 = b2Mul(xf, vertices[i]);
-				g_debugDraw->DrawSegment(v1, v2, color);
-				g_debugDraw->DrawPoint(v2, 4.0, color);
+                m_debugDraw->DrawSegment(v1, v2, color);
+                m_debugDraw->DrawPoint(v2, 4.0, color);
 				v1 = v2;
 			}
 
 			if (chain->m_hasNextVertex)
 			{
 				b2Vec2 vn = b2Mul(xf, chain->m_nextVertex);
-				g_debugDraw->DrawSegment(v1, vn, ghostColor);
-				g_debugDraw->DrawCircle(vn, 0.1, ghostColor);
+                m_debugDraw->DrawSegment(v1, vn, ghostColor);
+                m_debugDraw->DrawCircle(vn, 0.1, ghostColor);
 			}
 		}
 		break;
@@ -1128,7 +1128,7 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 				vertices[i] = b2Mul(xf, poly->m_vertices[i]);
 			}
 
-			g_debugDraw->DrawSolidPolygon(vertices, vertexCount, color);
+            m_debugDraw->DrawSolidPolygon(vertices, vertexCount, color);
 		}
 		break;
             
@@ -1153,7 +1153,7 @@ void b2World::DrawJoint(b2Joint* joint)
 	switch (joint->GetType())
 	{
 	case e_distanceJoint:
-		g_debugDraw->DrawSegment(p1, p2, color);
+        m_debugDraw->DrawSegment(p1, p2, color);
 		break;
 
 	case e_pulleyJoint:
@@ -1161,31 +1161,40 @@ void b2World::DrawJoint(b2Joint* joint)
 			b2PulleyJoint* pulley = (b2PulleyJoint*)joint;
 			b2Vec2 s1 = pulley->GetGroundAnchorA();
 			b2Vec2 s2 = pulley->GetGroundAnchorB();
-			g_debugDraw->DrawSegment(s1, p1, color);
-			g_debugDraw->DrawSegment(s2, p2, color);
-			g_debugDraw->DrawSegment(s1, s2, color);
+            m_debugDraw->DrawSegment(s1, p1, color);
+            m_debugDraw->DrawSegment(s2, p2, color);
+            m_debugDraw->DrawSegment(s1, s2, color);
 		}
 		break;
 
 	case e_mouseJoint:
-		// don't draw this
-		break;
+        {
+            b2Color c;
+            c.Set(0.0, 1.0, 0.0);
+            m_debugDraw->DrawPoint(p1, 4.0, c);
+            m_debugDraw->DrawPoint(p2, 4.0, c);
+
+            c.Set(0.8, 0.8, 0.8);
+            m_debugDraw->DrawSegment(p1, p2, c);
+
+        }
+        break;
 
 	default:
-		g_debugDraw->DrawSegment(x1, p1, color);
-		g_debugDraw->DrawSegment(p1, p2, color);
-		g_debugDraw->DrawSegment(x2, p2, color);
+        m_debugDraw->DrawSegment(x1, p1, color);
+        m_debugDraw->DrawSegment(p1, p2, color);
+        m_debugDraw->DrawSegment(x2, p2, color);
 	}
 }
 
 void b2World::DrawDebugData()
 {
-    if (g_debugDraw == nullptr)
+    if (m_debugDraw == nullptr)
 	{
 		return;
 	}
 
-	uint32_t flags = g_debugDraw->GetFlags();
+    uint32_t flags = m_debugDraw->GetFlags();
 
 	if (flags & b2Draw::e_shapeBit)
 	{
@@ -1237,7 +1246,7 @@ void b2World::DrawDebugData()
 			//b2Vec2 cA = fixtureA->GetAABB().GetCenter();
 			//b2Vec2 cB = fixtureB->GetAABB().GetCenter();
 
-			//g_debugDraw->DrawSegment(cA, cB, color);
+            //m_debugDraw->DrawSegment(cA, cB, color);
 		}
 	}
 
@@ -1265,7 +1274,7 @@ void b2World::DrawDebugData()
 					vs[2].Set(aabb.upperBound.x, aabb.upperBound.y);
 					vs[3].Set(aabb.lowerBound.x, aabb.upperBound.y);
 
-					g_debugDraw->DrawPolygon(vs, 4, color);
+                    m_debugDraw->DrawPolygon(vs, 4, color);
 				}
 			}
 		}
@@ -1277,7 +1286,7 @@ void b2World::DrawDebugData()
 		{
 			b2Transform xf = b->GetTransform();
 			xf.p = b->GetWorldCenter();
-			g_debugDraw->DrawTransform(xf);
+            m_debugDraw->DrawTransform(xf);
 		}
 	}
 }
