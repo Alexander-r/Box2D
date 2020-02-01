@@ -53,7 +53,7 @@ struct b2BodyDef
 	/// This constructor sets the body definition default values.
 	b2BodyDef()
 	{
-		userData = NULL;
+        userData = nullptr;
 		position.Set(0.0, 0.0);
 		angle = 0.0;
 		linearVelocity.Set(0.0, 0.0);

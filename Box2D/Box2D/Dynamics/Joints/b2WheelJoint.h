@@ -78,11 +78,11 @@ struct b2WheelJointDef : public b2JointDef
 class b2WheelJoint : public b2Joint
 {
 public:
-	b2Vec2 GetAnchorA() const;
-	b2Vec2 GetAnchorB() const;
+    b2Vec2 GetAnchorA() const override;
+    b2Vec2 GetAnchorB() const override;
 
-	b2Vec2 GetReactionForce(double inv_dt) const;
-	double GetReactionTorque(double inv_dt) const;
+    b2Vec2 GetReactionForce(double inv_dt) const override;
+    double GetReactionTorque(double inv_dt) const override;
 
 	/// The local anchor point relative to bodyA's origin.
 	const b2Vec2& GetLocalAnchorA() const { return m_localAnchorA; }
@@ -136,16 +136,16 @@ public:
 	double GetSpringDampingRatio() const;
 
 	/// Dump to b2Log
-	void Dump();
+    void Dump() override;
 
 protected:
 
 	friend class b2Joint;
 	b2WheelJoint(const b2WheelJointDef* def);
 
-	void InitVelocityConstraints(const b2SolverData& data);
-	void SolveVelocityConstraints(const b2SolverData& data);
-	bool SolvePositionConstraints(const b2SolverData& data);
+    void InitVelocityConstraints(const b2SolverData& data) override;
+    void SolveVelocityConstraints(const b2SolverData& data) override;
+    bool SolvePositionConstraints(const b2SolverData& data) override;
 
 	double m_frequencyHz;
 	double m_dampingRatio;

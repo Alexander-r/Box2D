@@ -33,23 +33,23 @@ public:
 	void Set(const b2Vec2& v1, const b2Vec2& v2);
 
 	/// Implement b2Shape.
-	b2Shape* Clone(b2BlockAllocator* allocator) const;
+    b2Shape* Clone(b2BlockAllocator* allocator) const override;
 
 	/// @see b2Shape::GetChildCount
-	int32_t GetChildCount() const;
+    int32_t GetChildCount() const override;
 
 	/// @see b2Shape::TestPoint
-	bool TestPoint(const b2Transform& transform, const b2Vec2& p) const;
+    bool TestPoint(const b2Transform& transform, const b2Vec2& p) const override;
 
 	/// Implement b2Shape.
 	bool RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
-				const b2Transform& transform, int32_t childIndex) const;
+                const b2Transform& transform, int32_t childIndex) const override;
 
 	/// @see b2Shape::ComputeAABB
-	void ComputeAABB(b2AABB* aabb, const b2Transform& transform, int32_t childIndex) const;
+    void ComputeAABB(b2AABB* aabb, const b2Transform& transform, int32_t childIndex) const override;
 
 	/// @see b2Shape::ComputeMass
-	void ComputeMass(b2MassData* massData, double density) const;
+    void ComputeMass(b2MassData* massData, double density) const override;
 	
 	/// These are the edge vertices
 	b2Vec2 m_vertex1, m_vertex2;

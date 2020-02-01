@@ -62,7 +62,7 @@ public:
 	/// Get the fat AABB for a proxy.
 	const b2AABB& GetFatAABB(int32_t proxyId) const;
 
-	/// Get user data from a proxy. Returns NULL if the id is invalid.
+    /// Get user data from a proxy. Returns nullptr if the id is invalid.
 	void* GetUserData(int32_t proxyId) const;
 
 	/// Test overlap of fat AABBs.

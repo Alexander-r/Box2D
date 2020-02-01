@@ -168,7 +168,7 @@ protected:
 	static void Destroy(b2Contact* contact, b2Shape::Type typeA, b2Shape::Type typeB, b2BlockAllocator* allocator);
 	static void Destroy(b2Contact* contact, b2BlockAllocator* allocator);
 
-	b2Contact() : m_fixtureA(NULL), m_fixtureB(NULL) {}
+    b2Contact() : m_fixtureA(nullptr), m_fixtureB(nullptr) {}
 	b2Contact(b2Fixture* fixtureA, int32_t indexA, b2Fixture* fixtureB, int32_t indexB);
 	virtual ~b2Contact() {}
 

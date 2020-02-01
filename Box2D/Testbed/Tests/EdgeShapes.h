@@ -28,7 +28,7 @@ public:
 	}
 
         double ReportFixture(b2Fixture* fixture, const b2Vec2& point,
-                                                  const b2Vec2& normal, double fraction)
+                                                  const b2Vec2& normal, double fraction) override
 	{
 		m_fixture = fixture;
 		m_point = point;

@@ -33,7 +33,7 @@ public:
 	b2ChainAndCircleContact(b2Fixture* fixtureA, int32_t indexA, b2Fixture* fixtureB, int32_t indexB);
 	~b2ChainAndCircleContact() {}
 
-	void Evaluate(b2Manifold* manifold, const b2Transform& xfA, const b2Transform& xfB);
+    void Evaluate(b2Manifold* manifold, const b2Transform& xfA, const b2Transform& xfB) override;
 };
 
 #endif
